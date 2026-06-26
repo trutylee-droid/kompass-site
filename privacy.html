@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Политика конфиденциальности — Kompass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0d1829;--navy2:#111f35;--blue:#2a4a7a;--silver:#b8c8e0;--gray:#8aaad0;--border:rgba(255,255,255,0.08)}
+body{background:var(--navy);color:#e8f0fc;font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body.lang-ko{font-family:'Noto Sans KR','Inter',sans-serif}
+nav{position:sticky;top:0;z-index:100;padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,24,41,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:30px;height:30px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff}
+.nav-logo-text{font-weight:700;font-size:14px;letter-spacing:2px;color:#fff}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-back{color:var(--gray);text-decoration:none;font-size:13px;transition:color 0.2s}
+.nav-back:hover{color:#fff}
+.lang-switcher{display:flex;gap:2px;background:rgba(255,255,255,0.06);border-radius:8px;padding:3px}
+.lang-btn{padding:4px 10px;border-radius:6px;border:none;background:transparent;color:var(--gray);cursor:pointer;font-size:12px;font-weight:600;transition:all 0.15s;font-family:inherit}
+.lang-btn.active{background:var(--blue);color:#fff}
+.lang-btn:hover:not(.active){color:#fff}
+.content{max-width:760px;margin:0 auto;padding:56px 40px 80px}
+.doc-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.2}
+.doc-meta{font-size:13px;color:var(--gray);margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+h2{font-size:18px;font-weight:600;color:#fff;margin:36px 0 12px}
+h3{font-size:15px;font-weight:600;color:var(--silver);margin:24px 0 8px}
+p{color:#8aaad0;margin-bottom:14px;font-size:15px}
+ul{color:#8aaad0;margin:10px 0 14px 20px;font-size:15px}
+ul li{margin-bottom:6px}
+.highlight{background:rgba(42,74,122,0.2);border:1px solid rgba(42,74,122,0.3);border-radius:10px;padding:16px 20px;margin:20px 0}
+.highlight p{color:var(--silver);margin:0}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+th{text-align:left;padding:10px 14px;background:rgba(255,255,255,0.05);color:var(--silver);font-weight:600;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;color:#8aaad0;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top}
+.contact-block{margin-top:40px;padding:24px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px}
+.contact-block p{margin-bottom:6px}
+footer{text-align:center;padding:32px 40px;border-top:1px solid var(--border);font-size:13px;color:var(--gray)}
+footer a{color:var(--gray);text-decoration:none;margin:0 12px}
+footer a:hover{color:#fff}
+@media(max-width:768px){nav,footer{padding-left:20px;padding-right:20px}.content{padding:40px 20px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">K</div>
+    <span class="nav-logo-text">KOMPASS</span>
+  </a>
+  <div class="nav-right">
+    <a href="/" class="nav-back" data-i18n="back"></a>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('ru')">РУС</button>
+      <button class="lang-btn" onclick="setLang('ko')">한국어</button>
+      <button class="lang-btn" onclick="setLang('en')">ENG</button>
+    </div>
+  </div>
+</nav>
+
+<div class="content">
+  <div class="doc-label" data-i18n="label"></div>
+  <h1 data-i18n="title"></h1>
+  <div class="doc-meta" data-i18n="meta"></div>
+  <div id="doc-body"></div>
+</div>
+
+<footer>
+  <a href="/" data-i18n="f_home"></a>
+  <a href="/privacy.html" data-i18n="f_privacy"></a>
+  <a href="/terms.html" data-i18n="f_terms"></a>
+  <a href="/refund.html" data-i18n="f_refund"></a>
+</footer>
+
+<script>
+const content = {
+  ru: {
+    back:'← На главную', label:'Юридический документ', meta:'Последнее обновление: июнь 2026 г. · Применяется к сервису Kompass (kompass.5korea.uk)',
+    title:'Политика конфиденциальности',
+    f_home:'Главная', f_privacy:'Конфиденциальность', f_terms:'Условия', f_refund:'Возврат',
+    body:`
+<div class="highlight"><p>Мы серьёзно относимся к защите ваших данных. Этот документ описывает, какую информацию мы собираем, как используем и как защищаем.</p></div>
+
+<h2>1. Оператор данных</h2>
+<p>Персональные данные обрабатывает:<br>
+<strong>콤파스인천점</strong><br>
+Регистрационный номер: 865-74-00596<br>
+Адрес: Инчхон, Республика Корея<br>
+Email: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a><br>
+Телефон: 010-5183-5885</p>
+
+<h2>2. Какие данные мы собираем</h2>
+<table>
+<tr><th>Категория</th><th>Данные</th><th>Основание</th></tr>
+<tr><td>Идентификация</td><td>Имя, номер телефона, номер карты ARC (иностранца)</td><td>Регистрация аккаунта</td></tr>
+<tr><td>Налоговые данные</td><td>Доходы, удержанные налоги, сведения о работодателях (из Hometax)</td><td>Оказание услуги перерасчёта</td></tr>
+<tr><td>Переписка</td><td>Сообщения в чате с оператором, обращения в поддержку</td><td>Обработка заявок</td></tr>
+<tr><td>Техническая информация</td><td>Тип устройства, версия ОС, FCM-токен для push-уведомлений</td><td>Работа приложения</td></tr>
+<tr><td>SMS-данные</td><td>Содержимое SMS от Hometax (только коды подтверждения)</td><td>Только при явном согласии пользователя</td></tr>
+</table>
+
+<h2>3. Автоматический перехват SMS</h2>
+<p>Приложение Kompass может читать входящие SMS для автоматического ввода кодов подтверждения от портала Hometax. Эта функция:</p>
+<ul>
+<li>Активируется только после вашего явного согласия</li>
+<li>Читает только SMS от отправителя Hometax</li>
+<li>Не передаёт содержимое SMS третьим лицам</li>
+<li>Может быть отключена в любой момент в настройках профиля</li>
+<li>Каждый факт перехвата фиксируется в журнале доступа (PIPA-лог)</li>
+</ul>
+<div class="highlight"><p>Любой запрос ваших данных оператором отображается в разделе «Журнал запросов» в вашем профиле.</p></div>
+
+<h2>4. Цели обработки данных</h2>
+<ul>
+<li>Оказание услуг: перерасчёт налогов, оформление виз, апостиль и других услуг компании</li>
+<li>Связь с вами по вопросам заявок и статусов</li>
+<li>Отправка push-уведомлений и сообщений в чате</li>
+<li>Соблюдение требований корейского налогового законодательства</li>
+</ul>
+
+<h2>5. Срок хранения данных</h2>
+<table>
+<tr><th>Тип данных</th><th>Срок хранения</th></tr>
+<tr><td>Аккаунт и профиль</td><td>До момента удаления аккаунта</td></tr>
+<tr><td>Налоговые данные</td><td>5 лет (требование налогового законодательства РК)</td></tr>
+<tr><td>Журнал запросов данных</td><td>3 года</td></tr>
+<tr><td>Переписка с оператором</td><td>2 года</td></tr>
+<tr><td>Технические логи</td><td>6 месяцев</td></tr>
+</table>
+
+<h2>6. Передача данных третьим лицам</h2>
+<p>Мы не продаём и не передаём ваши данные третьим лицам, за исключением:</p>
+<ul>
+<li><strong>Hometax (NTS)</strong> — при запросе налоговых сведений (с вашего согласия)</li>
+<li><strong>Платёжные системы</strong> — только платёжные реквизиты для обработки подписки (Tosspayments/PortOne)</li>
+<li><strong>Firebase (Google)</strong> — для хранения данных и отправки уведомлений (серверы в США, сертифицированы по ISO 27001)</li>
+<li><strong>Государственные органы</strong> — по законному требованию</li>
+</ul>
+
+<h2>7. Ваши права</h2>
+<p>В соответствии с Законом о защите персональных данных (개인정보보호법, PIPA) вы имеете право:</p>
+<ul>
+<li>Запросить доступ к своим данным</li>
+<li>Исправить неточные данные</li>
+<li>Удалить аккаунт и связанные данные</li>
+<li>Отозвать согласие на SMS-перехват</li>
+<li>Получить копию данных в машиночитаемом формате</li>
+</ul>
+<p>Для реализации прав обращайтесь: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></p>
+
+<h2>8. Безопасность</h2>
+<ul>
+<li>Передача данных — только по зашифрованным каналам (TLS/HTTPS)</li>
+<li>Данные хранятся в Firebase Firestore с настроенными правилами доступа</li>
+<li>Доступ операторов к данным клиентов — только в рамках активной заявки</li>
+<li>Каждый доступ к персональным данным логируется</li>
+</ul>
+
+<h2>9. Файлы cookie</h2>
+<p>Сайт 5korea.uk использует минимальный набор технических cookie, необходимых для работы. Аналитика и рекламные cookie не используются.</p>
+
+<h2>10. Изменения политики</h2>
+<p>При существенных изменениях мы уведомим вас через приложение не менее чем за 7 дней до вступления в силу.</p>
+
+<div class="contact-block">
+<p><strong>Ответственный за обработку персональных данных:</strong></p>
+<p>콤파스인천점 · Инчхон, Республика Корея</p>
+<p>Email: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></p>
+<p>Тел: 010-5183-5885</p>
+</div>`
+  },
+  ko: {
+    back:'← 홈으로', label:'법적 문서', meta:'최종 업데이트: 2026년 6월 · Kompass 서비스(kompass.5korea.uk)에 적용됩니다',
+    title:'개인정보처리방침',
+    f_home:'홈', f_privacy:'개인정보처리방침', f_terms:'이용약관', f_refund:'환불정책',
+    body:`
+<div class="highlight"><p>저희는 고객님의 개인정보 보호를 매우 중요하게 생각합니다. 이 문서는 수집하는 정보, 사용 방법 및 보호 방법을 설명합니다.</p></div>
+
+<h2>1. 개인정보 처리자</h2>
+<p><strong>콤파스인천점</strong><br>
+사업자등록번호: 865-74-00596<br>
+소재지: 대한민국 인천광역시<br>
+이메일: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a><br>
+전화: 010-5183-5885</p>
+
+<h2>2. 수집하는 개인정보</h2>
+<table>
+<tr><th>항목</th><th>수집 정보</th><th>수집 목적</th></tr>
+<tr><td>식별 정보</td><td>이름, 전화번호, 외국인등록번호(ARC)</td><td>계정 생성</td></tr>
+<tr><td>세금 정보</td><td>소득, 원천징수세액, 고용주 정보(홈택스 제공)</td><td>세금 환급 서비스</td></tr>
+<tr><td>상담 내역</td><td>담당자와의 채팅 메시지, 고객 문의</td><td>신청 처리</td></tr>
+<tr><td>기술 정보</td><td>기기 유형, OS 버전, 푸시알림용 FCM 토큰</td><td>앱 서비스 운영</td></tr>
+<tr><td>SMS 정보</td><td>홈택스 인증번호 SMS 내용만 해당</td><td>명시적 동의 시에만</td></tr>
+</table>
+
+<h2>3. SMS 자동 인증</h2>
+<p>Kompass 앱은 홈택스 인증번호를 자동으로 입력하기 위해 수신 SMS를 읽을 수 있습니다. 이 기능은:</p>
+<ul>
+<li>명시적 동의 후에만 활성화됩니다</li>
+<li>홈택스 발신 SMS만 읽습니다</li>
+<li>제3자에게 SMS 내용을 전달하지 않습니다</li>
+<li>언제든지 프로필 설정에서 비활성화할 수 있습니다</li>
+<li>모든 인터셉트 내역은 접근 로그(PIPA 로그)에 기록됩니다</li>
+</ul>
+<div class="highlight"><p>담당자의 모든 데이터 요청은 프로필의 '요청 기록' 섹션에서 확인할 수 있습니다.</p></div>
+
+<h2>4. 개인정보 이용 목적</h2>
+<ul>
+<li>세금 환급, 비자, 아포스티유 등 서비스 제공</li>
+<li>신청 처리 및 진행 상황 안내</li>
+<li>푸시 알림 및 채팅 메시지 발송</li>
+<li>한국 세법 준수</li>
+</ul>
+
+<h2>5. 보유 기간</h2>
+<table>
+<tr><th>항목</th><th>보유 기간</th></tr>
+<tr><td>계정 및 프로필</td><td>계정 삭제 시까지</td></tr>
+<tr><td>세금 정보</td><td>5년 (세법 규정)</td></tr>
+<tr><td>데이터 접근 로그</td><td>3년</td></tr>
+<tr><td>담당자 채팅 내역</td><td>2년</td></tr>
+<tr><td>기술 로그</td><td>6개월</td></tr>
+</table>
+
+<h2>6. 제3자 제공</h2>
+<p>개인정보는 다음 경우에만 제3자에게 제공됩니다:</p>
+<ul>
+<li><strong>홈택스(국세청)</strong> — 동의 후 세금 정보 요청 시</li>
+<li><strong>결제 시스템</strong> — 구독 처리를 위한 결제 정보만 (Tosspayments/PortOne)</li>
+<li><strong>Firebase(Google)</strong> — 데이터 저장 및 알림 발송 (ISO 27001 인증)</li>
+<li><strong>관계 기관</strong> — 법적 요청 시</li>
+</ul>
+
+<h2>7. 이용자 권리</h2>
+<p>개인정보보호법(PIPA)에 따라 다음 권리를 행사할 수 있습니다:</p>
+<ul>
+<li>개인정보 열람 요청</li>
+<li>부정확한 정보 정정</li>
+<li>계정 및 관련 데이터 삭제</li>
+<li>SMS 자동 인증 동의 철회</li>
+<li>개인정보 이동 요청</li>
+</ul>
+<p>권리 행사: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></p>
+
+<h2>8. 보안</h2>
+<ul>
+<li>데이터 전송: TLS/HTTPS 암호화 채널만 사용</li>
+<li>Firebase Firestore에 접근 제어 규칙 적용</li>
+<li>담당자의 고객 데이터 접근은 진행 중인 신청 건에 한정</li>
+<li>모든 개인정보 접근 내역 로깅</li>
+</ul>
+
+<h2>9. 쿠키</h2>
+<p>5korea.uk 사이트는 운영에 필요한 최소한의 기술적 쿠키만 사용합니다. 분석 또는 광고 쿠키는 사용하지 않습니다.</p>
+
+<h2>10. 방침 변경</h2>
+<p>중요한 변경이 있을 경우 시행 최소 7일 전에 앱을 통해 알려드립니다.</p>
+
+<div class="contact-block">
+<p><strong>개인정보 보호책임자:</strong></p>
+<p>콤파스인천점 · 대한민국 인천광역시</p>
+<p>이메일: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></p>
+<p>전화: 010-5183-5885</p>
+</div>`
+  },
+  en: {
+    back:'← Back to Home', label:'Legal Document', meta:'Last updated: June 2026 · Applies to Kompass service (kompass.5korea.uk)',
+    title:'Privacy Policy',
+    f_home:'Home', f_privacy:'Privacy Policy', f_terms:'Terms of Use', f_refund:'Refund Policy',
+    body:`
+<div class="highlight"><p>We take your privacy seriously. This document explains what information we collect, how we use it and how we protect it.</p></div>
+
+<h2>1. Data Controller</h2>
+<p><strong>콤파스인천점 (Kompass Incheon)</strong><br>
+Business registration: 865-74-00596<br>
+Address: Incheon, Republic of Korea<br>
+Email: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a><br>
+Phone: 010-5183-5885</p>
+
+<h2>2. Data We Collect</h2>
+<table>
+<tr><th>Category</th><th>Data</th><th>Purpose</th></tr>
+<tr><td>Identity</td><td>Name, phone number, ARC number</td><td>Account registration</td></tr>
+<tr><td>Tax data</td><td>Income, withheld tax, employer details (from Hometax)</td><td>Tax refund service</td></tr>
+<tr><td>Communications</td><td>Chat messages with operators, support requests</td><td>Processing applications</td></tr>
+<tr><td>Technical</td><td>Device type, OS version, FCM token for push notifications</td><td>App functionality</td></tr>
+<tr><td>SMS content</td><td>Hometax verification codes only</td><td>Only with explicit consent</td></tr>
+</table>
+
+<h2>3. Automatic SMS Verification</h2>
+<p>The Kompass app can read incoming SMS messages to automatically enter confirmation codes from Hometax. This feature:</p>
+<ul>
+<li>Is only activated after your explicit consent</li>
+<li>Only reads SMS from Hometax sender</li>
+<li>Does not share SMS content with any third parties</li>
+<li>Can be disabled at any time in your profile settings</li>
+<li>Every interception is recorded in the access log (PIPA log)</li>
+</ul>
+<div class="highlight"><p>Every time an operator requests your data, it appears in the "Access Log" section of your profile.</p></div>
+
+<h2>4. How We Use Your Data</h2>
+<ul>
+<li>Providing services: tax refunds, visas, apostille and other services</li>
+<li>Communicating about your applications and their status</li>
+<li>Sending push notifications and chat messages</li>
+<li>Complying with Korean tax law requirements</li>
+</ul>
+
+<h2>5. Retention Periods</h2>
+<table>
+<tr><th>Data Type</th><th>Retention Period</th></tr>
+<tr><td>Account & profile</td><td>Until account deletion</td></tr>
+<tr><td>Tax data</td><td>5 years (Korean tax law requirement)</td></tr>
+<tr><td>Data access log</td><td>3 years</td></tr>
+<tr><td>Operator chat history</td><td>2 years</td></tr>
+<tr><td>Technical logs</td><td>6 months</td></tr>
+</table>
+
+<h2>6. Third-Party Sharing</h2>
+<p>We do not sell your data. We share it only with:</p>
+<ul>
+<li><strong>Hometax (NTS)</strong> — to retrieve tax records with your consent</li>
+<li><strong>Payment processors</strong> — payment details only for subscription processing (Tosspayments/PortOne)</li>
+<li><strong>Firebase (Google)</strong> — for data storage and push notifications (ISO 27001 certified)</li>
+<li><strong>Government authorities</strong> — when legally required</li>
+</ul>
+
+<h2>7. Your Rights</h2>
+<p>Under Korea's Personal Information Protection Act (PIPA) you have the right to:</p>
+<ul>
+<li>Access your personal data</li>
+<li>Correct inaccurate data</li>
+<li>Delete your account and associated data</li>
+<li>Withdraw consent for SMS interception</li>
+<li>Receive a copy of your data in machine-readable format</li>
+</ul>
+<p>To exercise your rights: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></p>
+
+<h2>8. Security</h2>
+<ul>
+<li>Data transmission: encrypted channels only (TLS/HTTPS)</li>
+<li>Data stored in Firebase Firestore with access control rules</li>
+<li>Operator access to client data limited to active applications only</li>
+<li>All personal data access is logged</li>
+</ul>
+
+<h2>9. Cookies</h2>
+<p>The 5korea.uk website uses only the minimum technical cookies required for operation. No analytics or advertising cookies are used.</p>
+
+<h2>10. Policy Changes</h2>
+<p>For material changes we will notify you through the app at least 7 days before they take effect.</p>
+
+<div class="contact-block">
+<p><strong>Privacy Officer:</strong></p>
+<p>콤파스인천점 · Incheon, Republic of Korea</p>
+<p>Email: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></p>
+<p>Phone: 010-5183-5885</p>
+</div>`
+  }
+};
+
+let lang = 'ru';
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.body.className = l==='ko'?'lang-ko':'';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(content[l][k]!==undefined) el.innerHTML=content[l][k];
+  });
+  document.getElementById('doc-body').innerHTML = content[l].body;
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.trim()===(l==='ru'?'РУС':l==='ko'?'한국어':'ENG'));
+  });
+  const titles={ru:'Политика конфиденциальности — Kompass',ko:'개인정보처리방침 — Kompass',en:'Privacy Policy — Kompass'};
+  document.title=titles[l];
+}
+setLang('ru');
+</script>
+</body>
+</html>

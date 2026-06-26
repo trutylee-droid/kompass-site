@@ -177,12 +177,36 @@ footer{padding:48px 40px;border-top:1px solid var(--border)}
       <button class="lang-btn" onclick="setLang('ko')">🇰🇷</button>
       <button class="lang-btn" onclick="setLang('en')">🇬🇧</button>
     </div>
-    <a href="https://5korea.uk" class="btn-secondary" style="font-size:13px;padding:7px 14px;" target="_blank">← Сайт</a><a href="https://kompass-operator.vercel.app" class="nav-cta" data-i18n="nav_login"></a>
+    <a href="https://kompass-operator.vercel.app" class="nav-cta" data-i18n="nav_login"></a>
   </div>
 </nav>
 
 <section class="hero">
   <div class="hero-bg"></div>
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;">
+      <svg width="600" height="600" viewBox="0 0 200 200" style="opacity:0.055;filter:blur(0.5px);" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="95" fill="none" stroke="#b8c8e0" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#b8c8e0" stroke-width="0.8"/>
+        <circle cx="100" cy="100" r="4" fill="#b8c8e0"/>
+        <!-- Стрелки компаса -->
+        <polygon points="100,8 106,96 100,88 94,96" fill="#e8f0ff"/>
+        <polygon points="100,192 106,104 100,112 94,104" fill="#6a8ab0"/>
+        <polygon points="8,100 96,94 88,100 96,106" fill="#6a8ab0"/>
+        <polygon points="192,100 104,94 112,100 104,106" fill="#6a8ab0"/>
+        <!-- Диагональные засечки -->
+        <line x1="100" y1="8" x2="100" y2="20" stroke="#b8c8e0" stroke-width="1"/>
+        <line x1="100" y1="180" x2="100" y2="192" stroke="#b8c8e0" stroke-width="1"/>
+        <line x1="8" y1="100" x2="20" y2="100" stroke="#b8c8e0" stroke-width="1"/>
+        <line x1="180" y1="100" x2="192" y2="100" stroke="#b8c8e0" stroke-width="1"/>
+        <!-- N S W E -->
+        <text x="100" y="32" text-anchor="middle" fill="#e8f0ff" font-size="10" font-family="Inter,sans-serif" font-weight="700">N</text>
+        <text x="100" y="178" text-anchor="middle" fill="#6a8ab0" font-size="10" font-family="Inter,sans-serif" font-weight="700">S</text>
+        <text x="22" y="104" text-anchor="middle" fill="#6a8ab0" font-size="10" font-family="Inter,sans-serif" font-weight="700">W</text>
+        <text x="178" y="104" text-anchor="middle" fill="#6a8ab0" font-size="10" font-family="Inter,sans-serif" font-weight="700">E</text>
+        <!-- Кольцо делений -->
+        <circle cx="100" cy="100" r="88" fill="none" stroke="#b8c8e0" stroke-width="0.5" stroke-dasharray="2 8"/>
+      </svg>
+    </div>
   <div class="hero-content">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
@@ -198,7 +222,6 @@ footer{padding:48px 40px;border-top:1px solid var(--border)}
       <div><div class="hero-stat-num">8+</div><div class="hero-stat-label" data-i18n="stat1"></div></div>
       <div><div class="hero-stat-num">5000+</div><div class="hero-stat-label" data-i18n="stat2"></div></div>
       <div><div class="hero-stat-num">3</div><div class="hero-stat-label" data-i18n="stat3"></div></div>
-      <div><div class="hero-stat-num">₩</div><div class="hero-stat-label" data-i18n="stat4"></div></div>
     </div>
   </div>
 </section>

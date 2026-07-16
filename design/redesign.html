@@ -259,24 +259,9 @@ function iconBox(name,catVar){
 
 /* ---------- Компас-лого (SVG) ---------- */
 function compass(size){
-  // v1: серебристо-синяя роза; v2: сине-красное кольцо-компас
-  if(S.style==='v2'){
-    return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" class="">
-      <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#4E7AC8"/><stop offset=".6" stop-color="#22365E"/><stop offset="1" stop-color="#D8232A"/></linearGradient></defs>
-      <circle cx="32" cy="32" r="27" fill="none" stroke="url(#g2)" stroke-width="5"/>
-      <path d="M32 8 L40 32 L32 56 L24 32 Z" fill="#22365E"/>
-      <path d="M8 32 L32 24 L56 32 L32 40 Z" fill="#D8232A" opacity=".92"/>
-      <circle cx="32" cy="32" r="3.4" fill="#EDF2F7"/></svg>`;
-  }
-  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" class="compass-mini">
-    <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#EDF2F7"/><stop offset=".55" stop-color="#9AA7B8"/><stop offset="1" stop-color="#5E6B7D"/></linearGradient></defs>
-    <circle cx="32" cy="32" r="26" fill="none" stroke="url(#g1)" stroke-width="2.4" opacity=".7"/>
-    <path d="M32 6 L38 32 L32 30 Z" fill="#3B82F6"/><path d="M32 6 L26 32 L32 30 Z" fill="url(#g1)"/>
-    <path d="M32 58 L38 32 L32 34 Z" fill="url(#g1)"/><path d="M32 58 L26 32 L32 34 Z" fill="#2b64c7"/>
-    <path d="M6 32 L32 26 L30 32 Z" fill="url(#g1)"/><path d="M58 32 L32 26 L34 32 Z" fill="url(#g1)"/>
-    <circle cx="32" cy="32" r="3.2" fill="#3B82F6"/></svg>`;
+  var src = S.style==='v2' ? 'assets/mark-v2.png' : 'assets/mark-v1.png';
+  var r = Math.round(size*(S.style==='v2'?0.22:0.16));
+  return '<img src="'+src+'" width="'+size+'" height="'+size+'" style="border-radius:'+r+'px;object-fit:cover;display:block;box-shadow:0 2px 8px rgba(0,0,0,.3)" alt="KOMPASS">';
 }
 
 /* ---------- Данные панели ---------- */

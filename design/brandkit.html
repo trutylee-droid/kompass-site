@@ -131,16 +131,9 @@ html[data-style="v2"] .hero{background:radial-gradient(130% 150% at 72% 25%,#203
 <script>
 const S={style:'v1'},root=document.documentElement;
 function compass(size){
-  if(S.style==='v2') return `<svg width="${size}" height="${size}" viewBox="0 0 64 64">
-    <defs><linearGradient id="cg${size}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4E7AC8"/><stop offset=".6" stop-color="#22365E"/><stop offset="1" stop-color="#D8232A"/></linearGradient></defs>
-    <circle cx="32" cy="32" r="27" fill="none" stroke="url(#cg${size})" stroke-width="5"/>
-    <path d="M32 8 L40 32 L32 56 L24 32 Z" fill="#22365E"/><path d="M8 32 L32 24 L56 32 L32 40 Z" fill="#D8232A"/><circle cx="32" cy="32" r="3.4" fill="#EDF2F7"/></svg>`;
-  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64">
-    <defs><linearGradient id="cg${size}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDF2F7"/><stop offset=".55" stop-color="#9AA7B8"/><stop offset="1" stop-color="#5E6B7D"/></linearGradient></defs>
-    <circle cx="32" cy="32" r="26" fill="none" stroke="url(#cg${size})" stroke-width="2.2" opacity=".65"/>
-    <path d="M32 6 L38 32 L32 30 Z" fill="#3B82F6"/><path d="M32 6 L26 32 L32 30 Z" fill="url(#cg${size})"/>
-    <path d="M32 58 L38 32 L32 34 Z" fill="url(#cg${size})"/><path d="M32 58 L26 32 L32 34 Z" fill="#2b64c7"/>
-    <path d="M6 32 L32 26 L30 32 Z" fill="url(#cg${size})"/><path d="M58 32 L32 26 L34 32 Z" fill="url(#cg${size})"/><circle cx="32" cy="32" r="3.2" fill="#3B82F6"/></svg>`;
+  var src = S.style==='v2' ? 'assets/mark-v2.png' : 'assets/mark-v1.png';
+  var r = Math.round(size*(S.style==='v2'?0.22:0.16));
+  return '<img src="'+src+'" width="'+size+'" height="'+size+'" style="border-radius:'+r+'px;object-fit:cover;display:block;box-shadow:0 2px 8px rgba(0,0,0,.3)" alt="KOMPASS">';
 }
 function logolock(size){return `<div style="display:flex;align-items:center;gap:12px">${compass(size)}<span style="font-size:${size*.42}px;font-weight:800;letter-spacing:.12em;background:var(--logo);-webkit-background-clip:text;background-clip:text;color:transparent">KOMPASS</span></div>`}
 const STAT=[['Новая','#3B82F6'],['Назначена','#6366F1'],['В работе','#F97316'],['Ожидает','#EAB308'],['Завершена','#10B981'],['Отменена','#6B7280'],['Отклонена','#EF4444']];
@@ -167,7 +160,7 @@ function render(){
     <div class="phone"><div class="scr empty"><div style="opacity:.5">${compass(84)}</div><h4>Пока нет заявок</h4><p>Создайте первую — это займёт минуту</p><div class="b primary" style="margin-top:6px">+ Новая заявка</div></div></div>
     <div class="phone"><div class="scr empty"><div style="opacity:.5">${compass(84)}</div><h4>Новостей пока нет</h4><p>Здесь появятся объявления и события</p></div></div>`);
   R('rMisc',`
-    <div class="card"><div style="display:flex;justify-content:center">${`<div class="spin">${compass(64)}</div>`}</div><div class="cap"><b>Спиннер</b>вращающийся компас</div></div>
+    <div class="card"><div style="display:flex;justify-content:center">${`<div class="spin"><svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="var(--acc)" stroke-width="3" stroke-dasharray="42 120" stroke-linecap="round"/><path d="M32 12 L38 32 L32 30Z" fill="var(--acc2)"/><path d="M32 12 L26 32 L32 30Z" fill="var(--acc)"/><circle cx="32" cy="32" r="3" fill="var(--acc)"/></svg></div>`}</div><div class="cap"><b>Спиннер</b>вращающийся компас</div></div>
     <div class="card"><div style="display:flex;justify-content:center"><div class="botav">${compass(38)}</div></div><div class="cap"><b>Аватар AI-бота</b>в чате</div></div>`);
   R('statChips',STAT.map(([l,c])=>`<span class="chip" style="background:${c}22;color:${c}"><span class="dot" style="background:${c}"></span>${l}</span>`).join(''));
   R('rOg',`<div class="og"><div style="flex:none">${compass(96)}</div><div class="txt"><b>KOMPASS</b><p>Налоги, визы и документы для жизни в Корее — в одном приложении.</p><s>5KOREA.UK</s></div></div>`);

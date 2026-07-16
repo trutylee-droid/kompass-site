@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru" data-style="v1">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>KOMPASS — Бренд-кит</title>
+<style>
+:root{--f:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html[data-style="v1"]{--acc:#3B82F6;--acc2:#3B82F6;--navy:#0A1729;--navy2:#12233B;--logo:linear-gradient(145deg,#EDF2F7,#9AA7B8 55%,#5E6B7D);--ring:#4E7AC8}
+html[data-style="v2"]{--acc:#20407A;--acc2:#D8232A;--navy:#0B1A2F;--navy2:#12263F;--logo:linear-gradient(140deg,#5A86D6,#20365F 60%,#D8232A 130%);--ring:#D8232A}
+body{font-family:var(--f);background:#0A1526;color:#EAF1FB;padding:0 0 90px}
+.top{position:sticky;top:0;z-index:9;display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:15px 30px;background:rgba(10,21,38,.9);backdrop-filter:blur(12px);border-bottom:1px solid #223a5a}
+.top h1{font-size:15px;font-weight:800;letter-spacing:.05em;margin-right:auto}
+.seg{display:flex;background:#16294a;border:1px solid #223a5a;border-radius:999px;padding:4px}
+.seg button{border:0;background:transparent;color:#8FA6C4;font:inherit;font-size:13px;font-weight:700;padding:8px 16px;border-radius:999px;cursor:pointer}
+.seg button.on{background:var(--acc);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:30px}
+.gh{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8FA6C4;margin:40px 0 18px;display:flex;gap:12px;align-items:center}
+.gh::after{content:"";flex:1;height:1px;background:#223a5a}
+.gh:first-child{margin-top:0}
+.row{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.card{background:#0F2038;border:1px solid #223a5a;border-radius:18px;padding:22px}
+.cap{font-size:12px;color:#8FA6C4;margin-top:12px;text-align:center}
+.cap b{color:#EAF1FB;display:block;font-size:13px;margin-bottom:2px}
+/* app icon */
+.appicon{border-radius:24%;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 34px rgba(0,0,0,.5)}
+html[data-style="v1"] .appicon{background:radial-gradient(120% 120% at 30% 20%,#1C365C,#0A1526)}
+html[data-style="v2"] .appicon{background:#fff}
+/* phone */
+.phone{width:250px;background:#14273F;border-radius:34px;border:1px solid #223a5a;padding:10px;box-shadow:0 22px 50px rgba(0,0,0,.4)}
+.scr{background:var(--navy);border-radius:26px;height:500px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.splash{align-items:center;justify-content:center;gap:18px;flex-direction:column;background:radial-gradient(130% 100% at 50% 30%,var(--navy2),var(--navy))}
+.onb{padding:26px 22px;display:flex;flex-direction:column;height:100%}
+.onb .art{flex:1;display:flex;align-items:center;justify-content:center}
+.onb h3{font-size:21px;font-weight:800;margin-bottom:8px}
+.onb p{color:#8FA6C4;font-size:13.5px;line-height:1.5}
+.onb .dots{display:flex;gap:6px;margin:16px 0}
+.onb .dots i{width:7px;height:7px;border-radius:50%;background:#2a3f5c}.onb .dots i.on{width:20px;border-radius:4px;background:var(--acc)}
+.onb .btn{background:var(--acc);color:#fff;text-align:center;padding:14px;border-radius:14px;font-weight:700;font-size:15px}
+.hero{border-radius:18px;height:130px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(120% 150% at 72% 25%,color-mix(in srgb,var(--acc) 55%,#000),#0A1526)}
+html[data-style="v2"] .hero{background:radial-gradient(130% 150% at 72% 25%,#20365F,#0A1526)}
+.hero .t{position:absolute;left:18px;top:22px;right:80px}
+.hero .t b{font-size:15px;display:block}.hero .t s{color:rgba(255,255,255,.7);font-size:11.5px;text-decoration:none}
+.empty{flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px}
+.empty h4{font-size:16px}.empty p{color:#8FA6C4;font-size:13px}
+.spin{animation:spin 2.4s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.botav{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--acc) 22%,#0A1526)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.b{padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;border:1px solid transparent}
+.b.primary{background:var(--acc);color:#fff}
+.b.red{background:var(--acc2);color:#fff}
+.b.ghost{background:transparent;border-color:var(--acc);color:var(--acc)}
+.b.soft{background:color-mix(in srgb,var(--acc) 16%,transparent);color:var(--acc)}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%}
+.font b{font-size:30px;font-weight:800;letter-spacing:-.01em}
+.font p{color:#c4d2e6;font-size:14px;line-height:1.6;margin-top:8px;max-width:460px}
+.font small{color:#8FA6C4;font-size:12px}
+/* OG card */
+.og{width:520px;max-width:100%;height:273px;border-radius:16px;overflow:hidden;position:relative;display:flex;align-items:center;gap:22px;padding:34px;
+  background:linear-gradient(135deg,var(--navy2),var(--navy))}
+.og .txt b{font-size:26px;background:var(--logo);-webkit-background-clip:text;background-clip:text;color:transparent}
+.og .txt p{color:#9db0cc;font-size:14px;margin-top:8px;max-width:260px;line-height:1.5}
+.og .txt s{color:var(--acc);font-size:12px;text-decoration:none;font-weight:700;letter-spacing:.05em;display:block;margin-top:14px}
+/* email */
+.email{width:420px;max-width:100%;background:#fff;color:#12233B;border-radius:14px;overflow:hidden;border:1px solid #223a5a}
+.email .eh{background:var(--navy2);padding:20px;display:flex;align-items:center;gap:12px}
+.email .eh b{color:#fff;font-size:17px;letter-spacing:.1em;font-weight:800}
+.email .eb{padding:22px}.email .eb h4{font-size:17px}.email .eb p{color:#5a6b82;font-size:13.5px;line-height:1.6;margin-top:8px}
+.email .ebtn{display:inline-block;background:var(--acc);color:#fff;padding:11px 20px;border-radius:9px;font-weight:700;font-size:13.5px;margin-top:16px;text-decoration:none}
+.email .ef{background:#f4f7fb;padding:16px 22px;color:#7a8ba3;font-size:11px;line-height:1.6}
+/* letterhead */
+.letter{width:420px;max-width:100%;background:#fff;color:#12233B;border-radius:8px;padding:26px;border:1px solid #223a5a}
+.letter .lh{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--acc);padding-bottom:14px}
+.letter .lh b{font-size:19px;letter-spacing:.1em;font-weight:800;color:#12233B}
+.letter .lh small{color:#5a6b82;font-size:10.5px;text-align:right;line-height:1.5;display:block}
+.letter .lc{margin-top:16px}.letter .lc h4{font-size:14px}.letter .lc .ln{height:8px;background:#eef2f7;border-radius:4px;margin-top:10px}.letter .lc .ln.s{width:60%}
+.note{color:#8FA6C4;font-size:13px;background:#0F2038;border:1px solid #223a5a;border-radius:12px;padding:14px 18px;margin-top:26px;line-height:1.6}
+</style></head>
+<body>
+<div class="top"><h1>KOMPASS · Бренд-кит</h1>
+  <div class="seg" id="seg"><button data-s="v1" class="on">Вариант 1 · серебро+синий</button><button data-s="v2">Вариант 2 · компас+красный</button></div>
+</div>
+<div class="wrap">
+
+  <div class="gh">Иконка приложения и favicon</div>
+  <div class="row" id="rIcon"></div>
+
+  <div class="gh">Сплэш / заставка запуска</div>
+  <div class="row" id="rSplash"></div>
+
+  <div class="gh">Онбординг (первый вход)</div>
+  <div class="row" id="rOnb"></div>
+
+  <div class="gh">Баннер на главной</div>
+  <div class="row" id="rHero"></div>
+
+  <div class="gh">Пустые состояния</div>
+  <div class="row" id="rEmpty"></div>
+
+  <div class="gh">Спиннер загрузки · аватар AI-бота</div>
+  <div class="row" id="rMisc"></div>
+
+  <div class="gh">Кнопки · чипы · статусы</div>
+  <div class="card" style="width:100%">
+    <div class="btns" style="margin-bottom:18px"><span class="b primary">Основная</span><span class="b red">Акцент</span><span class="b ghost">Контурная</span><span class="b soft">Мягкая</span></div>
+    <div class="chips" id="statChips"></div>
+  </div>
+
+  <div class="gh">Шрифтовая пара</div>
+  <div class="card font" style="width:100%">
+    <b>KOMPASS — надёжность и порядок</b>
+    <p>Заголовки — жирное начертание, плотный трекинг. Основной текст — обычный вес, увеличенный интерлиньяж для читаемости на русском, корейском и латинице.</p>
+    <small>Заголовки: SF Pro / Inter Bold · Текст: SF Pro / Inter Regular</small>
+  </div>
+
+  <div class="gh">Превью ссылки (когда кидаешь в мессенджер)</div>
+  <div class="row" id="rOg"></div>
+
+  <div class="gh">Email клиенту</div>
+  <div class="row" id="rEmail"></div>
+
+  <div class="gh">Шапка печатного бланка (form-fill)</div>
+  <div class="row" id="rLetter"></div>
+
+  <div class="note">💡 Всё — векторные/CSS концепты, единый источник стиля. Для продакшена: иконку приложения и favicon отдаю в PNG/SVG нужных размеров, сплэш и баннер — как ассеты. Скажи, какие элементы дорабатываем и какой из двух стилей утверждаем — доведу до финала и отдам готовые файлы разработчику.</div>
+</div>
+
+<script>
+const S={style:'v1'},root=document.documentElement;
+function compass(size){
+  if(S.style==='v2') return `<svg width="${size}" height="${size}" viewBox="0 0 64 64">
+    <defs><linearGradient id="cg${size}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4E7AC8"/><stop offset=".6" stop-color="#22365E"/><stop offset="1" stop-color="#D8232A"/></linearGradient></defs>
+    <circle cx="32" cy="32" r="27" fill="none" stroke="url(#cg${size})" stroke-width="5"/>
+    <path d="M32 8 L40 32 L32 56 L24 32 Z" fill="#22365E"/><path d="M8 32 L32 24 L56 32 L32 40 Z" fill="#D8232A"/><circle cx="32" cy="32" r="3.4" fill="#EDF2F7"/></svg>`;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64">
+    <defs><linearGradient id="cg${size}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDF2F7"/><stop offset=".55" stop-color="#9AA7B8"/><stop offset="1" stop-color="#5E6B7D"/></linearGradient></defs>
+    <circle cx="32" cy="32" r="26" fill="none" stroke="url(#cg${size})" stroke-width="2.2" opacity=".65"/>
+    <path d="M32 6 L38 32 L32 30 Z" fill="#3B82F6"/><path d="M32 6 L26 32 L32 30 Z" fill="url(#cg${size})"/>
+    <path d="M32 58 L38 32 L32 34 Z" fill="url(#cg${size})"/><path d="M32 58 L26 32 L32 34 Z" fill="#2b64c7"/>
+    <path d="M6 32 L32 26 L30 32 Z" fill="url(#cg${size})"/><path d="M58 32 L32 26 L34 32 Z" fill="url(#cg${size})"/><circle cx="32" cy="32" r="3.2" fill="#3B82F6"/></svg>`;
+}
+function logolock(size){return `<div style="display:flex;align-items:center;gap:12px">${compass(size)}<span style="font-size:${size*.42}px;font-weight:800;letter-spacing:.12em;background:var(--logo);-webkit-background-clip:text;background-clip:text;color:transparent">KOMPASS</span></div>`}
+const STAT=[['Новая','#3B82F6'],['Назначена','#6366F1'],['В работе','#F97316'],['Ожидает','#EAB308'],['Завершена','#10B981'],['Отменена','#6B7280'],['Отклонена','#EF4444']];
+
+function R(id,html){document.getElementById(id).innerHTML=html}
+function render(){
+  R('rIcon',`
+    <div class="card"><div class="appicon" style="width:120px;height:120px">${compass(74)}</div><div class="cap"><b>Иконка · 120px</b>на телефоне</div></div>
+    <div class="card"><div class="appicon" style="width:72px;height:72px">${compass(46)}</div><div class="cap"><b>60px</b>средняя</div></div>
+    <div class="card"><div class="appicon" style="width:40px;height:40px">${compass(26)}</div><div class="cap"><b>Favicon</b>вкладка/сайт</div></div>`);
+  R('rSplash',`<div class="phone"><div class="scr splash">${logolock(46)}<div style="color:#8FA6C4;font-size:12px;letter-spacing:.15em">ВСЕ ДОКУМЕНТЫ · ОДНО ПРИЛОЖЕНИЕ</div></div></div>
+    <div class="card" style="flex:1;min-width:240px"><div class="cap" style="text-align:left"><b>Сплэш-экран</b>Лого по центру на фирменном фоне. Показывается 1–1.5 сек при запуске, плавно уходит в главный экран.</div></div>`);
+  const onb=[['Все документы — в одном месте','Паспорт, ID-карта, визы и справки всегда под рукой, даже без интернета.',0],
+             ['Заявки без очередей','Оформляйте перерасчёт налога, визы и документы прямо из приложения.',1],
+             ['AI-помощник 24/7','Задайте вопрос на русском — ответим о налогах, визах и документах.',2]];
+  R('rOnb',onb.map(([h,p,d])=>`<div class="phone"><div class="scr onb">
+     <div class="art">${compass(96)}</div><h3>${h}</h3><p>${p}</p>
+     <div class="dots">${[0,1,2].map(i=>`<i class="${i===d?'on':''}"></i>`).join('')}</div>
+     <div class="btn">${d===2?'Начать':'Далее'}</div></div></div>`).join(''));
+  R('rHero',`<div class="phone" style="width:270px"><div class="scr" style="padding:14px;justify-content:flex-start">
+     <div class="hero"><div class="t"><b>KOMPASS 365</b><s>Ваш надёжный помощник в Корее</s></div>${compass(78)}</div></div></div>
+     <div class="card" style="flex:1;min-width:240px"><div class="cap" style="text-align:left"><b>Баннер главной</b>Компас-мотив в фирменной гамме вместо текущего зелёного. Слайдер: приветствие → услуги → новость.</div></div>`);
+  R('rEmpty',`
+    <div class="phone"><div class="scr empty"><div style="opacity:.5">${compass(84)}</div><h4>Пока нет заявок</h4><p>Создайте первую — это займёт минуту</p><div class="b primary" style="margin-top:6px">+ Новая заявка</div></div></div>
+    <div class="phone"><div class="scr empty"><div style="opacity:.5">${compass(84)}</div><h4>Новостей пока нет</h4><p>Здесь появятся объявления и события</p></div></div>`);
+  R('rMisc',`
+    <div class="card"><div style="display:flex;justify-content:center">${`<div class="spin">${compass(64)}</div>`}</div><div class="cap"><b>Спиннер</b>вращающийся компас</div></div>
+    <div class="card"><div style="display:flex;justify-content:center"><div class="botav">${compass(38)}</div></div><div class="cap"><b>Аватар AI-бота</b>в чате</div></div>`);
+  R('statChips',STAT.map(([l,c])=>`<span class="chip" style="background:${c}22;color:${c}"><span class="dot" style="background:${c}"></span>${l}</span>`).join(''));
+  R('rOg',`<div class="og"><div style="flex:none">${compass(96)}</div><div class="txt"><b>KOMPASS</b><p>Налоги, визы и документы для жизни в Корее — в одном приложении.</p><s>5KOREA.UK</s></div></div>`);
+  R('rEmail',`<div class="email"><div class="eh">${compass(30)}<b>KOMPASS</b></div>
+     <div class="eb"><h4>Ваша заявка принята</h4><p>Здравствуйте! Мы получили вашу заявку №260715DUN1. Менеджер свяжется с вами в ближайшее время. Статус можно отслеживать в приложении.</p><a class="ebtn">Открыть заявку</a></div>
+     <div class="ef">콤파스인천점 · 사업자등록번호 865-74-00596 · Kompass.kor@gmail.com<br>Вы получили это письмо, потому что оформили заявку в KOMPASS.</div></div>
+     <div class="card" style="flex:1;min-width:220px"><div class="cap" style="text-align:left"><b>Email-шаблон</b>Шапка с лого, кнопка действия, футер с юр-реквизитами. Для уведомлений о заявках и статусах.</div></div>`);
+  R('rLetter',`<div class="letter"><div class="lh"><b style="display:flex;align-items:center;gap:8px">${compass(28)} KOMPASS</b><small>콤파스인천점<br>사업자등록번호 865-74-00596<br>Инчхон · Синчанг · Дунпо</small></div>
+     <div class="lc"><h4>세대주 관계 증명서 / Справка о составе семьи</h4><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div></div>
+     <div class="card" style="flex:1;min-width:220px"><div class="cap" style="text-align:left"><b>Шапка бланка</b>Лого + реквизиты в углу печатных документов form-fill сервиса.</div></div>`);
+}
+document.getElementById('seg').addEventListener('click',e=>{if(!e.target.dataset.s)return;S.style=e.target.dataset.s;root.dataset.style=S.style;
+  document.querySelectorAll('#seg button').forEach(b=>b.classList.toggle('on',b.dataset.s===S.style));render();});
+render();
+</script>
+</body></html>

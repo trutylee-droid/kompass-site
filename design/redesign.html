@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru" data-style="v1" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOMPASS — Дизайн-концепт</title>
+<style>
+:root{
+  --r:14px; --r-s:10px; --r-l:20px;
+  --f:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+/* ---------- ПАЛИТРЫ: стиль × тема ---------- */
+html[data-style="v1"][data-theme="dark"]{
+  --bg:#0A1729;--panel:#0F2038;--card:#14273F;--card2:#1A3050;--line:#243d5c;
+  --tx:#EAF1FB;--mut:#90A6C5;--acc:#3B82F6;--acc2:#3B82F6;--acc-s:rgba(59,130,246,.16);
+  --ok:#37C08B;--ok-s:rgba(55,192,139,.16);--warn:#E0A83B;--warn-s:rgba(224,168,59,.16);
+  --danger:#E5484D;--danger-s:rgba(229,72,77,.14);--violet:#8B7CF6;--violet-s:rgba(139,124,246,.16);
+  --m1:#D7DFE8;--m2:#7f8 da;--m2:#7F8DA0;--logo:linear-gradient(145deg,#EDF2F7,#9AA7B8 55%,#5E6B7D);
+}
+html[data-style="v1"][data-theme="light"]{
+  --bg:#EDF2F8;--panel:#FFFFFF;--card:#FFFFFF;--card2:#F4F8FC;--line:#E3EAF3;
+  --tx:#102039;--mut:#61748F;--acc:#2E6BE6;--acc2:#2E6BE6;--acc-s:rgba(46,107,230,.10);
+  --ok:#12A971;--ok-s:rgba(18,169,113,.12);--warn:#B9820F;--warn-s:rgba(200,140,20,.14);
+  --danger:#D93A3F;--danger-s:rgba(217,58,63,.10);--violet:#6D5CE0;--violet-s:rgba(109,92,224,.12);
+  --m1:#4A5A6E;--m2:#8persist;--m2:#8A98AB;--logo:linear-gradient(145deg,#8A97A8,#5A6alt);--logo:linear-gradient(145deg,#9AA7B8,#5E6B7D);
+}
+html[data-style="v2"][data-theme="dark"]{
+  --bg:#0B1A2F;--panel:#10233C;--card:#14263F;--card2:#1A3050;--line:#22405f;
+  --tx:#EAF1FB;--mut:#90A6C5;--acc:#3E6CBB;--acc2:#DA2A32;--acc-s:rgba(62,108,187,.18);
+  --ok:#37C08B;--ok-s:rgba(55,192,139,.16);--warn:#E0A83B;--warn-s:rgba(224,168,59,.16);
+  --danger:#E5484D;--danger-s:rgba(229,72,77,.14);--violet:#8B7CF6;--violet-s:rgba(139,124,246,.16);
+  --m1:#EDF2F7;--m2:#9AA7B8;--logo:linear-gradient(140deg,#3E6CBB,#1B3strap);--logo:linear-gradient(140deg,#5A86D6 0%,#20365F 60%,#DA2A32 130%);
+}
+html[data-style="v2"][data-theme="light"]{
+  --bg:#F5F9FC;--panel:#FFFFFF;--card:#FFFFFF;--card2:#F3F8FC;--line:#E5ECF3;
+  --tx:#12233B;--mut:#5F7690;--acc:#20407A;--acc2:#D8232A;--acc-s:rgba(32,64,122,.10);
+  --ok:#12A971;--ok-s:rgba(18,169,113,.12);--warn:#B9820F;--warn-s:rgba(200,140,20,.14);
+  --danger:#D93A3F;--danger-s:rgba(217,58,63,.10);--violet:#6D5CE0;--violet-s:rgba(109,92,224,.12);
+  --m1:#20407A;--m2:#7C8DA6;--logo:linear-gradient(140deg,#20407A 0%,#20365F 55%,#D8232A 130%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f);background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;transition:background .25s}
+/* ---------- Верхняя панель управления ---------- */
+.controls{position:sticky;top:0;z-index:50;display:flex;gap:20px;align-items:center;flex-wrap:wrap;
+  padding:14px 26px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+.controls .brandmini{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;font-size:15px;margin-right:auto}
+.seg{display:flex;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:4px}
+.seg button{border:0;background:transparent;color:var(--mut);font:inherit;font-size:13px;font-weight:600;
+  padding:7px 16px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+.seg button.on{background:var(--acc);color:#fff}
+html[data-style="v2"] .seg button.on{background:var(--acc)}
+.seg .lbl{color:var(--mut);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:7px 10px 7px 4px}
+.wrap{max-width:1280px;margin:0 auto;padding:34px 26px 90px}
+.sec-h{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--mut);margin:46px 0 18px;display:flex;align-items:center;gap:12px}
+.sec-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.sec-h:first-child{margin-top:0}
+/* ---------- Бренд ---------- */
+.brandrow{display:flex;gap:26px;flex-wrap:wrap;align-items:stretch}
+.brandcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);padding:30px;flex:1;min-width:280px;position:relative;overflow:hidden}
+.logolock{display:flex;align-items:center;gap:16px}
+.logomark{width:60px;height:60px;flex:none;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}
+.logotext{font-size:30px;font-weight:800;letter-spacing:.14em;background:var(--logo);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logotag{font-size:11px;letter-spacing:.22em;color:var(--mut);font-weight:600;margin-top:4px}
+.pal{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.sw{width:52px;height:52px;border-radius:12px;border:1px solid rgba(255,255,255,.08);position:relative}
+.sw span{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-size:10px;color:var(--mut)}
+.icongrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:14px;margin-top:6px}
+.icell{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 10px;text-align:center}
+.icell .ic{width:34px;height:34px;margin:0 auto 9px;display:flex;align-items:center;justify-content:center;border-radius:11px}
+.icell small{font-size:10.5px;color:var(--mut);line-height:1.3;display:block}
+/* ---------- Общие мокап-компоненты ---------- */
+.frameLabel{font-size:12px;font-weight:700;color:var(--mut);margin:0 0 10px 4px;letter-spacing:.04em}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.badge-dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+/* ---------- Панель оператора ---------- */
+.panelMock{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;min-height:620px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.pSide{width:236px;flex:none;background:var(--panel);border-right:1px solid var(--line);padding:18px 14px;display:flex;flex-direction:column;gap:4px}
+.pSide .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.pSide .brand b{font-weight:800;letter-spacing:.1em;font-size:15px}
+.pUser{padding:6px 10px 14px}
+.pUser b{font-size:14px}.pUser small{display:block;color:var(--mut);font-size:11.5px;margin-top:2px}
+.pGroup{font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--mut);text-transform:uppercase;padding:12px 10px 6px}
+.pItem{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:var(--r-s);color:var(--mut);font-size:13.5px;font-weight:500;cursor:pointer}
+.pItem svg{width:17px;height:17px;flex:none}
+.pItem .cnt{margin-left:auto;background:var(--acc2);color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+.pItem.on{background:var(--acc-s);color:var(--acc)}
+html[data-style="v2"] .pItem.on{color:var(--tx);background:var(--acc-s)}
+.pItem.on svg{color:var(--acc)}
+.pMain{flex:1;padding:26px 28px;overflow:auto}
+.pTitle{font-size:26px;font-weight:800;letter-spacing:-.01em}
+.pSub{color:var(--mut);font-size:14px;margin-top:2px}
+.pBtn{background:var(--acc);color:#fff;border:0;font:inherit;font-weight:700;font-size:13.5px;padding:11px 18px;border-radius:var(--r-s);cursor:pointer;float:right;margin-top:-42px}
+.filters{display:flex;gap:8px;margin:18px 0;flex-wrap:wrap}
+.filt{background:var(--card);border:1px solid var(--line);color:var(--tx);font-size:13px;font-weight:600;padding:8px 15px;border-radius:999px;display:flex;align-items:center;gap:7px}
+.filt.on{background:var(--acc);color:#fff;border-color:transparent}
+.filt .n{background:var(--acc2);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px}
+.filt.on .n{background:rgba(255,255,255,.25)}
+.tabs{display:flex;gap:6px;margin-bottom:16px;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{font-size:13.5px;font-weight:600;color:var(--mut);padding:9px 14px;border-radius:var(--r-s) var(--r-s) 0 0;cursor:pointer}
+.tab.on{color:var(--tx);background:var(--card);border:1px solid var(--line);border-bottom-color:var(--card);margin-bottom:-1px}
+.qcard{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:10px}
+.qcard.flag{border-color:var(--danger);background:var(--danger-s)}
+.av{width:44px;height:44px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;background:var(--acc)}
+.qinfo{min-width:0;flex:1}
+.qname{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.qname b{font-size:14.5px}
+.qmeta{color:var(--mut);font-size:12px;margin-top:3px}
+.qright{display:flex;align-items:center;gap:10px;flex:none}
+.qstatus{font-size:12.5px;font-weight:600;color:var(--mut)}
+.qassign{display:flex;align-items:center;gap:6px;background:var(--acc-s);color:var(--acc);font-size:12.5px;font-weight:700;padding:7px 12px;border-radius:var(--r-s)}
+/* ---------- Телефоны ---------- */
+.phones{display:flex;gap:26px;flex-wrap:wrap}
+.phone{width:300px;flex:none;background:var(--card);border-radius:38px;border:1px solid var(--line);padding:12px;box-shadow:0 24px 55px rgba(0,0,0,.30)}
+.screen{background:var(--bg);border-radius:28px;overflow:hidden;height:640px;display:flex;flex-direction:column;position:relative}
+.stat{display:flex;justify-content:space-between;align-items:center;padding:12px 20px 6px;font-size:12px;font-weight:700;color:var(--tx)}
+.scr{flex:1;overflow:auto;padding:6px 18px 14px}
+.scr::-webkit-scrollbar{display:none}
+.appbar{display:flex;align-items:center;justify-content:center;padding:8px 0 14px;font-weight:800;font-size:17px;position:relative}
+.hi small{color:var(--mut);font-size:14px}
+.hi h2{font-size:26px;font-weight:800;margin:2px 0}
+.hi .loc{color:var(--mut);font-size:12.5px;display:flex;align-items:center;gap:4px}
+.hero{border-radius:var(--r-l);height:150px;margin:16px 0;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(120% 140% at 70% 20%,color-mix(in srgb,var(--acc) 55%,#000) 0%,#0A1526 75%)}
+html[data-style="v2"] .hero{background:radial-gradient(130% 150% at 72% 25%,#20365F 0%,#0A1526 80%)}
+.hero .ring{position:absolute;inset:0;opacity:.5}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:-8px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dots i.on{width:20px;border-radius:4px;background:var(--acc)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.tile .ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.tile b{font-size:17px}.tile small{display:block;color:var(--mut);font-size:11.5px;margin-top:2px}
+.promo{background:var(--acc-s);border:1px solid color-mix(in srgb,var(--acc) 30%,transparent);border-radius:var(--r);padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.promo .pc{width:38px;height:38px;border-radius:50%;border:3px solid var(--acc);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--acc);flex:none}
+.promo b{color:var(--acc);font-size:13px}
+.office{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.office .oh{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;margin-bottom:12px}
+.office .addr{color:var(--mut);font-size:12.5px;display:flex;gap:7px;margin-bottom:10px}
+.office .tel{color:var(--ok);font-weight:700;font-size:15px;display:flex;align-items:center;gap:9px;margin:7px 0}
+.office .hrs{color:var(--mut);font-size:12.5px;line-height:1.7;margin-top:8px}
+.nav{display:flex;justify-content:space-around;padding:10px 6px 8px;border-top:1px solid var(--line);background:var(--panel)}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--mut);font-size:10px;font-weight:600}
+.nav a.on{color:var(--acc)}
+.nav a svg{width:21px;height:21px}
+.list-h{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin:16px 4px 8px}
+.row{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.row .ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.row .rt{flex:1;min-width:0}
+.row .rt b{font-size:15px}.row .rt small{display:block;color:var(--mut);font-size:12px;margin-top:2px}
+.row .chev{color:var(--mut)}
+.segtabs{display:flex;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:5px;margin:6px 0 14px}
+.segtabs div{flex:1;text-align:center;font-size:13.5px;font-weight:700;color:var(--mut);padding:9px;border-radius:8px}
+.segtabs div.on{background:var(--acc);color:#fff}
+.fab{position:absolute;right:18px;bottom:78px;background:var(--acc);color:#fff;border-radius:16px;padding:14px 20px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 26px color-mix(in srgb,var(--acc) 45%,transparent)}
+.plan{display:flex;gap:10px;justify-content:center;margin:14px 0}
+.plan .p{font-size:13px;font-weight:700;padding:9px 18px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
+.plan .p.on{background:var(--acc-s);color:var(--acc);border-color:transparent}
+.logout{border:1px solid var(--danger);color:var(--danger);background:var(--danger-s);border-radius:var(--r);padding:15px;text-align:center;font-weight:700;font-size:15px;margin-top:6px}
+.newscard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.newscard .d{color:var(--mut);font-size:12px}
+.newscard h3{font-size:18px;margin:6px 0}
+.newscard a{color:var(--acc);font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;gap:6px;align-items:center;margin-top:8px}
+.note{color:var(--mut);font-size:13px;line-height:1.6;margin:2px 0 8px}
+.compass-mini{animation:spin 26s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:720px){.pSide{display:none}.pBtn{float:none;margin:14px 0 0}}
+</style>
+</head>
+<body>
+<div class="controls">
+  <div class="brandmini"><span id="cmark"></span> KOMPASS · Redesign</div>
+  <div class="seg" id="styleSeg">
+    <span class="lbl">Стиль</span>
+    <button data-s="v1" class="on">Вариант 1 · синий+серебро</button>
+    <button data-s="v2">Вариант 2 · компас+красный</button>
+  </div>
+  <div class="seg" id="themeSeg">
+    <span class="lbl">Тема</span>
+    <button data-t="dark" class="on">Тёмная</button>
+    <button data-t="light">Светлая</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="sec-h">Бренд и палитра</div>
+  <div class="brandrow">
+    <div class="brandcard">
+      <div class="logolock">
+        <span class="logomark" id="logoBig"></span>
+        <div><div class="logotext">KOMPASS</div><div class="logotag" id="tagline">ВСЕ ДОКУМЕНТЫ · ОДНО ПРИЛОЖЕНИЕ</div></div>
+      </div>
+      <div class="pal" id="pal"></div>
+    </div>
+    <div class="brandcard" style="flex:1.4">
+      <div class="frameLabel">Переработанные иконки (адаптируются под стиль)</div>
+      <div class="icongrid" id="iconGrid"></div>
+    </div>
+  </div>
+
+  <div class="sec-h">Панель оператора — «Очередь заявок»</div>
+  <div class="panelMock" id="panelMock"></div>
+
+  <div class="sec-h">Мобильное приложение</div>
+  <div class="phones" id="phones"></div>
+</div>
+
+<script>
+const S={style:'v1',theme:'dark'};
+const root=document.documentElement;
+
+/* ---------- SVG иконки ---------- */
+const svg=(p,vb='0 0 24 24')=>`<svg viewBox="${vb}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const I={
+ queue:svg('<rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/>'),
+ search:svg('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),
+ plus:svg('<path d="M12 5v14M5 12h14"/>'),
+ clock:svg('<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>'),
+ grid:svg('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
+ dash:svg('<path d="M4 13a8 8 0 0 1 16 0"/><path d="M12 13l4-3"/><circle cx="12" cy="13" r="1.4" fill="currentColor"/>'),
+ users:svg('<circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5.5a3 3 0 0 1 0 5.8M20.5 20a5 5 0 0 0-3-4.6"/>'),
+ office:svg('<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 7h2M8 11h2M8 15h2M14 7h2M14 11h2M14 15h2"/>'),
+ chart:svg('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'),
+ shield:svg('<path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>'),
+ gear:svg('<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>'),
+ help:svg('<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7M12 17h.01"/>'),
+ doc:svg('<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/>'),
+ tag:svg('<path d="M3 12l8-8h8v8l-8 8z"/><circle cx="15" cy="9" r="1.4" fill="currentColor"/>'),
+ news:svg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h10M7 16h5"/>'),
+ banner:svg('<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/>'),
+ pipa:svg('<path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M12 8v4M12 15h.01"/>'),
+ key:svg('<circle cx="8" cy="15" r="4"/><path d="M11 12l8-8 2 2M16 7l2 2"/>'),
+ out:svg('<path d="M14 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 12h9M16 8l4 4-4 4"/>'),
+ globe:svg('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>'),
+ bot:svg('<rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9 16h6"/><path d="M2 12v3M22 12v3"/>'),
+ folder:svg('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'),
+ receipt:svg('<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>'),
+ chat:svg('<path d="M4 5h16v11H9l-4 4z"/>'),
+ user:svg('<circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/>'),
+ home:svg('<path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/>'),
+ pin:svg('<path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>'),
+ id:svg('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="12" r="2.2"/><path d="M13 10h5M13 14h5"/>'),
+ car:svg('<path d="M3 13l2-5h14l2 5v5h-3v-2H6v2H3z"/><circle cx="7" cy="16" r="1.4"/><circle cx="17" cy="16" r="1.4"/>'),
+ plane:svg('<path d="M2 14l20-8-6 16-3-6-6-2z"/>'),
+ edit:svg('<path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M13 7l4 4"/>'),
+ bell:svg('<path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/>'),
+ map:svg('<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>'),
+ book:svg('<path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 0-2 2z"/><path d="M18 6v14"/>'),
+};
+/* цвета для «цветных» иконок варианта 2 */
+const CAT={acc:'var(--acc)',ok:'var(--ok)',violet:'var(--violet)',warn:'var(--warn)',red:'var(--acc2)',blue:'#3B82F6'};
+function iconBox(name,catVar){
+  // v2 = цветная плитка, v1 = единый синий/серебристый
+  const v2 = S.style==='v2';
+  const col = v2 ? catVar : 'var(--acc)';
+  const bg  = v2 ? `color-mix(in srgb, ${col} 16%, transparent)` : 'var(--acc-s)';
+  return `<span class="ic" style="background:${bg};color:${col}">${I[name]}</span>`;
+}
+
+/* ---------- Компас-лого (SVG) ---------- */
+function compass(size){
+  // v1: серебристо-синяя роза; v2: сине-красное кольцо-компас
+  if(S.style==='v2'){
+    return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" class="">
+      <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#4E7AC8"/><stop offset=".6" stop-color="#22365E"/><stop offset="1" stop-color="#D8232A"/></linearGradient></defs>
+      <circle cx="32" cy="32" r="27" fill="none" stroke="url(#g2)" stroke-width="5"/>
+      <path d="M32 8 L40 32 L32 56 L24 32 Z" fill="#22365E"/>
+      <path d="M8 32 L32 24 L56 32 L32 40 Z" fill="#D8232A" opacity=".92"/>
+      <circle cx="32" cy="32" r="3.4" fill="#EDF2F7"/></svg>`;
+  }
+  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" class="compass-mini">
+    <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EDF2F7"/><stop offset=".55" stop-color="#9AA7B8"/><stop offset="1" stop-color="#5E6B7D"/></linearGradient></defs>
+    <circle cx="32" cy="32" r="26" fill="none" stroke="url(#g1)" stroke-width="2.4" opacity=".7"/>
+    <path d="M32 6 L38 32 L32 30 Z" fill="#3B82F6"/><path d="M32 6 L26 32 L32 30 Z" fill="url(#g1)"/>
+    <path d="M32 58 L38 32 L32 34 Z" fill="url(#g1)"/><path d="M32 58 L26 32 L32 34 Z" fill="#2b64c7"/>
+    <path d="M6 32 L32 26 L30 32 Z" fill="url(#g1)"/><path d="M58 32 L32 26 L34 32 Z" fill="url(#g1)"/>
+    <circle cx="32" cy="32" r="3.2" fill="#3B82F6"/></svg>`;
+}
+
+/* ---------- Данные панели ---------- */
+const SIDE=[
+ {g:'Работа'},{i:'queue',t:'Очередь',n:1,on:1},{i:'search',t:'Поиск'},{i:'plus',t:'Новая заявка'},{i:'clock',t:'Истекающие'},{i:'grid',t:'Пульт'},
+ {g:'Управление'},{i:'dash',t:'Дашборд'},{i:'users',t:'Операторы'},{i:'office',t:'Офисы'},{i:'chart',t:'Отчёты'},{i:'grid',t:'Логи и мониторинг'},{i:'pipa',t:'PIPA журнал'},{i:'gear',t:'Настройки системы'},{i:'help',t:'FAQ / Помощь'},{i:'office',t:'Управление офисами'},{i:'doc',t:'Типы документов'},{i:'banner',t:'Баннеры'},{i:'news',t:'Новости'},{i:'tag',t:'Права и услуги'},
+];
+const QUEUE=[
+ {n:'сенсей ли',fl:1,cs:'#E5484D',tags:[['ЧС','danger'],['Первичное получение ID','ok'],['Айди карта','ok']],id:'#260715DUN1',ph:'+77001111111',st:'Назначена'},
+ {n:'Евгения',img:1,tags:[['Первичное получение прав','acc'],['ГАИ','acc'],['💵 10 000₩','ok']],id:'#260711INC63935',ph:'+821067148558',st:'Назначена'},
+ {n:'Евгения',img:1,tags:[['Справка о составе семьи','violet'],['Посольство УЗБ','violet']],id:'#260708OFF10',ph:'+821067148558',st:'Назначена'},
+ {n:'Евгения',img:1,tags:[['Возврат пенсионных','warn'],['Пенсионный фонд','warn']],id:'#260708OFF9',ph:'+821067148558',st:'В работе'},
+ {n:'Светлана Пак',cs:'#3B82F6',tags:[['Перевыпуск','ok'],['Айди карта','ok']],id:'#260707INC9',ph:'+821075830770',st:'В работе'},
+ {n:'Маргарита',cs:'#8B7CF6',tags:[['Справка о составе семьи','violet'],['Посольство УЗБ','violet']],id:'#260707SIN4',ph:'+821044688506',st:'Назначена'},
+];
+const TC={danger:['var(--danger-s)','var(--danger)'],ok:['var(--ok-s)','var(--ok)'],acc:['var(--acc-s)','var(--acc)'],violet:['var(--violet-s)','var(--violet)'],warn:['var(--warn-s)','var(--warn)']};
+
+function renderPanel(){
+  const side=SIDE.map(x=>x.g?`<div class="pGroup">${x.g}</div>`
+    :`<div class="pItem ${x.on?'on':''}">${I[x.i]}<span>${x.t}</span>${x.n?`<span class="cnt">${x.n}</span>`:''}</div>`).join('');
+  const cards=QUEUE.map(q=>{
+    const av=q.img?`<div class="av" style="background:linear-gradient(135deg,#c98a63,#8a5a3a)">Е</div>`
+      :`<div class="av" style="background:${q.cs}">${q.n[0].toUpperCase()}</div>`;
+    const tags=q.tags.map(([t,c])=>{const[b,f]=TC[c];return `<span class="chip" style="background:${b};color:${f}">${t}</span>`}).join('');
+    return `<div class="qcard ${q.fl?'flag':''}">${av}
+      <div class="qinfo"><div class="qname"><b>${q.n}</b>${tags}</div><div class="qmeta">${q.id} · ${q.ph}</div></div>
+      <div class="qright"><span class="qstatus">${q.st}</span><span class="qassign">${I.user}Сергей</span></div></div>`;
+  }).join('');
+  document.getElementById('panelMock').innerHTML=`
+    <div class="pSide"><div class="brand">${compass(26)}<b>KOMPASS</b></div>
+      <div class="pUser"><b>Сергей</b><small>Супер-Админ · Все офисы</small></div>${side}</div>
+    <div class="pMain">
+      <button class="pBtn">+ Новая заявка</button>
+      <div class="pTitle">Очередь заявок</div><div class="pSub">Все офисы</div>
+      <div class="filters">
+        <div class="filt on">Все 26 <span class="n">1</span></div>
+        <div class="filt">Дунпо 2</div><div class="filt">Синчанг 4 <span class="n">1</span></div><div class="filt">Инчхон 20</div>
+      </div>
+      <div class="tabs"><div class="tab on">Мои (8)</div><div class="tab">Новые (1)</div><div class="tab">Все (26)</div><div class="tab">Завершённые</div></div>
+      ${cards}
+    </div>`;
+}
+
+/* ---------- Экраны приложения ---------- */
+function nav(active){
+  const items=[['home','Главная'],['receipt','Заявки'],['chat','Чат'],['news','Новости'],['user','Профиль']];
+  return `<div class="nav">${items.map(([i,t])=>`<a class="${t===active?'on':''}">${I[i]}<span>${t}</span></a>`).join('')}</div>`;
+}
+function stat(t){return `<div class="stat"><span>${t}</span><span>••••• 📶 🔋</span></div>`}
+
+function scrHome(){return `<div class="screen">${stat('13:23')}
+  <div class="scr">
+    <div class="hi"><small>Добрый день,</small><h2>сенсей</h2><div class="loc">${I.pin}Офис: Дунпо</div></div>
+    <div class="hero"><span class="ring">${compassHeroRing()}</span>${compass(78)}</div>
+    <div class="dots"><i></i><i class="on"></i><i></i></div>
+    <div class="tiles">
+      <div class="tile">${iconBox('receipt',CAT.acc)}<b>Услуги</b><small>Налоги, визы, документы</small></div>
+      <div class="tile">${iconBox('folder',CAT.ok)}<b>Документы</b><small>Паспорт, ID карта, договор</small></div>
+    </div>
+    <div class="promo"><span class="pc">0%</span><div><b>Заполните профиль</b><div class="note" style="margin:0">это ускорит создание заявок</div></div></div>
+    <div class="office"><div class="oh">${I.office}Дунпо</div>
+      <div class="addr">${I.pin}<span>충남 아산시 둔포면 둔포중앙로 123</span></div>
+      <div class="tel">${I.help.replace('9','9')}<span>010-5538-5400</span></div>
+      <div class="tel"><span style="width:18px;display:inline-flex">📞</span>010-8184-0058</div>
+      <div class="hrs">Пн–Пт 09:00–19:00<br>Суббота 10:00–18:00<br>Воскресенье 10:00–16:00</div></div>
+  </div>${nav('Главная')}</div>`}
+
+function compassHeroRing(){return `<svg width="100%" height="100%" viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:.35">
+  <circle cx="150" cy="75" r="60" fill="none" stroke="#4E7AC8" stroke-width="1"/>
+  <circle cx="150" cy="75" r="40" fill="none" stroke="#4E7AC8" stroke-width="1"/></svg>`}
+
+function scrRequests(){return `<div class="screen">${stat('13:23')}
+  <div class="scr"><div class="appbar">Заявки</div>
+    <div class="segtabs"><div class="on">Активные (1)</div><div>История (1)</div></div>
+    <div class="row">${iconBox('folder',CAT.acc)}<div class="rt"><b>Заявка</b><small>№260715DUN1 · 15.07.2026</small></div>
+      <span class="chip" style="background:var(--violet-s);color:var(--violet)">Назначена</span></div>
+    <div class="fab">${I.plus}Новая заявка</div>
+  </div>${nav('Заявки')}</div>`}
+
+function scrChat(){return `<div class="screen">${stat('13:23')}
+  <div class="scr"><div class="appbar">Чат</div>
+    <div class="row">${iconBox('bot',CAT.violet)}<div class="rt"><b>AI Помощник</b><small><span class="badge-dot" style="background:var(--acc)"></span> Налоги, визы, документы — задайте вопрос</small></div><span class="chev">${I.plus.replace('M12 5v14M5 12h14','M9 6l6 6-6 6')}</span></div>
+    <div class="list-h">Мои заявки</div>
+    <div class="row">${iconBox('folder',CAT.acc)}<div class="rt"><b>Заявка</b><small><span class="badge-dot" style="background:var(--acc)"></span> Статус: Назначена</small></div><small style="color:var(--mut)">13:08</small></div>
+    <div class="row">${iconBox('folder',CAT.ok)}<div class="rt"><b>Справка о составе семьи</b><small><span class="badge-dot" style="background:var(--ok)"></span> Статус: Завершена</small></div></div>
+  </div>${nav('Чат')}</div>`}
+
+function scrNews(){return `<div class="screen">${stat('13:23')}
+  <div class="scr"><div class="appbar">Новости</div>
+    <div class="newscard"><div class="d">10.07.2026</div><h3>Новость! Событие!</h3><div class="note">Поздравляем!</div><a>Читать далее →</a></div>
+  </div>${nav('Новости')}</div>`}
+
+function scrProfile(){return `<div class="screen">${stat('13:24')}
+  <div class="scr"><div class="appbar">Профиль</div>
+    <div class="office" style="text-align:center;padding:18px">
+      <div style="display:inline-flex;gap:8px;align-items:center;background:var(--acc-s);color:var(--acc);font-weight:700;padding:8px 16px;border-radius:999px;margin-bottom:12px">${I.edit}Редактировать</div>
+      <div class="plan" style="margin:0"><span class="p on">Бесплатный</span><span class="p">Дунпо</span></div></div>
+    <div class="row">${iconBox('id',CAT.acc)}<div class="rt"><b>Личные данные</b><small>Заполнено 0% — дополнить</small></div><span class="chev">›</span></div>
+    <div class="row">${iconBox('gear',CAT.violet)}<div class="rt"><b>Настройки</b><small>Уведомления, Face ID, PIN</small></div><span class="chev">›</span></div>
+    <div class="row">${iconBox('pin',CAT.violet)}<div class="rt"><b>Мой офис</b><small>Дунпо</small></div><span class="chev">›</span></div>
+    <div class="row">${iconBox('id',CAT.ok)}<div class="rt"><b>Контакты офисов</b><small>Адреса, телефоны, часы</small></div><span class="chev">›</span></div>
+    <div class="logout">Выйти из аккаунта</div>
+  </div>${nav('Профиль')}</div>`}
+
+function renderPhones(){
+  const scr=[['Главная',scrHome],['Заявки',scrRequests],['Чат',scrChat],['Новости',scrNews],['Профиль',scrProfile]];
+  document.getElementById('phones').innerHTML=scr.map(([t,f])=>`<div><div class="frameLabel">${t}</div><div class="phone">${f()}</div></div>`).join('');
+}
+
+/* ---------- Бренд-секция ---------- */
+function renderBrand(){
+  document.getElementById('logoBig').innerHTML=compass(60);
+  document.getElementById('cmark').innerHTML=compass(22);
+  document.getElementById('tagline').textContent = S.style==='v2'?'НАДЁЖНОСТЬ · ТОЧНОСТЬ · БЕЗОПАСНОСТЬ':'ВСЕ ДОКУМЕНТЫ · ОДНО ПРИЛОЖЕНИЕ';
+  const vars=['--acc','--acc2','--ok','--violet','--warn','--danger'];
+  const names=S.style==='v2'?['Синий','Красный','Успех','Справки','Пенсии','ЧС']:['Акцент','Акцент','Успех','Доп.','Внимание','ЧС'];
+  document.getElementById('pal').innerHTML=vars.map((v,i)=>`<div class="sw" style="background:var(${v})"><span>${names[i]}</span></div>`).join('');
+  const ics=[['id','ID / Виза','acc'],['car','Права','ok'],['doc','Налоги','red'],['shield','Страховка','violet'],['book','Переводы','warn'],['folder','Прочее','blue'],['bot','AI-чат','violet'],['receipt','Услуги','acc']];
+  document.getElementById('iconGrid').innerHTML=ics.map(([n,t,c])=>`<div class="icell">${iconBox(n,CAT[c])}<small>${t}</small></div>`).join('');
+}
+
+function renderAll(){renderBrand();renderPanel();renderPhones();}
+function setState(k,v){S[k]=v;root.dataset[k==='style'?'style':'theme']=v;
+  document.querySelectorAll(`#${k}Seg button`).forEach(b=>b.classList.toggle('on',(b.dataset.s||b.dataset.t)===v));renderAll();}
+document.getElementById('styleSeg').addEventListener('click',e=>{if(e.target.dataset.s)setState('style',e.target.dataset.s)});
+document.getElementById('themeSeg').addEventListener('click',e=>{if(e.target.dataset.t)setState('theme',e.target.dataset.t)});
+renderAll();
+</script>
+</body>
+</html>

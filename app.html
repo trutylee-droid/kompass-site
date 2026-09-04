@@ -85,7 +85,7 @@ footer a{color:inherit}
     </a>
   </div>
 
-  <p class="hint" id="hint">Откройте эту страницу с телефона — мы сразу отправим в нужный магазин.</p>
+  <p class="hint">Наведите камеру телефона на код — он сразу откроет нужный магазин.</p>
 
   <div class="feat">
     <div><span class="dot"></span><span><b>Заявки и статусы.</b> Видно, на каком этапе ваше дело.</span></div>
@@ -97,17 +97,8 @@ footer a{color:inherit}
 </main>
 
 <script>
-(function(){
-  var ua = navigator.userAgent || '';
-  var IOS = /iPad|iPhone|iPod/.test(ua) || (/Mac/.test(ua) && navigator.maxTouchPoints > 1);
-  var AND = /Android/.test(ua);
-  var hint = document.getElementById('hint');
-  if (IOS || AND) {
-    var url = IOS ? document.getElementById('ios').href : document.getElementById('and').href;
-    hint.textContent = 'Открываем магазин приложений…';
-    setTimeout(function(){ window.location.replace(url); }, 350);
-  }
-})();
+// Сюда попадают компьютеры (телефоны сервер уводит в магазин сам, см.
+// functions/app.js). Показываем обе кнопки и QR — ничего не перенаправляем.
 </script>
 </body>
 </html>

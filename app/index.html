@@ -85,7 +85,7 @@ footer a{color:inherit}
     </a>
   </div>
 
-  <p class="hint">Наведите камеру телефона на код — он сразу откроет нужный магазин.</p>
+  <p class="hint" id="hint">Наведите камеру телефона на код — он откроет нужный магазин.</p>
 
   <div class="feat">
     <div><span class="dot"></span><span><b>Заявки и статусы.</b> Видно, на каком этапе ваше дело.</span></div>
@@ -97,8 +97,26 @@ footer a{color:inherit}
 </main>
 
 <script>
-// Сюда попадают компьютеры (телефоны сервер уводит в магазин сам, см.
-// functions/app.js). Показываем обе кнопки и QR — ничего не перенаправляем.
+// Автоматически в магазин НЕ уходим. iOS считает такой переход попыткой
+// открыть чужое приложение и спрашивает разрешение — лишний шаг, на котором
+// часть людей нажмёт «Отменить». Переход по нажатию система пропускает молча,
+// поэтому телефону показываем одну большую кнопку — ровно одно касание.
+(function(){
+  var ua = navigator.userAgent || '';
+  var IOS = /iPad|iPhone|iPod/.test(ua) || (/Mac/.test(ua) && navigator.maxTouchPoints > 1);
+  var AND = /Android/.test(ua);
+  if (!IOS && !AND) return;                       // компьютер — оставляем как есть
+  var ios = document.getElementById('ios');
+  var and = document.getElementById('and');
+  var qr  = document.querySelector('.qr');
+  if (qr) qr.style.display = 'none';
+  (IOS ? and : ios).style.display = 'none';
+  var keep = IOS ? ios : and;
+  keep.classList.remove('and'); keep.classList.add('ios');
+  keep.style.fontSize = '17px'; keep.style.padding = '19px 20px';
+  document.getElementById('hint').textContent =
+    IOS ? 'Одно касание — и откроется App Store.' : 'Одно касание — и откроется Google Play.';
+})();
 </script>
 </body>
 </html>

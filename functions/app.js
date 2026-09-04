@@ -1,14 +1,40 @@
-// 5korea.uk/app — страница установки.
+// 5korea.uk/app — камера навелась на код, и человек сразу в нужном магазине.
 //
-// ПОЧЕМУ НЕ ПЕРЕНАПРАВЛЯЕМ САМИ. Пробовали отвечать сразу перенаправлением в
-// магазин: iOS всё равно спрашивает «Открыть эту страницу в приложении
-// App Store?» — система расценивает переход, который человек не начинал сам,
-// как попытку открыть чужое приложение. Диалог с кнопкой «Отменить» стоит
-// ровно на пути к установке, и часть людей на нём отваливается.
+// ВАЖНО, ПОЧЕМУ ИМЕННО ТАК. Первая попытка выбирала магазин скриптом на самой
+// странице — iOS считает переход, начатый скриптом, попыткой открыть чужое
+// приложение и спрашивает разрешение. Лишний диалог на пути к установке.
 //
-// Переход ПО НАЖАТИЮ система пропускает без вопросов. Поэтому страница
-// открывается всегда, а на телефоне показывает одну большую кнопку своего
-// магазина — одно касание вместо вопроса.
+// Теперь магазин выбирает сервер и отвечает обычным перенаправлением: для
+// браузера это переход по ссылке, а apps.apple.com и play.google.com система
+// открывает в своих приложениях сама, без вопросов.
+//
+// Кэш выключен намеренно: страница отдаёт разное разным устройствам, и
+// закэшированный ответ увёл бы половину людей не туда.
+const IOS = 'https://apps.apple.com/app/id6787089751';
+const ANDROID = 'https://play.google.com/store/apps/details?id=kr.korea5.kompass_app';
+
 export async function onRequest(context) {
-  return context.next();
+  const ua = context.request.headers.get('user-agent') || '';
+  const url = new URL(context.request.url);
+
+  // ?page=1 — открыть саму страницу с телефона, не улетая в магазин
+  if (!url.searchParams.has('page')) {
+    const to = /iPad|iPhone|iPod/i.test(ua) ? IOS
+             : /Android/i.test(ua) ? ANDROID : null;
+    if (to) {
+      return new Response(null, {
+        status: 302,
+        headers: {
+          'Location': to,
+          'Cache-Control': 'no-store, no-cache, must-revalidate',
+          'Vary': 'User-Agent',
+        },
+      });
+    }
+  }
+  const res = await context.next();
+  const out = new Response(res.body, res);
+  out.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+  out.headers.set('Vary', 'User-Agent');
+  return out;
 }

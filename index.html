@@ -77,6 +77,24 @@ section{padding:96px 40px}
 .service-icon{font-size:32px;margin-bottom:16px}
 .service-title{font-size:17px;font-weight:600;color:#fff;margin-bottom:8px}
 .service-desc{font-size:14px;color:var(--gray);line-height:1.6}
+.price-wrap{margin-top:48px}
+.price-head{font-size:20px;font-weight:700;margin-bottom:4px}
+.price-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
+.price-tab{padding:8px 18px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--gray);cursor:pointer;font:inherit;font-size:14px;font-weight:600}
+.price-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.price-group{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.price-group summary{cursor:pointer;padding:16px 20px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.price-group summary::-webkit-details-marker{display:none}
+.price-group summary .cnt{color:var(--gray);font-weight:500;font-size:13px;white-space:nowrap}
+.price-group[open] summary .cnt::after{content:' ▲'}
+.price-group:not([open]) summary .cnt::after{content:' ▼'}
+.price-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:10px 20px;border-top:1px solid var(--border);font-size:14px}
+.price-row .p{white-space:nowrap;color:var(--silver);font-weight:600}
+.price-row .n{display:block;font-size:12px;color:var(--gray);margin-top:2px}
+.price-gnote{padding:10px 20px 14px;font-size:12px;color:var(--gray);white-space:pre-line;border-top:1px solid var(--border)}
+.price-foot{font-size:13px;color:var(--gray);margin-top:14px;line-height:1.6}
+.office-status.closed .office-status-dot{background:#6b7a90;animation:none}
+.office-status.lunch .office-status-dot{background:#f59e0b}
 .service-tag{display:inline-block;margin-top:12px;padding:3px 10px;background:rgba(42,74,122,0.3);border-radius:20px;font-size:11px;color:var(--silver);font-weight:600}
 
 /* STEPS */
@@ -239,7 +257,7 @@ footer{padding:48px 40px;border-top:1px solid var(--border)}
       <h2 class="section-title" data-i18n="s_services_title"></h2>
       <p class="section-sub" data-i18n="s_services_sub"></p>
     </div>
-    <div class="services-grid fade-in">
+    <div class="services-grid fade-in" id="svc-grid">
       <div class="service-card">
         <div class="service-icon">💰</div>
         <div class="service-title" data-i18n="svc1_title"></div>
@@ -398,29 +416,29 @@ footer{padding:48px 40px;border-top:1px solid var(--border)}
       <p class="section-sub" data-i18n="s_offices_sub"></p>
     </div>
     <div class="offices-grid fade-in">
-      <div class="office-card">
+      <div class="office-card" data-office="dunpo">
         <div class="office-name" data-i18n="off1_name"></div>
         <div class="office-name-kr">둔포 사무소</div>
-        <div class="office-detail">📍 충남 아산시 둔포면 둔포중앙로 123</div>
+        <div class="office-detail office-addr">📍 충남 아산시 둔포면 둔포중앙로 123</div>
         <div class="office-detail">📞 <a href="tel:+821055385400" style="color:var(--silver);text-decoration:none">010-5538-5400</a></div>
-        <div class="office-detail">⏰ Пн–Пт 09:00–19:00 · Сб 10:00–18:00 · Вс 10:00–16:00 · обед 12:00–13:00</div>
-        <div class="office-status"><span class="office-status-dot"></span><span data-i18n="office_open"></span></div>
+        <div class="office-detail office-hours">⏰ Пн–Пт 09:00–19:00 · Сб 10:00–18:00 · Вс 10:00–16:00 · обед 12:00–13:00</div>
+        <div class="office-status"><span class="office-status-dot"></span><span class="office-status-text" data-i18n="office_open"></span></div>
       </div>
-      <div class="office-card">
+      <div class="office-card" data-office="sinchang">
         <div class="office-name" data-i18n="off2_name"></div>
         <div class="office-name-kr">신창 사무소</div>
-        <div class="office-detail">📍 충남 아산시 신창면 읍내리 479</div>
+        <div class="office-detail office-addr">📍 충남 아산시 신창면 읍내리 479</div>
         <div class="office-detail">📞 <a href="tel:+821083625052" style="color:var(--silver);text-decoration:none">010-8362-5052</a></div>
-        <div class="office-detail">⏰ Пн–Пт 09:00–19:00 · Сб 10:00–18:00 · Вс 10:00–16:00 · обед 12:00–13:00</div>
-        <div class="office-status"><span class="office-status-dot"></span><span data-i18n="office_open"></span></div>
+        <div class="office-detail office-hours">⏰ Пн–Пт 09:00–19:00 · Сб 10:00–18:00 · Вс 10:00–16:00 · обед 12:00–13:00</div>
+        <div class="office-status"><span class="office-status-dot"></span><span class="office-status-text" data-i18n="office_open"></span></div>
       </div>
-      <div class="office-card">
+      <div class="office-card" data-office="incheon">
         <div class="office-name" data-i18n="off3_name"></div>
         <div class="office-name-kr">인천 연수구 사무소</div>
-        <div class="office-detail">📍 인천광역시 연수구 비류대로433번길 12, 1층 5호</div>
+        <div class="office-detail office-addr">📍 인천광역시 연수구 비류대로433번길 12, 1층 5호</div>
         <div class="office-detail">📞 <a href="tel:+821084241133" style="color:var(--silver);text-decoration:none">010-8424-1133</a></div>
-        <div class="office-detail">⏰ Пн–Пт 09:00–19:00 · Сб 10:00–18:00 · Вс 10:00–16:00 · обед 12:00–13:00</div>
-        <div class="office-status"><span class="office-status-dot"></span><span data-i18n="office_open"></span></div>
+        <div class="office-detail office-hours">⏰ Пн–Пт 09:00–19:00 · Сб 10:00–18:00 · Вс 10:00–16:00 · обед 12:00–13:00</div>
+        <div class="office-status"><span class="office-status-dot"></span><span class="office-status-text" data-i18n="office_open"></span></div>
       </div>
     </div>
   </div>
@@ -449,6 +467,12 @@ footer{padding:48px 40px;border-top:1px solid var(--border)}
         <div class="pay-amount" data-i18n="pay3_amount"></div>
         <div class="pay-desc" data-i18n="pay3_desc"></div>
       </div>
+    </div>
+    <div class="price-wrap" id="price-wrap" hidden>
+      <div class="price-head" data-i18n="price_title"></div>
+      <div class="price-tabs" id="price-tabs"></div>
+      <div id="price-body"></div>
+      <div class="price-foot"><span data-i18n="price_note"></span> <span id="price-upd"></span></div>
     </div>
   </div>
 </section>
@@ -509,7 +533,7 @@ footer{padding:48px 40px;border-top:1px solid var(--border)}
 <script>
 const i18n = {
   ru: {
-    nav_services:'Услуги', nav_app:'Приложение', nav_offices:'Офисы', nav_pricing:'Тарифы', nav_login:'Войти в кабинет',
+    nav_services:'Услуги', nav_app:'Приложение', nav_offices:'Офисы', nav_pricing:'Цены', nav_login:'Войти в кабинет',
     hero_badge:'8 лет в Корее · 5000+ клиентов · Инчхон, Синчанг, Дунпо',
     hero_title:'Ваш надёжный<br><em>помощник в Корее</em>',
     hero_sub:'Налоговый перерасчёт, визы, страховка и документы — на русском языке. Без очередей, без языкового барьера.',
@@ -531,6 +555,9 @@ const i18n = {
     svc10_title:'Юридическое сопровождение', svc10_desc:'Помощь в юридических вопросах.',
     svc11_title:'Для бизнеса', svc11_desc:'Бухгалтерское сопровождение, открытие и закрытие юрлица, вопросы с налоговой, мэрией и банком.',
     svc12_title:'Доверенности и справки', svc12_desc:'Оформление доверенностей, справок и другие поручения.',
+    svc13_title:'Частное страхование', svc13_desc:'Подбор и оформление частной страховки.',
+    price_title:'Прайс по офисам', price_note:'Прайс ведут сами офисы, здесь он обновляется автоматически. Госпошлины оплачиваются отдельно. Точную стоимость по вашей ситуации менеджер назовёт до начала работы.', price_upd:'Обновлено', price_other:'Прочее',
+    hours_lunch:'обед', hours_off:'выходной', st_open:'Открыто', st_closed:'Закрыто', st_lunch:'Обед', days:['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
     s_how_label:'Как работаем', s_how_title:'Просто и прозрачно',
     step1_num:'Шаг 01', step1_title:'Обращаетесь к нам', step1_desc:'Через приложение, по телефону или в офис. Говорим только на русском.',
     step2_num:'Шаг 02', step2_title:'Уточняем задачу', step2_desc:'Менеджер уточняет детали, называет стоимость и список нужных документов.',
@@ -560,7 +587,7 @@ const i18n = {
     footer_copy:'© 2026 Kompass. Корея', footer_privacy:'Политика конфиденциальности', footer_terms:'Условия использования',
   },
   ko: {
-    nav_services:'서비스', nav_app:'앱', nav_offices:'오피스', nav_pricing:'요금제', nav_login:'로그인',
+    nav_services:'서비스', nav_app:'앱', nav_offices:'오피스', nav_pricing:'요금', nav_login:'로그인',
     hero_badge:'8년 경력 · 연 5천+ 고객 · 인천, 신창, 둔포',
     hero_title:'한국 생활의<br><em>든든한 파트너</em>',
     hero_sub:'세금 환급, 비자, 보험, 서류 업무를 러시아어와 한국어로 안내해 드립니다. 언어 장벽 없이, 줄 서지 않고.',
@@ -582,6 +609,9 @@ const i18n = {
     svc10_title:'법률 지원', svc10_desc:'법률 문제 상담 및 지원.',
     svc11_title:'기업 서비스', svc11_desc:'기장 대행, 법인 설립·폐업, 세무서·시청·은행 업무 지원.',
     svc12_title:'위임장·증명서', svc12_desc:'위임장 및 각종 증명서 발급 지원.',
+    svc13_title:'민간 보험', svc13_desc:'민간 보험 상담 및 가입 지원.',
+    price_title:'지점별 가격표', price_note:'가격표는 각 지점에서 직접 관리하며 자동으로 반영됩니다. 인지대·수수료는 별도입니다. 정확한 금액은 업무 시작 전 담당자가 안내합니다. 항목명은 러시아어로 표기됩니다.', price_upd:'업데이트', price_other:'기타',
+    hours_lunch:'점심', hours_off:'휴무', st_open:'영업 중', st_closed:'영업 종료', st_lunch:'점심시간', days:['월','화','수','목','금','토','일'],
     s_how_label:'이용 방법', s_how_title:'간단하고 투명하게',
     step1_num:'Step 01', step1_title:'문의하기', step1_desc:'앱, 전화, 또는 방문으로 연락 주세요. 러시아어와 한국어로 상담합니다.',
     step2_num:'Step 02', step2_title:'상담 및 안내', step2_desc:'담당자가 내용을 확인하고 비용과 필요 서류를 안내해 드립니다.',
@@ -633,6 +663,9 @@ const i18n = {
     svc10_title:'Legal support', svc10_desc:'Help with legal matters.',
     svc11_title:'For business', svc11_desc:'Bookkeeping, opening and closing a company, dealing with the tax office, city hall and banks.',
     svc12_title:'Powers of attorney & certificates', svc12_desc:'Powers of attorney, certificates and other errands.',
+    svc13_title:'Private insurance', svc13_desc:'Choosing and arranging private insurance.',
+    price_title:'Price list by office', price_note:'Each office maintains its own price list; it updates here automatically. Government fees are paid separately. Your manager will quote the exact price before work begins. Service names are shown in Russian.', price_upd:'Updated', price_other:'Other',
+    hours_lunch:'lunch', hours_off:'closed', st_open:'Open', st_closed:'Closed', st_lunch:'Lunch break', days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
     s_how_label:'How It Works', s_how_title:'Simple and transparent',
     step1_num:'Step 01', step1_title:'Contact us', step1_desc:'Reach out via app, phone or walk into one of our offices. We speak Russian.',
     step2_num:'Step 02', step2_title:'We clarify the task', step2_desc:'Your manager checks the details and tells you the price and the documents needed.',
@@ -683,7 +716,131 @@ function setLang(lang) {
   // Title
   const titles = {ru:'Kompass — Ваш помощник в Корее', ko:'Kompass — 한국 생활 파트너', en:'Kompass — Your Guide in Korea'};
   document.title = titles[lang];
+  if (typeof renderCatalog === 'function') renderCatalog();
 }
+
+// ── Живой каталог (29.09): направления, прайс и график офисов берутся из панели
+// через /api/catalog. Нет ответа — остаётся статичный текст выше, ничего не ломается.
+// Описания направлений — здесь (svcN_*), а какие направления показывать и в каком
+// порядке — решает панель (service_categories: isActive, order).
+const SVC_MAP = {tax:1, arc:2, cat_mu27e1mp:3, embassy:4, gai:5, state_insurance:6, pension:7,
+  translation:8, cat_mt5ph18k:9, legal:10, accounting:11, cat_mrblxtma:12, cat_mtsavhue:13};
+const SVC_TAG = {1:'tag_popular', 11:'B2B'};
+const SVC_ICON = {13:'🛡️'};
+document.querySelectorAll('#svc-grid .service-card').forEach(c => {
+  const t = c.querySelector('.service-title'), i = c.querySelector('.service-icon');
+  const m = t && (t.getAttribute('data-i18n') || '').match(/^svc(\d+)_title$/);
+  if (m && i) SVC_ICON[m[1]] = i.textContent;
+});
+const OFF_KEY = {dunpo:'off1_name', sinchang:'off2_name', incheon:'off3_name'};
+let CATALOG = null, priceOffice = null;
+
+const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function fmtPrice(raw) {
+  const s = String(raw || '').trim();
+  if (!s) return '—';
+  const d = s.replace(/\s/g, '');
+  if (!/^\d+$/.test(d)) return s;
+  return d.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₩';
+}
+
+function renderServices() {
+  const L = i18n[currentLang], grid = document.getElementById('svc-grid');
+  const cats = CATALOG.categories.slice().sort((a, b) =>
+    (a.id === 'tax' ? -1 : 0) - (b.id === 'tax' ? -1 : 0) || a.order - b.order);
+  if (!cats.length) return;
+  grid.innerHTML = cats.map(c => {
+    const k = SVC_MAP[c.id];
+    const title = k && L['svc' + k + '_title'] ? L['svc' + k + '_title']
+      : (currentLang === 'ko' ? (c.nameKr || c.nameRu) : c.nameRu);
+    const desc = k ? (L['svc' + k + '_desc'] || '') : '';
+    const tagKey = k && SVC_TAG[k];
+    const tag = tagKey ? (L[tagKey] || tagKey) : (c.corporate && !k ? 'B2B' : '');
+    return '<div class="service-card"><div class="service-icon">' + esc((k && SVC_ICON[k]) || '📌') + '</div>'
+      + '<div class="service-title">' + esc(title) + '</div>'
+      + (desc ? '<div class="service-desc">' + esc(desc) + '</div>' : '')
+      + (tag ? '<span class="service-tag">' + esc(tag) + '</span>' : '') + '</div>';
+  }).join('');
+}
+
+function hoursText(sch) {
+  const L = i18n[currentLang], keys = ['mon','tue','wed','thu','fri','sat','sun'];
+  const val = d => !d || d.off ? 'off' : (d.open || '') + '–' + (d.close || '');
+  const parts = []; let i = 0;
+  while (i < 7) {
+    let j = i; while (j + 1 < 7 && val(sch[keys[j + 1]]) === val(sch[keys[i]])) j++;
+    const v = val(sch[keys[i]]);
+    parts.push((i === j ? L.days[i] : L.days[i] + '–' + L.days[j]) + ' ' + (v === 'off' ? L.hours_off : v));
+    i = j + 1;
+  }
+  const l = keys.map(k => sch[k] && !sch[k].off && sch[k].lunchStart ? sch[k].lunchStart + '–' + sch[k].lunchEnd : '').filter(Boolean);
+  if (l.length && l.every(x => x === l[0])) parts.push(L.hours_lunch + ' ' + l[0]);
+  return parts.join(' · ');
+}
+
+function officeState(sch) {
+  const now = new Date(new Date().toLocaleString('en-US', {timeZone: 'Asia/Seoul'}));
+  const d = sch[['sun','mon','tue','wed','thu','fri','sat'][now.getDay()]];
+  const hm = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+  if (!d || d.off || !d.open || !d.close || hm < d.open || hm >= d.close) return 'closed';
+  if (d.lunchStart && d.lunchEnd && hm >= d.lunchStart && hm < d.lunchEnd) return 'lunch';
+  return 'open';
+}
+
+function renderOffices() {
+  const L = i18n[currentLang];
+  CATALOG.offices.forEach(o => {
+    const card = document.querySelector('.office-card[data-office="' + o.id + '"]');
+    if (!card) return;
+    if (o.address) card.querySelector('.office-addr').textContent = '📍 ' + o.address;
+    if (o.schedule) {
+      card.querySelector('.office-hours').textContent = '⏰ ' + hoursText(o.schedule);
+      const st = officeState(o.schedule), box = card.querySelector('.office-status');
+      box.classList.toggle('closed', st === 'closed'); box.classList.toggle('lunch', st === 'lunch');
+      box.querySelector('.office-status-text').textContent = L['st_' + st];
+    }
+  });
+}
+
+function renderPrices() {
+  const L = i18n[currentLang], wrap = document.getElementById('price-wrap');
+  const offs = CATALOG.offices.filter(o => CATALOG.prices[o.id] && CATALOG.prices[o.id].items.length);
+  if (!offs.length) return;
+  if (!priceOffice || !offs.some(o => o.id === priceOffice)) priceOffice = offs[0].id;
+  document.getElementById('price-tabs').innerHTML = offs.map(o =>
+    '<button class="price-tab' + (o.id === priceOffice ? ' active' : '') + '" data-o="' + esc(o.id) + '">'
+    + esc(L[OFF_KEY[o.id]] || o.nameRu) + '</button>').join('');
+  document.querySelectorAll('.price-tab').forEach(b => b.onclick = () => { priceOffice = b.dataset.o; renderPrices(); });
+  const pr = CATALOG.prices[priceOffice];
+  const groups = pr.groups.slice(), gids = new Set(groups.map(g => g.id));
+  if (pr.items.some(i => !gids.has(i.groupId))) groups.push({id: '__other', title: L.price_other, note: ''});
+  document.getElementById('price-body').innerHTML = groups.map(g => {
+    const rows = pr.items.filter(i => g.id === '__other' ? !gids.has(i.groupId) : i.groupId === g.id);
+    if (!rows.length) return '';
+    return '<details class="price-group"><summary><span>' + esc(g.title) + '</span><span class="cnt">' + rows.length + '</span></summary>'
+      + rows.map(i => '<div class="price-row"><span>' + esc(i.title)
+        + (i.note ? '<span class="n">' + esc(i.note) + '</span>' : '') + '</span><span class="p">' + esc(fmtPrice(i.price)) + '</span></div>').join('')
+      + (g.note && g.note.trim() ? '<div class="price-gnote">' + esc(g.note.trim()) + '</div>' : '') + '</details>';
+  }).join('');
+  const upd = document.getElementById('price-upd');
+  if (pr.updatedAt) {
+    const dt = new Date(pr.updatedAt);
+    upd.textContent = L.price_upd + ': ' + dt.toLocaleDateString(currentLang === 'ko' ? 'ko-KR' : currentLang === 'en' ? 'en-GB' : 'ru-RU', {timeZone: 'Asia/Seoul'});
+  } else upd.textContent = '';
+  wrap.hidden = false;
+}
+
+function renderCatalog() {
+  if (!CATALOG) return;
+  try { renderServices(); } catch (e) { console.warn('services', e); }
+  try { renderOffices(); } catch (e) { console.warn('offices', e); }
+  try { renderPrices(); } catch (e) { console.warn('prices', e); }
+}
+
+fetch('/api/catalog').then(r => r.ok ? r.json() : null).then(d => {
+  if (d && Array.isArray(d.categories) && Array.isArray(d.offices) && d.prices) { CATALOG = d; renderCatalog(); }
+}).catch(() => {});
+setInterval(() => { try { if (CATALOG) renderOffices(); } catch (e) {} }, 60000);
 
 // Init
 setLang('ru');

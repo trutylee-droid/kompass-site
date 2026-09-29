@@ -85,75 +85,39 @@ footer a:hover{color:#fff}
 const content = {
   ru: {
     back:'← На главную', label:'Юридический документ',
-    meta:'Последнее обновление: июнь 2026 г. · Распространяется на платные подписки Kompass.',
+    meta:'Последнее обновление: сентябрь 2026 г. · Распространяется на платные услуги Kompass.',
     title:'Политика возврата',
     f_home:'Главная', f_privacy:'Конфиденциальность', f_terms:'Условия', f_refund:'Возврат',
     body:`
-<div class="highlight"><p>Мы хотим, чтобы вы были довольны сервисом. Если что-то пошло не так — расскажем как получить возврат.</p></div>
+<div class="highlight"><p>Приложение Kompass бесплатное. Платными являются только услуги, которые оказывают наши специалисты. Стоимость согласуется с вами до начала работы.</p></div>
 
-<h2>1. Право на возврат</h2>
-<p>Вы можете запросить полный возврат средств в течение <strong>7 календарных дней</strong> с момента оплаты при одновременном соблюдении двух условий:</p>
+<h2>1. Когда деньги возвращаются полностью</h2>
 <ul>
-<li>С момента оплаты прошло не более 7 дней</li>
-<li>Вы не использовали ни одну из платных функций подписки</li>
+<li>Вы отказались от услуги до того, как мы начали работу</li>
+<li>Услуга не была оказана по вине Kompass</li>
+<li>Произошло ошибочное или двойное списание</li>
 </ul>
 
-<div class="warn"><p>После того как вы воспользовались хотя бы одной платной функцией — возврат невозможен, даже если с момента оплаты прошло менее 7 дней.</p></div>
+<h2>2. Частичный возврат</h2>
+<p>Если вы отказались от услуги, когда работа уже начата, мы возвращаем оплату за вычетом стоимости фактически выполненной части работы. Объём выполненного мы покажем и объясним.</p>
 
-<h2>2. Что считается использованием платной функции</h2>
-<p>Использованием считается любое из следующих действий:</p>
+<h2>3. Что не возвращается</h2>
+<div class="warn"><p>Государственные пошлины и сборы, которые уже были оплачены за вас (в миграционную службу, посольство, налоговую и другие органы), не возвращаются — эти деньги получает государственный орган, а не Kompass.</p></div>
 <ul>
-<li>Отправка сообщения оператору через прямой чат (Премиум)</li>
-<li>Активация SMS-автоперехвата (Базовый и выше)</li>
-<li>Просмотр истории перерасчётов (Базовый и выше)</li>
-<li>Приоритетная обработка заявки (Премиум)</li>
-<li>Получение push-уведомления через подписку</li>
+<li>Работа, которая уже выполнена полностью</li>
+<li>Выполненная работа, если государственный орган принял отрицательное решение — решение органа не зависит от нас</li>
+<li>Услуги третьих лиц (переводчик, нотариус и т.п.), если они уже оплачены по вашему поручению</li>
 </ul>
-<div class="info"><p>Факт первого использования каждой функции фиксируется автоматически в системе (<code>firstUsedAt</code>) и хранится в журнале активности (<code>usageLog</code>).</p></div>
-
-<h2>3. Сценарии</h2>
-<div class="scenario-card">
-  <h3>✅ Возврат возможен</h3>
-  <p>Оплатили Базовый тариф, прошло 3 дня, ни одной функцией не воспользовались → полный возврат.</p>
-</div>
-<div class="scenario-card">
-  <h3>❌ Возврат невозможен</h3>
-  <p>Оплатили Базовый тариф, на следующий день получили push-уведомление → возврат не предоставляется.</p>
-</div>
-<div class="scenario-card">
-  <h3>❌ Возврат невозможен</h3>
-  <p>Оплатили Премиум, прошло 8 дней, функциями не пользовались → срок 7 дней истёк.</p>
-</div>
-<div class="scenario-card">
-  <h3>⚠️ Частичный возврат</h3>
-  <p>В исключительных случаях (технический сбой на нашей стороне, ошибочное двойное списание) — возврат рассматривается индивидуально.</p>
-</div>
 
 <h2>4. Как запросить возврат</h2>
 <ul>
-<li>Напишите на <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></li>
-<li>В теме письма укажите: <strong>«Возврат подписки»</strong></li>
-<li>Укажите номер телефона, привязанный к аккаунту, и дату оплаты</li>
+<li>Напишите на <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a>, позвоните или обратитесь в офис</li>
+<li>Укажите имя, номер телефона и услугу, за которую просите возврат</li>
 </ul>
-<p>Мы рассмотрим запрос в течение <strong>3 рабочих дней</strong> и уведомим о решении.</p>
+<p>Мы рассмотрим запрос в течение <strong>3 рабочих дней</strong> и сообщим решение.</p>
 
-<h2>5. Сроки зачисления</h2>
-<p>При одобрении возврата средства поступают на карту в течение <strong>5–10 рабочих дней</strong> в зависимости от банка и платёжной системы.</p>
-
-<h2>6. Отмена подписки</h2>
-<p>Отмена подписки и возврат — разные операции:</p>
-<ul>
-<li><strong>Отмена</strong> — прекращает автопродление. Доступ к функциям сохраняется до конца оплаченного периода. Выполняется в настройках профиля.</li>
-<li><strong>Возврат</strong> — возврат денег за текущий период при соблюдении условий выше. Только через email-запрос.</li>
-</ul>
-
-<h2>7. Исключения</h2>
-<p>Возврат не производится в следующих случаях:</p>
-<ul>
-<li>Нарушение <a href="/terms.html" style="color:var(--silver)">Условий использования</a></li>
-<li>Блокировка аккаунта за мошеннические действия</li>
-<li>Подписка оформлена через App Store или Google Play — в этом случае возврат регулируется политикой Apple или Google соответственно</li>
-</ul>
+<h2>5. Как возвращаются деньги</h2>
+<p>Возврат производится тем же способом, которым была произведена оплата. Срок зачисления на карту зависит от банка.</p>
 
 <div class="contact-block">
 <p><strong>Вопросы по возврату:</strong></p>
@@ -164,148 +128,82 @@ const content = {
   },
   ko: {
     back:'← 홈으로', label:'법적 문서',
-    meta:'최종 업데이트: 2026년 6월 · Kompass 유료 구독에 적용됩니다.',
+    meta:'최종 업데이트: 2026년 9월 · Kompass 유료 서비스에 적용됩니다.',
     title:'환불정책',
     f_home:'홈', f_privacy:'개인정보처리방침', f_terms:'이용약관', f_refund:'환불정책',
     body:`
-<div class="highlight"><p>고객 만족을 최우선으로 생각합니다. 불편한 점이 있으시면 환불 방법을 안내해 드립니다.</p></div>
+<div class="highlight"><p>Kompass 앱은 무료입니다. 유료는 전문 담당자가 제공하는 서비스뿐이며, 비용은 업무 시작 전에 고객과 협의합니다.</p></div>
 
-<h2>1. 환불 조건</h2>
-<p>다음 두 가지 조건을 모두 충족하는 경우 결제일로부터 <strong>7일 이내</strong> 전액 환불이 가능합니다:</p>
+<h2>1. 전액 환불</h2>
 <ul>
-<li>결제 후 7일이 경과하지 않은 경우</li>
-<li>유료 기능을 한 번도 사용하지 않은 경우</li>
-</ul>
-<div class="warn"><p>유료 기능을 한 번이라도 사용한 경우, 결제 후 7일 이내라도 환불이 불가합니다.</p></div>
-
-<h2>2. 유료 기능 사용 기준</h2>
-<p>다음 중 하나라도 해당되면 사용한 것으로 간주합니다:</p>
-<ul>
-<li>담당자 직접 채팅 메시지 전송 (프리미엄)</li>
-<li>SMS 자동 인증 활성화 (베이직 이상)</li>
-<li>환급 내역 조회 (베이직 이상)</li>
-<li>우선 처리 적용 (프리미엄)</li>
-<li>구독을 통한 푸시 알림 수신</li>
-</ul>
-<div class="info"><p>각 기능의 최초 사용 시각은 시스템에 자동으로 기록됩니다(<code>firstUsedAt</code>). 활동 로그(<code>usageLog</code>)에 보관됩니다.</p></div>
-
-<h2>3. 환불 가능 여부 예시</h2>
-<div class="scenario-card">
-  <h3>✅ 환불 가능</h3>
-  <p>베이직 요금제 결제 후 3일 경과, 유료 기능 미사용 → 전액 환불</p>
-</div>
-<div class="scenario-card">
-  <h3>❌ 환불 불가</h3>
-  <p>베이직 요금제 결제 다음 날 푸시 알림 수신 → 환불 불가</p>
-</div>
-<div class="scenario-card">
-  <h3>❌ 환불 불가</h3>
-  <p>프리미엄 결제 후 8일 경과, 미사용 → 7일 기간 초과</p>
-</div>
-<div class="scenario-card">
-  <h3>⚠️ 개별 검토</h3>
-  <p>당사 기술 오류, 중복 결제 등 예외적 상황은 개별적으로 검토합니다.</p>
-</div>
-
-<h2>4. 환불 신청 방법</h2>
-<ul>
-<li><a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a>으로 이메일 발송</li>
-<li>제목: <strong>「구독 환불 요청」</strong></li>
-<li>계정에 등록된 전화번호와 결제일 기재</li>
-</ul>
-<p>요청 접수 후 <strong>영업일 기준 3일 이내</strong> 검토 결과를 안내드립니다.</p>
-
-<h2>5. 환불 처리 기간</h2>
-<p>환불 승인 후 은행 및 결제 시스템에 따라 <strong>5~10 영업일</strong> 이내에 카드로 환불됩니다.</p>
-
-<h2>6. 구독 취소 vs 환불</h2>
-<ul>
-<li><strong>구독 취소</strong>: 자동 갱신 중단. 결제 기간 종료까지 유료 기능 계속 이용 가능. 프로필 설정에서 진행.</li>
-<li><strong>환불</strong>: 위 조건 충족 시 현재 기간 환불. 이메일로만 신청 가능.</li>
+<li>업무 시작 전에 서비스를 취소한 경우</li>
+<li>Kompass의 귀책사유로 서비스가 제공되지 않은 경우</li>
+<li>잘못된 결제 또는 중복 결제가 발생한 경우</li>
 </ul>
 
-<h2>7. 환불 불가 사유</h2>
+<h2>2. 부분 환불</h2>
+<p>업무가 이미 시작된 후 취소하는 경우, 실제로 수행된 업무 비용을 제외한 금액을 환불합니다. 수행된 업무 내용은 고객에게 설명해 드립니다.</p>
+
+<h2>3. 환불되지 않는 항목</h2>
+<div class="warn"><p>고객을 대신하여 이미 납부한 수수료 및 인지대(출입국관리사무소, 대사관, 세무서 등 기관 납부분)는 환불되지 않습니다. 해당 금액은 Kompass가 아닌 행정기관에 납부된 것입니다.</p></div>
 <ul>
-<li><a href="/terms.html" style="color:var(--silver)">이용약관</a> 위반</li>
-<li>부정행위로 인한 계정 정지</li>
-<li>App Store 또는 Google Play를 통한 구독 — Apple 또는 Google의 환불 정책 적용</li>
+<li>이미 완료된 업무</li>
+<li>행정기관이 불허·거부 결정을 한 경우의 수행 완료 업무 — 기관의 결정은 Kompass가 좌우할 수 없습니다</li>
+<li>고객의 요청으로 이미 비용이 지급된 제3자 서비스(번역, 공증 등)</li>
 </ul>
+
+<h2>4. 환불 요청 방법</h2>
+<ul>
+<li><a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a>으로 이메일, 전화 또는 사무실 방문</li>
+<li>성함, 전화번호, 환불을 요청하는 서비스를 알려 주세요</li>
+</ul>
+<p>요청은 <strong>영업일 기준 3일 이내</strong>에 검토 후 결과를 안내해 드립니다.</p>
+
+<h2>5. 환불 방식</h2>
+<p>환불은 결제한 수단과 동일한 방법으로 진행됩니다. 카드 환불 반영 기간은 카드사·은행에 따라 다릅니다.</p>
 
 <div class="contact-block">
 <p><strong>환불 문의:</strong></p>
 <p>이메일: <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></p>
 <p>전화: 010-5183-5885</p>
-<p style="color:var(--gray);font-size:13px;margin-top:8px">답변 기간: 영업일 기준 3일 이내</p>
+<p style="color:var(--gray);font-size:13px;margin-top:8px">답변 시간: 영업일 기준 3일 이내</p>
 </div>`
   },
   en: {
-    back:'← Back to Home', label:'Legal Document',
-    meta:'Last updated: June 2026 · Applies to Kompass paid subscriptions.',
+    back:'← Back to home', label:'Legal document',
+    meta:'Last updated: September 2026 · Applies to paid Kompass services.',
     title:'Refund Policy',
-    f_home:'Home', f_privacy:'Privacy Policy', f_terms:'Terms of Use', f_refund:'Refund Policy',
+    f_home:'Home', f_privacy:'Privacy', f_terms:'Terms', f_refund:'Refunds',
     body:`
-<div class="highlight"><p>We want you to be happy with Kompass. If something isn't right, here's how to get a refund.</p></div>
+<div class="highlight"><p>The Kompass app is free. Only services provided by our specialists are paid, and the price is agreed with you before work begins.</p></div>
 
-<h2>1. Refund Eligibility</h2>
-<p>You may request a full refund within <strong>7 calendar days</strong> of payment, provided both conditions are met:</p>
+<h2>1. Full refund</h2>
 <ul>
-<li>No more than 7 days have passed since payment</li>
-<li>You have not used any paid features of the subscription</li>
-</ul>
-<div class="warn"><p>Once you have used even one paid feature, a refund is not available — even if it has been fewer than 7 days since payment.</p></div>
-
-<h2>2. What Counts as Using a Paid Feature</h2>
-<p>Any of the following actions counts as use:</p>
-<ul>
-<li>Sending a message via direct specialist chat (Premium)</li>
-<li>Activating automatic SMS interception (Basic and above)</li>
-<li>Viewing refund history (Basic and above)</li>
-<li>Priority processing applied to an application (Premium)</li>
-<li>Receiving a push notification through the subscription</li>
-</ul>
-<div class="info"><p>The timestamp of first use of each feature is recorded automatically in the system (<code>firstUsedAt</code>) and stored in the activity log (<code>usageLog</code>).</p></div>
-
-<h2>3. Scenarios</h2>
-<div class="scenario-card">
-  <h3>✅ Refund available</h3>
-  <p>Paid for Basic plan, 3 days have passed, no features used → full refund.</p>
-</div>
-<div class="scenario-card">
-  <h3>❌ No refund</h3>
-  <p>Paid for Basic plan, received a push notification the next day → refund not available.</p>
-</div>
-<div class="scenario-card">
-  <h3>❌ No refund</h3>
-  <p>Paid for Premium, 8 days have passed, no features used → 7-day window has expired.</p>
-</div>
-<div class="scenario-card">
-  <h3>⚠️ Case-by-case review</h3>
-  <p>In exceptional cases (technical failure on our end, accidental double charge) — reviewed individually.</p>
-</div>
-
-<h2>4. How to Request a Refund</h2>
-<ul>
-<li>Email <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a></li>
-<li>Subject line: <strong>"Subscription Refund"</strong></li>
-<li>Include the phone number linked to your account and the payment date</li>
-</ul>
-<p>We will review your request within <strong>3 business days</strong> and notify you of the decision.</p>
-
-<h2>5. Refund Processing Time</h2>
-<p>Once approved, refunds are credited to your card within <strong>5–10 business days</strong> depending on your bank and payment processor.</p>
-
-<h2>6. Cancellation vs Refund</h2>
-<ul>
-<li><strong>Cancellation</strong>: stops auto-renewal. Access to paid features continues until the end of the billing period. Done in profile settings.</li>
-<li><strong>Refund</strong>: returns payment for the current period if the conditions above are met. Requested by email only.</li>
+<li>You cancel the service before we start work</li>
+<li>The service was not provided due to Kompass's fault</li>
+<li>An erroneous or duplicate charge occurred</li>
 </ul>
 
-<h2>7. Exceptions — No Refund</h2>
+<h2>2. Partial refund</h2>
+<p>If you cancel after work has started, we refund the payment minus the cost of the work actually completed. We will show and explain what has been done.</p>
+
+<h2>3. Non-refundable</h2>
+<div class="warn"><p>Government fees and duties already paid on your behalf (to immigration, embassies, the tax office and other authorities) are not refundable — this money goes to the government body, not to Kompass.</p></div>
 <ul>
-<li>Violation of the <a href="/terms.html" style="color:var(--silver)">Terms of Use</a></li>
-<li>Account suspended for fraudulent activity</li>
-<li>Subscriptions purchased through the App Store or Google Play — Apple's or Google's refund policy applies respectively</li>
+<li>Work that has already been fully completed</li>
+<li>Completed work where a government authority issued a negative decision — the authority's decision is beyond our control</li>
+<li>Third-party services (translator, notary, etc.) already paid at your request</li>
 </ul>
+
+<h2>4. How to request a refund</h2>
+<ul>
+<li>Email <a href="mailto:Kompass.kor@gmail.com" style="color:var(--silver)">Kompass.kor@gmail.com</a>, call us or visit an office</li>
+<li>Provide your name, phone number and the service you want a refund for</li>
+</ul>
+<p>We review requests within <strong>3 business days</strong> and let you know the decision.</p>
+
+<h2>5. How money is returned</h2>
+<p>Refunds are made using the same method as the original payment. Card processing time depends on your bank.</p>
 
 <div class="contact-block">
 <p><strong>Refund enquiries:</strong></p>

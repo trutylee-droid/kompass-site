@@ -91,10 +91,9 @@ section{padding:96px 40px}
 .price-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:10px 20px;border-top:1px solid var(--border);font-size:14px}
 .price-row .p{white-space:nowrap;color:var(--silver);font-weight:600}
 .price-row .n{display:block;font-size:12px;color:var(--gray);margin-top:2px}
-.price-row .pay-link{display:block;font-size:12px;font-weight:600;color:#7fb2ff;text-decoration:none;text-align:right;margin-top:2px}
-.pay-cta{display:inline-block;margin-top:14px;padding:10px 18px;border-radius:10px;background:var(--blue2);color:#fff;text-decoration:none;font-weight:700;font-size:14px}
 .price-gnote{padding:10px 20px 14px;font-size:12px;color:var(--gray);white-space:pre-line;border-top:1px solid var(--border)}
 .price-foot{font-size:13px;color:var(--gray);margin-top:14px;line-height:1.6}
+.pay-cta{display:inline-block;margin-top:14px;padding:10px 18px;border-radius:10px;background:var(--blue2);color:#fff;text-decoration:none;font-weight:700;font-size:14px}
 .office-status.closed .office-status-dot{background:#6b7a90;animation:none}
 .office-status.lunch .office-status-dot{background:#f59e0b}
 .service-tag{display:inline-block;margin-top:12px;padding:3px 10px;background:rgba(42,74,122,0.3);border-radius:20px;font-size:11px;color:var(--silver);font-weight:600}
@@ -475,7 +474,7 @@ footer{padding:48px 40px;border-top:1px solid var(--border)}
       <div class="price-tabs" id="price-tabs"></div>
       <div id="price-body"></div>
       <div class="price-foot"><span data-i18n="price_note"></span> <span id="price-upd"></span></div>
-      <a class="pay-cta" href="/pay.html" data-i18n="pay_cta">Оплатить услугу онлайн</a>
+      <a class="pay-cta" href="/subscribe.html" data-i18n="sub_cta">Подписка «Мониторинг» — 10 000 ₩/мес</a>
     </div>
   </div>
 </section>
@@ -560,7 +559,7 @@ const i18n = {
     svc11_title:'Для бизнеса', svc11_desc:'Бухгалтерское сопровождение, открытие и закрытие юрлица, вопросы с налоговой, мэрией и банком.',
     svc12_title:'Доверенности и справки', svc12_desc:'Оформление доверенностей, справок и другие поручения.',
     svc13_title:'Частное страхование', svc13_desc:'Подбор и оформление частной страховки.',
-    price_title:'Прайс по офисам', price_note:'Прайс ведут сами офисы, здесь он обновляется автоматически. Госпошлины оплачиваются отдельно. Точную стоимость по вашей ситуации менеджер назовёт до начала работы.', price_upd:'Обновлено', price_other:'Прочее', pay_btn:'Оплатить', pay_cta:'Оплатить услугу онлайн',
+    price_title:'Прайс по офисам', price_note:'Прайс ведут сами офисы, здесь он обновляется автоматически. Госпошлины оплачиваются отдельно. Точную стоимость по вашей ситуации менеджер назовёт до начала работы.', price_upd:'Обновлено', price_other:'Прочее', sub_cta:'Подписка «Мониторинг» — 10 000 ₩/мес',
     hours_lunch:'обед', hours_off:'выходной', st_open:'Открыто', st_closed:'Закрыто', st_lunch:'Обед', days:['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
     s_how_label:'Как работаем', s_how_title:'Просто и прозрачно',
     step1_num:'Шаг 01', step1_title:'Обращаетесь к нам', step1_desc:'Через приложение, по телефону или в офис. Говорим только на русском.',
@@ -614,7 +613,7 @@ const i18n = {
     svc11_title:'기업 서비스', svc11_desc:'기장 대행, 법인 설립·폐업, 세무서·시청·은행 업무 지원.',
     svc12_title:'위임장·증명서', svc12_desc:'위임장 및 각종 증명서 발급 지원.',
     svc13_title:'민간 보험', svc13_desc:'민간 보험 상담 및 가입 지원.',
-    price_title:'지점별 가격표', price_note:'가격표는 각 지점에서 직접 관리하며 자동으로 반영됩니다. 인지대·수수료는 별도입니다. 정확한 금액은 업무 시작 전 담당자가 안내합니다. 항목명은 러시아어로 표기됩니다.', price_upd:'업데이트', price_other:'기타', pay_btn:'결제', pay_cta:'온라인 결제하기',
+    price_title:'지점별 가격표', price_note:'가격표는 각 지점에서 직접 관리하며 자동으로 반영됩니다. 인지대·수수료는 별도입니다. 정확한 금액은 업무 시작 전 담당자가 안내합니다. 항목명은 러시아어로 표기됩니다.', price_upd:'업데이트', price_other:'기타', sub_cta:'모니터링 월 구독 — 월 10,000원',
     hours_lunch:'점심', hours_off:'휴무', st_open:'영업 중', st_closed:'영업 종료', st_lunch:'점심시간', days:['월','화','수','목','금','토','일'],
     s_how_label:'이용 방법', s_how_title:'간단하고 투명하게',
     step1_num:'Step 01', step1_title:'문의하기', step1_desc:'앱, 전화, 또는 방문으로 연락 주세요. 러시아어와 한국어로 상담합니다.',
@@ -668,7 +667,7 @@ const i18n = {
     svc11_title:'For business', svc11_desc:'Bookkeeping, opening and closing a company, dealing with the tax office, city hall and banks.',
     svc12_title:'Powers of attorney & certificates', svc12_desc:'Powers of attorney, certificates and other errands.',
     svc13_title:'Private insurance', svc13_desc:'Choosing and arranging private insurance.',
-    price_title:'Price list by office', price_note:'Each office maintains its own price list; it updates here automatically. Government fees are paid separately. Your manager will quote the exact price before work begins. Service names are shown in Russian.', price_upd:'Updated', price_other:'Other', pay_btn:'Pay', pay_cta:'Pay online',
+    price_title:'Price list by office', price_note:'Each office maintains its own price list; it updates here automatically. Government fees are paid separately. Your manager will quote the exact price before work begins. Service names are shown in Russian.', price_upd:'Updated', price_other:'Other', sub_cta:'Monitoring plan — ₩10,000/month',
     hours_lunch:'lunch', hours_off:'closed', st_open:'Open', st_closed:'Closed', st_lunch:'Lunch break', days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
     s_how_label:'How It Works', s_how_title:'Simple and transparent',
     step1_num:'Step 01', step1_title:'Contact us', step1_desc:'Reach out via app, phone or walk into one of our offices. We speak Russian.',
@@ -823,9 +822,7 @@ function renderPrices() {
     if (!rows.length) return '';
     return '<details class="price-group"><summary><span>' + esc(g.title) + '</span><span class="cnt">' + rows.length + '</span></summary>'
       + rows.map(i => '<div class="price-row"><span>' + esc(i.title)
-        + (i.note ? '<span class="n">' + esc(i.note) + '</span>' : '') + '</span><span class="p">' + esc(fmtPrice(i.price))
-        + (/^\d{4,}$/.test(String(i.price || '').replace(/\s/g, '')) ? '<a class="pay-link" href="/pay.html?o=' + encodeURIComponent(priceOffice) + '&i=' + pr.items.indexOf(i) + '">' + esc(L.pay_btn || 'Оплатить') + '</a>' : '')
-        + '</span></div>').join('')
+        + (i.note ? '<span class="n">' + esc(i.note) + '</span>' : '') + '</span><span class="p">' + esc(fmtPrice(i.price)) + '</span></div>').join('')
       + (g.note && g.note.trim() ? '<div class="price-gnote">' + esc(g.note.trim()) + '</div>' : '') + '</details>';
   }).join('');
   const upd = document.getElementById('price-upd');

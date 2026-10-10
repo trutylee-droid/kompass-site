@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>결제 완료 · Оплата — KOMPASS</title>
+<title>구독 완료 · Подписка оформлена — KOMPASS</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="theme-color" content="#0E1F5B">
@@ -40,6 +40,7 @@ h1{font-size:24px;margin-bottom:6px}
 .box{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:18px}
 .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
 .row:last-of-type{border-bottom:none}
+.row[hidden]{display:none}
 .row span:first-child{color:var(--gray)}
 .total{font-size:22px;font-weight:700}
 .agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--silver);margin:14px 0}
@@ -54,7 +55,7 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 <body>
 <header>
   <a class="logo" href="/"><img src="/favicon.svg" alt="">KOMPASS</a>
-  <a href="/pay.html" style="font-size:14px">← 결제 · Оплата</a>
+  <a href="/" style="font-size:14px">← 홈 · На главную</a>
 </header>
 <main>
   <div class="box" style="max-width:560px;margin:20px auto">
@@ -74,24 +75,26 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 const q = new URLSearchParams(location.search);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const row = (a, b) => '<div class="row"><span>' + esc(a) + '</span><span>' + b + '</span></div>';
-fetch('https://us-central1-kompass-sandbox.cloudfunctions.net/tossConfirm', {
+fetch('https://us-central1-kompass-sandbox.cloudfunctions.net/tossBillingStart', {
   method: 'POST', headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({paymentKey: q.get('paymentKey'), orderId: q.get('orderId'), amount: Number(q.get('amount'))}),
+  body: JSON.stringify({authKey: q.get('authKey'), customerKey: q.get('customerKey')}),
 }).then(r => r.json()).then(j => {
   if (j.ok) {
-    document.getElementById('h').textContent = '결제가 완료되었습니다 · Оплата прошла';
+    document.getElementById('h').textContent = '구독이 시작되었습니다 · Подписка оформлена';
     document.getElementById('s').textContent = '담당 매니저가 확인 후 연락드립니다. · Менеджер свяжется с вами.';
-    document.getElementById('rows').innerHTML = row('서비스 · Услуга', esc(j.orderName)) + row('금액 · Сумма', Number(j.amount).toLocaleString('ko-KR') + '원')
-      + row('결제수단 · Способ', esc(j.method || '카드')) + row('주문번호 · Номер заказа', esc(q.get('orderId')))
+    const nx = j.nextChargeAt ? new Date(j.nextChargeAt).toLocaleDateString('ko-KR', {timeZone: 'Asia/Seoul'}) : '';
+    document.getElementById('rows').innerHTML = row('요금제 · Тариф', esc(j.plan)) + row('결제 금액 · Списано', Number(j.amount).toLocaleString('ko-KR') + '원')
+      + (j.cardCompany ? row('카드 · Карта', esc(j.cardCompany) + (j.cardLast4 ? ' ···' + esc(j.cardLast4) : '')) : '')
+      + (nx ? row('다음 결제일 · Следующее списание', esc(nx)) : '')
       + (j.receiptUrl ? row('영수증 · Чек', '<a href="' + esc(j.receiptUrl) + '" target="_blank" rel="noopener">보기 · Открыть</a>') : '');
     if (j.mode === 'test') document.getElementById('t').textContent = '테스트 결제 — 실제로 청구되지 않았습니다. · Тестовый платёж, деньги не списаны.';
   } else {
-    document.getElementById('h').textContent = '결제를 확인하지 못했습니다 · Оплата не подтверждена';
-    document.getElementById('s').textContent = (j.message || j.error || '') + ' — 고객센터 010-5183-5885로 문의해 주세요.';
+    document.getElementById('h').textContent = '구독을 완료하지 못했습니다 · Подписка не оформлена';
+    document.getElementById('s').textContent = (j.message || j.error || '') + ' — 010-5183-5885로 문의해 주세요.';
   }
 }).catch(() => {
   document.getElementById('h').textContent = '연결 오류 · Ошибка связи';
-  document.getElementById('s').textContent = '결제 여부를 확인하려면 010-5183-5885로 문의해 주세요.';
+  document.getElementById('s').textContent = '결제 여부 확인: 010-5183-5885';
 });
 </script>
 </body>

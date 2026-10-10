@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>결제 실패 · Оплата не прошла — KOMPASS</title>
+<title>구독 실패 · Подписка не оформлена — KOMPASS</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="theme-color" content="#0E1F5B">
@@ -40,6 +40,7 @@ h1{font-size:24px;margin-bottom:6px}
 .box{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:18px}
 .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
 .row:last-of-type{border-bottom:none}
+.row[hidden]{display:none}
 .row span:first-child{color:var(--gray)}
 .total{font-size:22px;font-weight:700}
 .agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--silver);margin:14px 0}
@@ -54,13 +55,13 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 <body>
 <header>
   <a class="logo" href="/"><img src="/favicon.svg" alt="">KOMPASS</a>
-  <a href="/pay.html" style="font-size:14px">← 결제 · Оплата</a>
+  <a href="/" style="font-size:14px">← 홈 · На главную</a>
 </header>
 <main>
   <div class="box" style="max-width:560px;margin:20px auto">
-    <h1>결제가 완료되지 않았습니다 · Оплата не прошла</h1>
+    <h1>구독이 완료되지 않았습니다 · Подписка не оформлена</h1>
     <p class="sub" id="s"></p>
-    <p style="margin-top:16px"><a class="btn" href="/pay.html">다시 시도 · Попробовать снова</a></p>
+    <p style="margin-top:16px"><a class="btn" href="/subscribe.html">다시 시도 · Попробовать снова</a></p>
   </div>
 </main>
 <footer>
@@ -70,7 +71,7 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 </footer>
 <script>
 const q = new URLSearchParams(location.search);
-document.getElementById('s').textContent = (q.get('message') || '결제가 취소되었거나 실패했습니다.') + (q.get('code') ? ' (' + q.get('code') + ')' : '') + ' · Деньги не списаны.';
+document.getElementById('s').textContent = (q.get('message') || '카드 등록이 취소되었거나 실패했습니다.') + (q.get('code') ? ' (' + q.get('code') + ')' : '') + ' · Деньги не списаны.';
 </script>
 </body>
 </html>

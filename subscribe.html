@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모니터링 구독 · Подписка «Мониторинг» — KOMPASS</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#0E1F5B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://js.tosspayments.com/v2/standard"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0d1829;--navy2:#111f35;--blue:#2a4a7a;--blue2:#3a5a8a;--silver:#b8c8e0;--gray:#8aaad0;--border:rgba(255,255,255,0.08);--green:#10b981;--warn:#f59e0b}
+body{background:var(--navy);color:#fff;font-family:'Noto Sans KR','Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--silver)}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);max-width:1000px;margin:0 auto}
+header a.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:700;letter-spacing:.06em}
+header a.logo img{width:30px;height:30px}
+main{max-width:1000px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:24px;margin-bottom:6px}
+.sub{color:var(--gray);font-size:14px;margin-bottom:18px}
+.test{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.4);color:#fcd34d;border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{padding:8px 18px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--gray);cursor:pointer;font:inherit;font-size:14px;font-weight:600}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.card img{width:100%;aspect-ratio:16/10;display:block;object-fit:cover}
+.card .b{padding:12px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card .g{font-size:12px;color:var(--gray)}
+.card .t{font-weight:600;font-size:15px}
+.card .n{font-size:12px;color:var(--gray)}
+.card .p{font-weight:700;color:var(--silver);margin-top:auto;padding-top:6px}
+.btn{display:inline-block;text-align:center;padding:10px 16px;border-radius:10px;border:none;background:var(--blue2);color:#fff;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.card .btn{margin:0 14px 14px}
+.detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+.detail img{width:100%;border-radius:14px;display:block}
+.box{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:18px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.row:last-of-type{border-bottom:none}
+.row[hidden]{display:none}
+.row span:first-child{color:var(--gray)}
+.total{font-size:22px;font-weight:700}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--silver);margin:14px 0}
+.agree input{margin-top:4px;width:18px;height:18px;flex:none}
+.wide{width:100%;font-size:16px;padding:14px}
+.note{font-size:12px;color:var(--gray);margin-top:10px}
+.err{color:#fca5a5;font-size:13px;margin-top:8px;min-height:1em}
+footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-height:1.8;padding:20px 16px;max-width:1000px;margin:0 auto}
+@media (max-width:720px){.detail{grid-template-columns:1fr}header{padding:12px 16px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/"><img src="/favicon.svg" alt="">KOMPASS</a>
+  <a href="/" style="font-size:14px">← 홈 · На главную</a>
+</header>
+<main>
+  <div class="test" id="testbar">테스트 결제 모드 — 실제로 청구되지 않습니다 · Тестовый режим: деньги не списываются</div>
+  <div class="detail">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231f3d6e%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230d1829%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22url%28%23g%29%22/%3E%3Ccircle%20cx%3D%22250%22%20cy%3D%2270%22%20r%3D%2270%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.05%29%22/%3E%3Cpath%20d%3D%22M228%2052%20l22%20-14%20l22%2014%20v26%20c0%2018%20-10%2030%20-22%2036%20c-12%20-6%20-22%20-18%20-22%20-36z%22%20fill%3D%22none%22%20stroke%3D%22%237fb2ff%22%20stroke-width%3D%224%22/%3E%3Cpath%20d%3D%22M240%2076%20l8%208%20l14%20-16%22%20fill%3D%22none%22%20stroke%3D%22%2310b981%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Ctext%20x%3D%2222%22%20y%3D%2244%22%20font-family%3D%22Inter%2CArial%22%20font-weight%3D%22700%22%20font-size%3D%2216%22%20letter-spacing%3D%223%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.85%29%22%3EKOMPASS%3C/text%3E%3Ctext%20x%3D%2222%22%20y%3D%22140%22%20font-family%3D%22Noto%20Sans%20KR%2CInter%2CArial%22%20font-weight%3D%22700%22%20font-size%3D%2222%22%20fill%3D%22%23fff%22%3E%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%20%C2%B7%20%D0%9C%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3%3C/text%3E%3Ctext%20x%3D%2222%22%20y%3D%22166%22%20font-family%3D%22Inter%2CArial%22%20font-size%3D%2213%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%3E%EC%9B%94%20%EA%B5%AC%EB%8F%85%20%C2%B7%20%D0%B5%D0%B6%D0%B5%D0%BC%D0%B5%D1%81%D1%8F%D1%87%D0%BD%D0%BE%3C/text%3E%3C/svg%3E" alt="Kompass 모니터링 월 구독">
+    <div class="box">
+      <div style="color:var(--gray);font-size:13px">월 구독 · Ежемесячная подписка</div>
+      <h1 style="font-size:22px;margin:4px 0 10px">Kompass 모니터링 · Мониторинг</h1>
+      <p class="sub" style="margin-bottom:8px">외국인등록증·비자·여권 만료일 알림, 담당 매니저의 월 1회 상태 점검, 앱 내 우선 상담.<br>
+      Напоминания о сроках ARC, визы и паспорта, ежемесячная проверка статуса менеджером, приоритетные ответы в чате приложения.</p>
+      <div class="row"><span>결제 주기 · Период</span><span>1개월 · 1 месяц</span></div>
+      <div class="row"><span>자동 갱신 · Автопродление</span><span>매월 · ежемесячно</span></div>
+      <div class="row"><span>월 요금 · Цена в месяц</span><span class="total">10,000원</span></div>
+      <p class="note" style="margin-top:6px">첫 결제는 카드 등록 즉시, 이후 매월 같은 날 자동 결제됩니다. 결제 전 결제일과 금액을 안내하며, 자동 갱신은 언제든지 해지할 수 있습니다(이미 결제한 기간 종료 시까지 이용). 해지 문의: 010-5183-5885, Kompass.kor@gmail.com<br>
+      Первое списание — сразу после привязки карты, далее каждый месяц в тот же день. Перед списанием сообщаем дату и сумму; автопродление можно отключить в любой момент (подписка действует до конца оплаченного периода).</p>
+      <label class="agree"><input type="checkbox" id="agree">
+        <span>위 내용과 <a href="/terms.html" target="_blank">이용약관</a>, <a href="/refund.html" target="_blank">환불정책</a>, <a href="/privacy.html" target="_blank">개인정보처리방침</a>을 확인했으며, 매월 10,000원 자동 결제에 동의합니다.<br>
+        Согласен с условиями, политикой возврата и ежемесячным автосписанием 10 000 ₩.</span></label>
+      <button class="btn wide" id="pay" disabled>카드 등록하고 구독하기 · Подписаться картой</button>
+      <div class="err" id="err"></div>
+      <p class="note">결제는 토스페이먼츠를 통해 안전하게 처리되며, 카드 정보는 KOMPASS에 저장되지 않습니다. · Платёж обрабатывает Toss Payments, данные карты у нас не хранятся.</p>
+    </div>
+  </div>
+</main>
+<footer>
+상호: 콤파스인천점(KOMPASS) · 대표자: LI EVGENIYA · 사업자등록번호: 865-74-00596 · 통신판매업신고: 2026-인천연수구-2095<br>
+주소: 인천광역시 연수구 비류대로433번길 12, 1층 5호 · 전화: 010-5183-5885 · 이메일: Kompass.kor@gmail.com<br>
+<a href="/terms.html">이용약관</a> · <a href="/privacy.html">개인정보처리방침</a> · <a href="/refund.html">환불정책</a>
+</footer>
+<script>
+// Toss автоплатёж (빌링). Ключ клиента публичный (test_ck_ — тестовый, MID bill_5kore9z4l).
+const TOSS_CLIENT_KEY = 'test_ck_0RnYX2w532ZPekEKW77N3NeyqApQ';
+const $ = id => document.getElementById(id);
+if (!TOSS_CLIENT_KEY.startsWith('test_')) $('testbar').hidden = true;
+$('agree').onchange = () => $('pay').disabled = !$('agree').checked;
+$('pay').onclick = async () => {
+  $('err').textContent = ''; $('pay').disabled = true;
+  try {
+    const customerKey = 'c_' + crypto.randomUUID().replace(/-/g, '').slice(0, 30);
+    const payment = TossPayments(TOSS_CLIENT_KEY).payment({customerKey});
+    await payment.requestBillingAuth({
+      method: 'CARD',
+      successUrl: location.origin + '/subscribe-success.html',
+      failUrl: location.origin + '/subscribe-fail.html',
+    });
+  } catch (e) {
+    $('err').textContent = (e && (e.message || e.code)) || '결제를 시작하지 못했습니다.';
+    $('pay').disabled = !$('agree').checked;
+  }
+};
+</script>
+</body>
+</html>

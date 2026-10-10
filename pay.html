@@ -41,6 +41,7 @@ h1{font-size:24px;margin-bottom:6px}
 .box{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:18px}
 .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
 .row:last-of-type{border-bottom:none}
+.row[hidden]{display:none}
 .row span:first-child{color:var(--gray)}
 .total{font-size:22px;font-weight:700}
 .agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--silver);margin:14px 0}
@@ -105,8 +106,11 @@ function h6(s) { // sha1 → первые 6 hex, как в tossConfirm
 function hue(s) { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h % 360; }
 function img(group, title) { // своё изображение у каждой группы и позиции: требование Toss «не повторять одно изображение»
   const a = hue(group), b = (a + 40 + hue(title) % 60) % 360;
-  const t = esc(group).slice(0, 26);
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${a},45%,28%)"/><stop offset="1" stop-color="hsl(${b},50%,18%)"/></linearGradient></defs><rect width="320" height="200" fill="url(#g)"/><circle cx="262" cy="52" r="64" fill="rgba(255,255,255,0.06)"/><circle cx="280" cy="170" r="40" fill="rgba(255,255,255,0.05)"/><text x="22" y="44" font-family="Inter,Arial" font-weight="700" font-size="16" letter-spacing="3" fill="rgba(255,255,255,0.85)">KOMPASS</text><text x="22" y="150" font-family="Noto Sans KR,Inter,Arial" font-weight="700" font-size="20" fill="#fff">${t}</text><text x="22" y="176" font-family="Inter,Arial" font-size="12" fill="rgba(255,255,255,0.7)">5korea.uk</text></svg>`;
+  const words = String(title).split(/\s+/); const lines = ['', ''];
+  for (const w of words) { const k = (lines[0] + ' ' + w).trim().length <= 22 || !lines[0] ? 0 : 1; lines[k] = (lines[k] + ' ' + w).trim(); }
+  if (lines[1].length > 24) lines[1] = lines[1].slice(0, 23) + '…';
+  const g = esc(group).slice(0, 34), t1 = esc(lines[0]), t2 = esc(lines[1]);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(${a},45%,28%)"/><stop offset="1" stop-color="hsl(${b},50%,18%)"/></linearGradient></defs><rect width="320" height="200" fill="url(#g)"/><circle cx="262" cy="52" r="64" fill="rgba(255,255,255,0.06)"/><circle cx="280" cy="170" r="40" fill="rgba(255,255,255,0.05)"/><text x="22" y="44" font-family="Inter,Arial" font-weight="700" font-size="16" letter-spacing="3" fill="rgba(255,255,255,0.85)">KOMPASS</text><text x="22" y="70" font-family="Inter,Arial" font-size="12" fill="rgba(255,255,255,0.65)">${g}</text><text x="22" y="134" font-family="Noto Sans KR,Inter,Arial" font-weight="700" font-size="19" fill="#fff">${t1}</text><text x="22" y="160" font-family="Noto Sans KR,Inter,Arial" font-weight="700" font-size="19" fill="#fff">${t2}</text><text x="22" y="186" font-family="Inter,Arial" font-size="11" fill="rgba(255,255,255,0.55)">5korea.uk</text></svg>`;
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
 function payable(off) {

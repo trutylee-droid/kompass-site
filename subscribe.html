@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>모니터링 구독 · Подписка «Мониторинг» — KOMPASS</title>
+<title>요금제 · Тарифы — KOMPASS</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="theme-color" content="#0E1F5B">
@@ -60,26 +60,27 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 </header>
 <main>
   <div class="test" id="testbar">테스트 결제 모드 — 실제로 청구되지 않습니다 · Тестовый режим: деньги не списываются</div>
-  <div class="detail">
-    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231f3d6e%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230d1829%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22url%28%23g%29%22/%3E%3Ccircle%20cx%3D%22250%22%20cy%3D%2270%22%20r%3D%2270%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.05%29%22/%3E%3Cpath%20d%3D%22M228%2052%20l22%20-14%20l22%2014%20v26%20c0%2018%20-10%2030%20-22%2036%20c-12%20-6%20-22%20-18%20-22%20-36z%22%20fill%3D%22none%22%20stroke%3D%22%237fb2ff%22%20stroke-width%3D%224%22/%3E%3Cpath%20d%3D%22M240%2076%20l8%208%20l14%20-16%22%20fill%3D%22none%22%20stroke%3D%22%2310b981%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Ctext%20x%3D%2222%22%20y%3D%2244%22%20font-family%3D%22Inter%2CArial%22%20font-weight%3D%22700%22%20font-size%3D%2216%22%20letter-spacing%3D%223%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.85%29%22%3EKOMPASS%3C/text%3E%3Ctext%20x%3D%2222%22%20y%3D%22140%22%20font-family%3D%22Noto%20Sans%20KR%2CInter%2CArial%22%20font-weight%3D%22700%22%20font-size%3D%2222%22%20fill%3D%22%23fff%22%3E%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%20%C2%B7%20%D0%9C%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3%3C/text%3E%3Ctext%20x%3D%2222%22%20y%3D%22166%22%20font-family%3D%22Inter%2CArial%22%20font-size%3D%2213%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%3E%EC%9B%94%20%EA%B5%AC%EB%8F%85%20%C2%B7%20%D0%B5%D0%B6%D0%B5%D0%BC%D0%B5%D1%81%D1%8F%D1%87%D0%BD%D0%BE%3C/text%3E%3C/svg%3E" alt="Kompass 모니터링 월 구독">
+  <h1>요금제 · Тарифы</h1>
+  <p class="sub">KOMPASS 모니터링은 담당 매니저와 공공기관 조회(CODEF)로 매월 고객님의 상태를 확인하고 문제가 생기면 먼저 알려드리는 서비스입니다.<br>
+  Мониторинг Kompass — менеджер и проверка госсервисов каждый месяц смотрят ваш статус и первыми предупреждают о проблемах.</p>
+  <div class="grid" id="plans"></div>
+  <div class="detail" style="margin-top:22px">
+    <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231f3d6e%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230d1829%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22url%28%23g%29%22/%3E%3Ccircle%20cx%3D%22250%22%20cy%3D%2270%22%20r%3D%2270%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.05%29%22/%3E%3Cpath%20d%3D%22M228%2052%20l22%20-14%20l22%2014%20v26%20c0%2018%20-10%2030%20-22%2036%20c-12%20-6%20-22%20-18%20-22%20-36z%22%20fill%3D%22none%22%20stroke%3D%22%237fb2ff%22%20stroke-width%3D%224%22/%3E%3Cpath%20d%3D%22M240%2076%20l8%208%20l14%20-16%22%20fill%3D%22none%22%20stroke%3D%22%2310b981%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Ctext%20x%3D%2222%22%20y%3D%2244%22%20font-family%3D%22Inter%2CArial%22%20font-weight%3D%22700%22%20font-size%3D%2216%22%20letter-spacing%3D%223%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.85%29%22%3EKOMPASS%3C/text%3E%3Ctext%20x%3D%2222%22%20y%3D%22140%22%20font-family%3D%22Noto%20Sans%20KR%2CInter%2CArial%22%20font-weight%3D%22700%22%20font-size%3D%2222%22%20fill%3D%22%23fff%22%3E%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%20%C2%B7%20%D0%9C%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3%3C/text%3E%3Ctext%20x%3D%2222%22%20y%3D%22166%22%20font-family%3D%22Inter%2CArial%22%20font-size%3D%2213%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%3E%EC%9B%94%20%EA%B5%AC%EB%8F%85%20%C2%B7%20%D0%B5%D0%B6%D0%B5%D0%BC%D0%B5%D1%81%D1%8F%D1%87%D0%BD%D0%BE%3C/text%3E%3C/svg%3E" alt="Kompass 모니터링 월 구독" id="pimg">
     <div class="box">
       <div style="color:var(--gray);font-size:13px">월 구독 · Ежемесячная подписка</div>
-      <h1 style="font-size:22px;margin:4px 0 10px">Kompass 모니터링 · Мониторинг</h1>
-      <ul class="sub" style="margin:0 0 8px 18px">
-        <li>외국인등록증·비자·여권 등 서류 만료일 알림 · Напоминания о сроках ARC, визы, паспорта и ваших документов</li>
-        <li>My Hub: 연금·건강보험·세금·과태료 등 공공기관 정보 조회 · My Hub: данные госсервисов — пенсия, страховка, налоги, штрафы</li>
-        <li>담당 매니저 채팅·AI 도우미·신청 현황 확인 · Чат с менеджером, AI-помощник и статусы заявок</li>
-        <li>서류 보관함·기한 캘린더 · Хранилище документов и календарь сроков</li>
-      </ul>
+      <h1 style="font-size:22px;margin:4px 0 10px" id="pname"></h1>
+      <ul class="sub" style="margin:0 0 8px 18px" id="plist"></ul>
       <div class="row"><span>제공 방법 · Как предоставляется</span><span>결제 즉시 앱·웹 이용 (실물 배송 없음) · сразу в приложении, без доставки</span></div>
       <div class="row"><span>결제 주기 · Период</span><span>1개월 · 1 месяц</span></div>
       <div class="row"><span>자동 갱신 · Автопродление</span><span>매월 · ежемесячно</span></div>
-      <div class="row"><span>월 요금 · Цена в месяц</span><span class="total">10,000원</span></div>
-      <p class="note" style="margin-top:6px">첫 결제는 카드 등록 즉시, 이후 매월 같은 날 자동 결제됩니다. 결제 전 결제일과 금액을 안내하며, 자동 갱신은 언제든지 해지할 수 있습니다(이미 결제한 기간 종료 시까지 이용). 해지 문의: 010-5183-5885, Kompass.kor@gmail.com<br>
+      <div class="row"><span>월 요금 · Цена в месяц</span><span class="total" id="pprice"></span></div>
+      <label style="display:block;margin-top:12px;font-size:13px;color:var(--silver)">앱에 로그인한 휴대폰 번호 · Номер телефона, с которым вы входите в приложение
+        <input id="phone" inputmode="tel" placeholder="010-1234-5678" style="display:block;width:100%;margin-top:6px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:#fff;font:inherit"></label>
+      <p class="note" style="margin-top:8px">첫 결제는 카드 등록 즉시, 이후 매월 같은 날 자동 결제됩니다. 결제 전 결제일과 금액을 안내하며, 자동 갱신은 언제든지 해지할 수 있습니다(이미 결제한 기간 종료 시까지 이용). 해지 문의: 010-5183-5885, Kompass.kor@gmail.com<br>
       Первое списание — сразу после привязки карты, далее каждый месяц в тот же день. Перед списанием сообщаем дату и сумму; автопродление можно отключить в любой момент (подписка действует до конца оплаченного периода).</p>
       <label class="agree"><input type="checkbox" id="agree">
-        <span>위 내용과 <a href="/terms.html" target="_blank">이용약관</a>, <a href="/refund.html" target="_blank">환불정책</a>, <a href="/privacy.html" target="_blank">개인정보처리방침</a>을 확인했으며, 매월 10,000원 자동 결제에 동의합니다.<br>
-        Согласен с условиями, политикой возврата и ежемесячным автосписанием 10 000 ₩.</span></label>
+        <span>위 내용과 <a href="/terms.html" target="_blank">이용약관</a>, <a href="/refund.html" target="_blank">환불정책</a>, <a href="/privacy.html" target="_blank">개인정보처리방침</a>을 확인했으며, 매월 <b class="pp"></b> 자동 결제에 동의합니다.<br>
+        Согласен с условиями, политикой возврата и ежемесячным автосписанием <b class="pp"></b>.</span></label>
       <button class="btn wide" id="pay" disabled>카드 등록하고 구독하기 · Подписаться картой</button>
       <div class="err" id="err"></div>
       <p class="note">결제는 토스페이먼츠를 통해 안전하게 처리되며, 카드 정보는 KOMPASS에 저장되지 않습니다. · Платёж обрабатывает Toss Payments, данные карты у нас не хранятся.</p>
@@ -93,23 +94,58 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 </footer>
 <script>
 // Toss автоплатёж (빌링). Ключ клиента публичный (test_ck_ — тестовый, MID bill_5kore9z4l).
+// 20.10 (Сергей): тарифы Free / Silver 9 900 / Gold 19 900 / Platinum 49 900. Цена списания берётся НА СЕРВЕРЕ по id тарифа.
 const TOSS_CLIENT_KEY = 'test_ck_0RnYX2w532ZPekEKW77N3NeyqApQ';
+const PLANS = [
+  {id:'free', name:'Free · 무료', price:0, items:[
+    'AI 상담·담당 매니저 채팅·신청 현황 · AI-помощник, чат с менеджером, статусы заявок',
+    '서류 보관함·만료일 알림·기한 캘린더 · Хранилище документов, напоминания о сроках, календарь']},
+  {id:'silver', name:'Silver · 세금·건강보험 모니터링', price:9900, items:[
+    'Free의 모든 기능 · Всё из Free',
+    '매월 세금 상태 확인 — 회사가 원천징수한 세금을 신고·납부했는지 · Ежемесячная проверка налогов: перечислил ли работодатель удержанный налог',
+    '건강보험 가입·납부 상태 확인 · Проверка статуса и оплаты медстраховки',
+    '문제 발견 시 담당 매니저가 먼저 연락 · Нашли проблему — менеджер связывается первым']},
+  {id:'gold', name:'Gold · 종합 모니터링', price:19900, items:[
+    'Silver의 모든 기능 · Всё из Silver',
+    '국민연금·과태료(무인단속)·지방세·하이패스 미납 확인 · Пенсия, штрафы с камер, местные налоги, неоплаченный Hi-Pass',
+    '소득·납세 관련 증명서 조회 · Справки о доходах и налогах']},
+  {id:'platinum', name:'Platinum · 사업자 + Gold', price:49900, items:[
+    'Gold의 모든 기능 · Всё из Gold',
+    '사업자 전용 섹션: 거래처 상태 확인, 세금계산서, 사업자 세금 캘린더, 사업자 서류 · Раздел для бизнеса: проверка контрагентов, счета-фактуры, налоговый календарь фирмы, документы фирмы',
+    '사업자 수 제한 없음, 직원 초대 가능 · Без ограничения числа фирм, приглашение сотрудников']},
+];
 const $ = id => document.getElementById(id);
+const won = n => n.toLocaleString('ko-KR') + '원';
 if (!TOSS_CLIENT_KEY.startsWith('test_')) $('testbar').hidden = true;
-$('agree').onchange = () => $('pay').disabled = !$('agree').checked;
+let cur = PLANS.find(p => p.id === new URLSearchParams(location.search).get('plan')) || PLANS[1];
+function render() {
+  $('plans').innerHTML = PLANS.map(p => '<div class="card" style="cursor:' + (p.price ? 'pointer' : 'default') + ';' + (p.id === cur.id ? 'border-color:#7fb2ff' : '') + '" data-id="' + p.id + '"><div class="b">'
+    + '<div class="t">' + p.name + '</div><div class="n">' + p.items[p.items.length - 1] + '</div>'
+    + '<div class="p">' + (p.price ? won(p.price) + ' / 월' : '무료 · бесплатно') + '</div></div></div>').join('');
+  $('plans').querySelectorAll('.card').forEach(c => c.onclick = () => { const p = PLANS.find(x => x.id === c.dataset.id); if (p.price) { cur = p; render(); } });
+  $('pname').textContent = cur.name;
+  $('plist').innerHTML = cur.items.map(i => '<li>' + i + '</li>').join('');
+  $('pprice').textContent = won(cur.price);
+  document.querySelectorAll('.pp').forEach(b => b.textContent = won(cur.price));
+}
+render();
+const phoneOk = () => $('phone').value.replace(/\D/g, '').length >= 10;
+const upd = () => $('pay').disabled = !($('agree').checked && phoneOk());
+$('agree').onchange = upd; $('phone').oninput = upd;
 $('pay').onclick = async () => {
   $('err').textContent = ''; $('pay').disabled = true;
   try {
     const customerKey = 'c_' + crypto.randomUUID().replace(/-/g, '').slice(0, 30);
+    const q = '?plan=' + cur.id + '&phone=' + encodeURIComponent($('phone').value.replace(/\D/g, ''));
     const payment = TossPayments(TOSS_CLIENT_KEY).payment({customerKey});
     await payment.requestBillingAuth({
       method: 'CARD',
-      successUrl: location.origin + '/subscribe-success.html',
+      successUrl: location.origin + '/subscribe-success.html' + q,
       failUrl: location.origin + '/subscribe-fail.html',
     });
   } catch (e) {
     $('err').textContent = (e && (e.message || e.code)) || '결제를 시작하지 못했습니다.';
-    $('pay').disabled = !$('agree').checked;
+    upd();
   }
 };
 </script>

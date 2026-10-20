@@ -77,7 +77,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const row = (a, b) => '<div class="row"><span>' + esc(a) + '</span><span>' + b + '</span></div>';
 fetch('https://us-central1-kompass-sandbox.cloudfunctions.net/tossBillingStart', {
   method: 'POST', headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({authKey: q.get('authKey'), customerKey: q.get('customerKey')}),
+  body: JSON.stringify({authKey: q.get('authKey'), customerKey: q.get('customerKey'), plan: q.get('plan'), phone: q.get('phone')}),
 }).then(r => r.json()).then(j => {
   if (j.ok) {
     document.getElementById('h').textContent = '구독이 시작되었습니다 · Подписка оформлена';

@@ -80,14 +80,18 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
       <h1 style="font-size:22px;margin:4px 0 10px" id="pname"></h1>
       <ul class="sub" style="margin:0 0 8px 18px" id="plist"></ul>
       <div class="row"><span data-i18n="r_how"></span><span data-i18n="r_how_v"></span></div>
+      <div class="tabs" id="modes" style="margin:10px 0 4px">
+        <button type="button" class="tab active" data-mode="sub" data-i18n="m_sub"></button>
+        <button type="button" class="tab" data-mode="once" data-i18n="m_once"></button>
+      </div>
       <div class="row"><span data-i18n="r_period"></span><span data-i18n="r_period_v"></span></div>
-      <div class="row"><span data-i18n="r_renew"></span><span data-i18n="r_renew_v"></span></div>
+      <div class="row"><span data-i18n="r_renew"></span><span id="renewV"></span></div>
       <div class="row"><span data-i18n="r_price"></span><span class="total" id="pprice"></span></div>
       <label style="display:block;margin-top:12px;font-size:13px;color:var(--silver)"><span data-i18n="phone"></span>
         <input id="phone" inputmode="tel" placeholder="010-1234-5678" style="display:block;width:100%;margin-top:6px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:#fff;font:inherit"></label>
       <p class="note" style="margin-top:8px" data-i18n="terms"></p>
       <label class="agree"><input type="checkbox" id="agree"> <span id="agreeTxt"></span></label>
-      <button class="btn wide" id="pay" disabled data-i18n="pay"></button>
+      <button class="btn wide" id="pay" disabled></button>
       <div class="err" id="err"></div>
       <p class="note" data-i18n="safe"></p>
     </div>
@@ -103,7 +107,7 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 // 20.10 (Сергей): тарифы Free / Silver 9 900 / Gold 19 900 / Platinum 49 900. Цена списания берётся НА СЕРВЕРЕ по id тарифа.
 const TOSS_CLIENT_KEY = 'test_ck_0RnYX2w532ZPekEKW77N3NeyqApQ';
 const T = {
- ru:{back:'← На главную',test:'Тестовый режим: деньги не списываются',title:'Тарифы',
+ ru:{m_sub:'Ежемесячно (автопродление)',m_once:'Один месяц (без автопродления)',r_renew_once:'нет — разовая оплата',payOnce:'Оплатить картой 1 месяц',agreeOnce:'Согласен с <a href="/terms.html" target="_blank">условиями</a>, <a href="/refund.html" target="_blank">политикой возврата</a> и <a href="/privacy.html" target="_blank">политикой конфиденциальности</a>. Разовая оплата {p} за 1 месяц, без автопродления.',back:'← На главную',test:'Тестовый режим: деньги не списываются',title:'Тарифы',
   intro:'Мониторинг Kompass — менеджер и проверка госсервисов каждый месяц смотрят ваш статус и первыми предупреждают о проблемах.',
   monthly:'Ежемесячная подписка',r_how:'Как предоставляется',r_how_v:'сразу в приложении и на сайте, без доставки',r_period:'Период',r_period_v:'1 месяц',
   r_renew:'Автопродление',r_renew_v:'ежемесячно',r_price:'Цена в месяц',phone:'Номер телефона, с которым вы входите в приложение Kompass',
@@ -115,7 +119,7 @@ const T = {
    silver:['Silver · налоги и страховка',['Всё из Free','Ежемесячная проверка налогов: перечислил ли работодатель удержанный налог','Проверка статуса и оплаты медстраховки','Нашли проблему — менеджер связывается первым']],
    gold:['Gold · полный мониторинг',['Всё из Silver','Пенсия, штрафы с камер, местные налоги, неоплаченный Hi-Pass','Справки о доходах и налогах']],
    platinum:['Platinum · бизнес + Gold',['Всё из Gold','Раздел для бизнеса: проверка контрагентов, счета-фактуры, налоговый календарь и документы фирмы','Без ограничения числа фирм, приглашение сотрудников']]}},
- ko:{back:'← 홈',test:'테스트 결제 모드 — 실제로 청구되지 않습니다',title:'요금제',
+ ko:{m_sub:'매월 자동결제',m_once:'1개월만 결제 (자동갱신 없음)',r_renew_once:'없음 — 1회 결제',payOnce:'카드로 1개월 결제하기',agreeOnce:'위 내용과 <a href="/terms.html" target="_blank">이용약관</a>, <a href="/refund.html" target="_blank">환불정책</a>, <a href="/privacy.html" target="_blank">개인정보처리방침</a>을 확인했으며, 1개월 이용료 {p} 1회 결제에 동의합니다(자동갱신 없음).',back:'← 홈',test:'테스트 결제 모드 — 실제로 청구되지 않습니다',title:'요금제',
   intro:'KOMPASS 모니터링은 담당 매니저와 공공기관 조회로 매월 고객님의 상태를 확인하고 문제가 생기면 먼저 알려드리는 서비스입니다.',
   monthly:'월 구독',r_how:'제공 방법',r_how_v:'결제 즉시 앱·웹 이용 (실물 배송 없음)',r_period:'결제 주기',r_period_v:'1개월',
   r_renew:'자동 갱신',r_renew_v:'매월',r_price:'월 요금',phone:'KOMPASS 앱에 로그인한 휴대폰 번호',
@@ -127,7 +131,7 @@ const T = {
    silver:['Silver · 세금·건강보험 모니터링',['Free의 모든 기능','매월 세금 상태 확인 — 회사가 원천징수한 세금을 신고·납부했는지','건강보험 가입·납부 상태 확인','문제 발견 시 담당 매니저가 먼저 연락']],
    gold:['Gold · 종합 모니터링',['Silver의 모든 기능','국민연금·과태료(무인단속)·지방세·하이패스 미납 확인','소득·납세 관련 증명서 조회']],
    platinum:['Platinum · 사업자 + Gold',['Gold의 모든 기능','사업자 전용: 거래처 상태 확인, 세금계산서, 사업자 세금 캘린더·서류','사업자 수 제한 없음, 직원 초대 가능']]}},
- en:{back:'← Home',test:'Test payment mode — no money is charged',title:'Plans',
+ en:{m_sub:'Monthly (auto-renewal)',m_once:'One month (no auto-renewal)',r_renew_once:'none — one-time payment',payOnce:'Pay 1 month by card',agreeOnce:'I agree to the <a href="/terms.html" target="_blank">terms</a>, <a href="/refund.html" target="_blank">refund policy</a> and <a href="/privacy.html" target="_blank">privacy policy</a>. One-time payment of {p} for 1 month, no auto-renewal.',back:'← Home',test:'Test payment mode — no money is charged',title:'Plans',
   intro:'Kompass monitoring: your manager and government data checks review your status every month and warn you first if something is wrong.',
   monthly:'Monthly subscription',r_how:'Delivery',r_how_v:'instantly in the app and on the web, no shipping',r_period:'Billing period',r_period_v:'1 month',
   r_renew:'Auto-renewal',r_renew_v:'monthly',r_price:'Price per month',phone:'Phone number you use to sign in to the Kompass app',
@@ -156,12 +160,17 @@ function render() {
   $('pname').textContent = nm(cur);
   $('plist').innerHTML = it(cur).map(i => '<li>' + i + '</li>').join('');
   $('pprice').textContent = won(cur.price);
-  $('agreeTxt').innerHTML = L.agree.replace('{p}', '<b>' + won(cur.price) + '</b>');
+  $('agreeTxt').innerHTML = (mode === 'once' ? L.agreeOnce : L.agree).replace('{p}', '<b>' + won(cur.price) + '</b>');
+  $('renewV').textContent = mode === 'once' ? L.r_renew_once : L.r_renew_v;
+  $('pay').textContent = mode === 'once' ? L.payOnce : L.pay;
+  document.querySelectorAll('#modes .tab').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
   document.querySelectorAll('[data-i18n]').forEach(el => { const v = L[el.getAttribute('data-i18n')]; if (v !== undefined) el.innerHTML = v; });
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.trim() === ({ru:'РУС',ko:'한국어',en:'ENG'})[lang]));
   document.documentElement.lang = lang; document.title = L.pageTitle;
 }
 function setLang(l) { lang = l; render(); }
+let mode = new URLSearchParams(location.search).get('mode') === 'once' ? 'once' : 'sub';
+document.querySelectorAll('#modes .tab').forEach(b => b.onclick = () => { mode = b.dataset.mode; render(); });
 render();
 const phoneOk = () => $('phone').value.replace(/\D/g, '').length >= 10;
 const upd = () => $('pay').disabled = !($('agree').checked && phoneOk());
@@ -169,8 +178,21 @@ $('agree').onchange = upd; $('phone').oninput = upd;
 $('pay').onclick = async () => {
   $('err').textContent = ''; $('pay').disabled = true;
   try {
+    const phone = $('phone').value.replace(/\D/g, '');
+    if (mode === 'once') {
+      // Разовая оплата 1 месяца (일반 결제). Сумму сервер сверит с тарифом.
+      const orderId = 'O_' + cur.id + '_' + crypto.randomUUID().replace(/-/g, '').slice(0, 20);
+      const payment = TossPayments(TOSS_CLIENT_KEY).payment({customerKey: TossPayments.ANONYMOUS});
+      await payment.requestPayment({
+        method: 'CARD', amount: {currency: 'KRW', value: cur.price}, orderId,
+        orderName: T.ko.plans[cur.id][0] + ' (1개월)',
+        successUrl: location.origin + '/subscribe-once-success.html?phone=' + encodeURIComponent(phone),
+        failUrl: location.origin + '/subscribe-fail.html',
+      });
+      return;
+    }
     const customerKey = 'c_' + crypto.randomUUID().replace(/-/g, '').slice(0, 30);
-    const q = '?plan=' + cur.id + '&phone=' + encodeURIComponent($('phone').value.replace(/\D/g, ''));
+    const q = '?plan=' + cur.id + '&phone=' + encodeURIComponent(phone);
     const payment = TossPayments(TOSS_CLIENT_KEY).payment({customerKey});
     await payment.requestBillingAuth({
       method: 'CARD',

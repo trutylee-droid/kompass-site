@@ -77,7 +77,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const row = (a, b) => '<div class="row"><span>' + esc(a) + '</span><span>' + b + '</span></div>';
 fetch('https://us-central1-kompass-sandbox.cloudfunctions.net/tossBillingStart', {
   method: 'POST', headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({authKey: q.get('authKey'), customerKey: q.get('customerKey'), plan: q.get('plan'), phone: q.get('phone')}),
+  body: JSON.stringify({authKey: q.get('authKey'), customerKey: q.get('customerKey'), plan: q.get('plan'), phone: q.get('phone'), ct: q.get('ct')}),
 }).then(r => r.json()).then(j => {
   if (j.ok) {
     document.getElementById('h').textContent = '구독이 시작되었습니다 · Подписка оформлена';
@@ -89,6 +89,7 @@ fetch('https://us-central1-kompass-sandbox.cloudfunctions.net/tossBillingStart',
       + (j.receiptUrl ? row('영수증 · Чек', '<a href="' + esc(j.receiptUrl) + '" target="_blank" rel="noopener">보기 · Открыть</a>') : '')
       + (j.manageUrl ? row('구독 관리 · Управление', '<a href="' + esc(j.manageUrl) + '">자동결제 해지 · Отключить автопродление</a>') : '');
     if (j.manageUrl) document.getElementById('s').textContent += ' 이 페이지의 「구독 관리」 링크를 저장해 두세요. · Сохраните ссылку «Управление».';
+    if (q.get('ct')) document.getElementById('s').textContent = 'Тариф уже открыт в приложении. Закройте это окно (кнопка «Готово» или ✕ сверху). · 앱에서 바로 이용할 수 있습니다.';
     if (j.mode === 'test') document.getElementById('t').textContent = '테스트 결제 — 실제로 청구되지 않았습니다. · Тестовый платёж, деньги не списаны.';
   } else {
     document.getElementById('h').textContent = '구독을 완료하지 못했습니다 · Подписка не оформлена';

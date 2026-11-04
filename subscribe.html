@@ -105,7 +105,11 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 <script>
 // Toss автоплатёж (빌링). Ключ клиента публичный (test_ck_ — тестовый, MID bill_5kore9z4l).
 // 20.10 (Сергей): тарифы Free / Silver 9 900 / Gold 19 900 / Platinum 49 900. Цена списания берётся НА СЕРВЕРЕ по id тарифа.
-const TOSS_CLIENT_KEY = 'test_ck_0RnYX2w532ZPekEKW77N3NeyqApQ';
+// 04.11: ключи и режим (test/live) отдельно для автоплатежа и разовой оплаты — с сервера (tossConfig).
+const CF = 'https://us-central1-kompass-sandbox.cloudfunctions.net/';
+let CFG = null;
+const cfgReady = fetch(CF + 'tossConfig', {cache: 'no-store'}).then(r => r.json()).then(j => { CFG = j; render(); }).catch(() => {});
+const keyFor = m => CFG && (m === 'once' ? CFG.once : CFG.billing);
 const T = {
  ru:{m_sub:'Ежемесячно (автопродление)',m_once:'Один месяц (без автопродления)',r_renew_once:'нет — разовая оплата',payOnce:'Оплатить картой 1 месяц',agreeOnce:'Согласен с <a href="/terms.html" target="_blank">условиями</a>, <a href="/refund.html" target="_blank">политикой возврата</a> и <a href="/privacy.html" target="_blank">политикой конфиденциальности</a>. Разовая оплата {p} за 1 месяц, без автопродления.',back:'← На главную',test:'Тестовый режим: деньги не списываются',title:'Тарифы',
   intro:'Мониторинг Kompass — менеджер и проверка госсервисов каждый месяц смотрят ваш статус и первыми предупреждают о проблемах.',
@@ -147,7 +151,6 @@ const T = {
 const PLANS = [{id:'free',price:0},{id:'silver',price:9900},{id:'gold',price:19900},{id:'platinum',price:49900}];
 const $ = id => document.getElementById(id);
 const won = n => lang === 'ko' ? n.toLocaleString('ko-KR') + '원' : '₩' + n.toLocaleString('en-US');
-if (!TOSS_CLIENT_KEY.startsWith('test_')) $('testbar').hidden = true;
 let cur = PLANS.find(p => p.id === new URLSearchParams(location.search).get('plan')) || PLANS[1];
 let lang = (new URLSearchParams(location.search).get('lang') || (navigator.language || '').slice(0, 2));
 if (!T[lang]) lang = 'ru';
@@ -164,6 +167,7 @@ function render() {
   $('renewV').textContent = mode === 'once' ? L.r_renew_once : L.r_renew_v;
   $('pay').textContent = mode === 'once' ? L.payOnce : L.pay;
   document.querySelectorAll('#modes .tab').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('testbar').hidden = !!(keyFor(mode) && keyFor(mode).mode === 'live');
   document.querySelectorAll('[data-i18n]').forEach(el => { const v = L[el.getAttribute('data-i18n')]; if (v !== undefined) el.innerHTML = v; });
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.trim() === ({ru:'РУС',ko:'한국어',en:'ENG'})[lang]));
   document.documentElement.lang = lang; document.title = L.pageTitle;
@@ -178,6 +182,10 @@ $('agree').onchange = upd; $('phone').oninput = upd;
 $('pay').onclick = async () => {
   $('err').textContent = ''; $('pay').disabled = true;
   try {
+    await cfgReady;
+    const k = keyFor(mode);
+    if (!k || !k.clientKey) throw new Error('결제 설정을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+    const TOSS_CLIENT_KEY = k.clientKey;
     const phone = $('phone').value.replace(/\D/g, '');
     if (mode === 'once') {
       // Разовая оплата 1 месяца (일반 결제). Сумму сервер сверит с тарифом.

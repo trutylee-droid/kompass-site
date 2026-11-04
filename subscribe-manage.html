@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>구독 관리 · Управление подпиской — KOMPASS</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<meta name="theme-color" content="#0E1F5B">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1829;color:#fff;font-family:'Noto Sans KR','Inter',sans-serif;line-height:1.6}
+main{max-width:560px;margin:0 auto;padding:32px 16px 48px}
+h1{font-size:22px;margin-bottom:6px}.sub{color:#8aaad0;font-size:14px;margin-bottom:18px}
+.box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:6px 16px;margin-bottom:16px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px}.row:last-child{border:none}
+.row span:first-child{color:#8aaad0}
+button{width:100%;padding:13px;border-radius:10px;border:1px solid #ef4444;background:transparent;color:#fca5a5;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+button:disabled{opacity:.5}.ok{color:#10b981;font-weight:700}.test{color:#fcd34d;font-size:13px;margin-bottom:12px}
+footer{max-width:560px;margin:0 auto;padding:0 16px 32px;color:#8aaad0;font-size:12px}a{color:#b8c8e0}
+</style>
+</head>
+<body>
+<main>
+<h1>구독 관리 · Управление подпиской</h1>
+<div class="sub" id="s">불러오는 중… · Загрузка…</div>
+<div class="test" id="t" hidden>테스트 구독 — 실제로 청구되지 않습니다. · Тестовая подписка, деньги не списываются.</div>
+<div class="box" id="rows" hidden></div>
+<button id="b" hidden>자동결제 해지 · Отключить автопродление</button>
+</main>
+<footer>문의 · Вопросы: 010-5183-5885 · Kompass.kor@gmail.com · <a href="/refund.html">환불정책</a></footer>
+<script>
+const CF = 'https://us-central1-kompass-sandbox.cloudfunctions.net/tossSubManage';
+const t = new URLSearchParams(location.search).get('t') || '';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const row = (a, b) => '<div class="row"><span>' + esc(a) + '</span><span>' + b + '</span></div>';
+const ST = {ACTIVE:'이용 중 · Активна', PAST_DUE:'결제 실패, 재시도 예정 · Списание не прошло, повторим', SUSPENDED:'일시 중지 · Приостановлена', ENDED:'종료 · Закончилась', TEST_ENDED:'종료 · Закончилась'};
+const dt = iso => iso ? new Date(iso).toLocaleDateString('ko-KR', {timeZone: 'Asia/Seoul'}) : '—';
+function show(j) {
+  if (!j.ok) { document.getElementById('s').textContent = '링크가 올바르지 않습니다. · Ссылка недействительна. 010-5183-5885'; return; }
+  document.getElementById('t').hidden = j.mode !== 'test';
+  const active = ['ACTIVE', 'PAST_DUE'].includes(j.status);
+  document.getElementById('s').innerHTML = !active ? esc(ST[j.status] || j.status)
+    : j.autoRenew ? '자동결제 이용 중입니다. · Автопродление включено.'
+    : '<span class="ok">자동결제가 해지되었습니다. ' + esc(dt(j.nextChargeAt)) + '까지 이용 가능합니다. · Автопродление отключено, подписка действует до ' + esc(dt(j.nextChargeAt)) + '.</span>';
+  const r = document.getElementById('rows'); r.hidden = false;
+  r.innerHTML = row('요금제 · Тариф', esc(j.planName)) + row('금액 · Сумма', Number(j.amount).toLocaleString('ko-KR') + '원 / 월')
+    + (j.cardCompany ? row('카드 · Карта', esc(j.cardCompany) + (j.cardLast4 ? ' ···' + esc(j.cardLast4) : '')) : '')
+    + row('상태 · Статус', esc(ST[j.status] || j.status))
+    + (active ? row(j.autoRenew ? '다음 결제일 · Следующее списание' : '이용 종료일 · Действует до', esc(dt(j.nextChargeAt))) : '');
+  document.getElementById('b').hidden = !(active && j.autoRenew);
+}
+const post = body => fetch(CF, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)}).then(r => r.json());
+post({t, action: 'get'}).then(show).catch(() => { document.getElementById('s').textContent = '연결 오류 · Ошибка связи'; });
+document.getElementById('b').onclick = async () => {
+  if (!confirm('자동결제를 해지할까요? 결제된 기간까지는 계속 이용할 수 있습니다.\nОтключить автопродление? Оплаченный период сохранится.')) return;
+  const b = document.getElementById('b'); b.disabled = true;
+  try { show(await post({t, action: 'cancel'})); } catch (e) { alert('오류 · Ошибка'); b.disabled = false; }
+};
+</script>
+</body>
+</html>

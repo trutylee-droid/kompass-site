@@ -86,7 +86,9 @@ fetch('https://us-central1-kompass-sandbox.cloudfunctions.net/tossBillingStart',
     document.getElementById('rows').innerHTML = row('요금제 · Тариф', esc(j.plan)) + row('결제 금액 · Списано', Number(j.amount).toLocaleString('ko-KR') + '원')
       + (j.cardCompany ? row('카드 · Карта', esc(j.cardCompany) + (j.cardLast4 ? ' ···' + esc(j.cardLast4) : '')) : '')
       + (nx ? row('다음 결제일 · Следующее списание', esc(nx)) : '')
-      + (j.receiptUrl ? row('영수증 · Чек', '<a href="' + esc(j.receiptUrl) + '" target="_blank" rel="noopener">보기 · Открыть</a>') : '');
+      + (j.receiptUrl ? row('영수증 · Чек', '<a href="' + esc(j.receiptUrl) + '" target="_blank" rel="noopener">보기 · Открыть</a>') : '')
+      + (j.manageUrl ? row('구독 관리 · Управление', '<a href="' + esc(j.manageUrl) + '">자동결제 해지 · Отключить автопродление</a>') : '');
+    if (j.manageUrl) document.getElementById('s').textContent += ' 이 페이지의 「구독 관리」 링크를 저장해 두세요. · Сохраните ссылку «Управление».';
     if (j.mode === 'test') document.getElementById('t').textContent = '테스트 결제 — 실제로 청구되지 않았습니다. · Тестовый платёж, деньги не списаны.';
   } else {
     document.getElementById('h').textContent = '구독을 완료하지 못했습니다 · Подписка не оформлена';

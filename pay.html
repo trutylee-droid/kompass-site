@@ -7,7 +7,7 @@
 <title>Оплата — KOMPASS</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <meta name="theme-color" content="#0E1F5B">
-<script src="https://js.tosspayments.com/v2/standard"></script>
+<script src="https://js.tosspayments.com/v2/standard" defer></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -51,7 +51,19 @@ const NAMES = {silver: ['Silver', 'налоги, страховка, пенси�
 const $ = id => document.getElementById(id);
 const won = n => '₩' + Number(n).toLocaleString('en-US');
 let info = null;
-fetch(CF + 'tossCheckoutInfo?t=' + encodeURIComponent(t), {cache: 'no-store'}).then(r => r.json()).then(j => {
+// 06.11: приложение кладёт данные окна в #i=… — рисуем сразу, без запроса к серверу.
+// Старые ссылки (без #i) — как раньше, через tossCheckoutInfo.
+function fromHash() {
+  try {
+    const m = location.hash.match(/[#&]i=([A-Za-z0-9_-]+)/);
+    if (!m) return null;
+    const b = m[1].replace(/-/g, '+').replace(/_/g, '/');
+    const j = JSON.parse(decodeURIComponent(escape(atob(b + '==='.slice((b.length + 3) % 4)))));
+    return j && j.ok && j.clientKey ? j : null;
+  } catch (e) { return null; }
+}
+const pre = fromHash();
+(pre ? Promise.resolve(pre) : fetch(CF + 'tossCheckoutInfo?t=' + encodeURIComponent(t), {cache: 'no-store'}).then(r => r.json())).then(j => {
   if (!j.ok) { $('t').textContent = 'Ссылка недействительна'; $('d').textContent = j.message || 'Откройте оплату из приложения ещё раз.'; $('b').hidden = true; document.querySelector('label').hidden = true; return; }
   info = j;
   const nm = NAMES[j.plan] || [j.planName, ''];
@@ -65,6 +77,9 @@ $('b').onclick = async () => {
   $('e').textContent = ''; $('b').disabled = true;
   try {
     const customerKey = 'c_' + crypto.randomUUID().replace(/-/g, '').slice(0, 30);
+    // скрипт Toss грузится с defer — если ещё не успел, ждём до 10 с
+    for (let i = 0; i < 50 && typeof TossPayments === 'undefined'; i++) await new Promise(r => setTimeout(r, 200));
+    if (typeof TossPayments === 'undefined') throw new Error('Не загрузилось окно Toss. Проверьте интернет и нажмите ещё раз.');
     const payment = TossPayments(info.clientKey).payment({customerKey});
     await payment.requestBillingAuth({method: 'CARD',
       successUrl: location.origin + '/subscribe-success.html?ct=' + t + '&plan=' + info.plan,

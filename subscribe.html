@@ -112,40 +112,40 @@ const cfgReady = fetch(CF + 'tossConfig', {cache: 'no-store'}).then(r => r.json(
 const keyFor = m => CFG && (m === 'once' ? CFG.once : CFG.billing);
 const T = {
  ru:{m_sub:'Ежемесячно (автопродление)',m_once:'Один месяц (без автопродления)',r_renew_once:'нет — разовая оплата',payOnce:'Оплатить картой 1 месяц',agreeOnce:'Согласен с <a href="/terms.html" target="_blank">условиями</a>, <a href="/refund.html" target="_blank">политикой возврата</a> и <a href="/privacy.html" target="_blank">политикой конфиденциальности</a>. Разовая оплата {p} за 1 месяц, без автопродления.',back:'← На главную',test:'Тестовый режим: деньги не списываются',title:'Тарифы',
-  intro:'Мониторинг Kompass — менеджер и проверка госсервисов каждый месяц смотрят ваш статус и первыми предупреждают о проблемах.',
+  intro:'Мониторинг Kompass — ваши данные из госсервисов в одном месте: доход, страхование, пенсия, штрафы и местные налоги.',
   monthly:'Ежемесячная подписка',r_how:'Как предоставляется',r_how_v:'сразу в приложении и на сайте, без доставки',r_period:'Период',r_period_v:'1 месяц',
   r_renew:'Автопродление',r_renew_v:'ежемесячно',r_price:'Цена в месяц',phone:'Номер телефона, с которым вы входите в приложение Kompass',
   terms:'Первое списание — сразу после привязки карты, далее каждый месяц в тот же день. Перед списанием сообщаем дату и сумму; автопродление можно отключить в любой момент (подписка действует до конца оплаченного периода). Вопросы и отключение: 010-5183-5885, Kompass.kor@gmail.com',
   agree:'Согласен с <a href="/terms.html" target="_blank">условиями</a>, <a href="/refund.html" target="_blank">политикой возврата</a>, <a href="/privacy.html" target="_blank">политикой конфиденциальности</a> и ежемесячным автосписанием {p}.',
   pay:'Привязать карту и подписаться',safe:'Платёж обрабатывает Toss Payments, данные карты у нас не хранятся.',
   free:'бесплатно',perMonth:' / мес',pageTitle:'Тарифы — KOMPASS',
-  plans:{free:['Free',['AI-помощник, чат с менеджером, статусы заявок','Хранилище документов, напоминания о сроках, календарь']],
-   silver:['Silver · налоги, страховка, пенсия',['Всё из Free','Справка о доходах и налогах из налоговой (소득금액증명) — в приложении и в ваших документах','Проверка статуса и оплаты медстраховки','Пенсия: сколько взносов накоплено и платит ли работодатель','Нашли проблему — менеджер связывается первым']],
-   gold:['Gold · полный мониторинг',['Всё из Silver','Штрафы с камер, местные налоги, неоплаченный Hi-Pass']],
+  plans:{free:['Free',['Хранение документов и напоминания об окончании их сроков','Налоговый календарь, новости госорганов, услуги Kompass','AI-помощник 24/7']],
+   silver:['Silver · доход, страхование, пенсия',['Всё из Free','Доход: данные налоговой службы за последние 5 лет','Страхование: текущий статус и кто входит в вашу страховку (если она семейная)','Пенсия: накопления и предполагаемая пенсия в будущем']],
+   gold:['Gold · полный мониторинг',['Всё из Silver','Штрафы: с камер и неоплаченный проезд по платным дорогам','Местные налоги: на машину, на имущество, муниципальный']],
    platinum:['Platinum · бизнес + Gold',['Всё из Gold','Раздел для бизнеса: проверка контрагентов, счета-фактуры, налоговый календарь и документы фирмы','Без ограничения числа фирм, приглашение сотрудников']]}},
  ko:{m_sub:'매월 자동결제',m_once:'1개월만 결제 (자동갱신 없음)',r_renew_once:'없음 — 1회 결제',payOnce:'카드로 1개월 결제하기',agreeOnce:'위 내용과 <a href="/terms.html" target="_blank">이용약관</a>, <a href="/refund.html" target="_blank">환불정책</a>, <a href="/privacy.html" target="_blank">개인정보처리방침</a>을 확인했으며, 1개월 이용료 {p} 1회 결제에 동의합니다(자동갱신 없음).',back:'← 홈',test:'테스트 결제 모드 — 실제로 청구되지 않습니다',title:'요금제',
-  intro:'KOMPASS 모니터링은 담당 매니저와 공공기관 조회로 매월 고객님의 상태를 확인하고 문제가 생기면 먼저 알려드리는 서비스입니다.',
+  intro:'KOMPASS 모니터링 — 소득, 건강보험, 국민연금, 과태료, 지방세 등 공공기관 정보를 한곳에서 확인하세요.',
   monthly:'월 구독',r_how:'제공 방법',r_how_v:'결제 즉시 앱·웹 이용 (실물 배송 없음)',r_period:'결제 주기',r_period_v:'1개월',
   r_renew:'자동 갱신',r_renew_v:'매월',r_price:'월 요금',phone:'KOMPASS 앱에 로그인한 휴대폰 번호',
   terms:'첫 결제는 카드 등록 즉시, 이후 매월 같은 날 자동 결제됩니다. 결제 전 결제일과 금액을 안내하며, 자동 갱신은 언제든지 해지할 수 있습니다(이미 결제한 기간 종료 시까지 이용). 해지 문의: 010-5183-5885, Kompass.kor@gmail.com',
   agree:'위 내용과 <a href="/terms.html" target="_blank">이용약관</a>, <a href="/refund.html" target="_blank">환불정책</a>, <a href="/privacy.html" target="_blank">개인정보처리방침</a>을 확인했으며, 매월 {p} 자동 결제에 동의합니다.',
   pay:'카드 등록하고 구독하기',safe:'결제는 토스페이먼츠를 통해 안전하게 처리되며, 카드 정보는 KOMPASS에 저장되지 않습니다.',
   free:'무료',perMonth:' / 월',pageTitle:'요금제 — KOMPASS',
-  plans:{free:['Free · 무료',['AI 상담·담당 매니저 채팅·신청 현황','서류 보관함·만료일 알림·기한 캘린더']],
-   silver:['Silver · 세금·건강보험·국민연금',['Free의 모든 기능','국세청 소득금액증명 조회 — 앱과 내 서류함에 저장','건강보험 가입·납부 상태 확인','국민연금 가입·납부 내역 확인','문제 발견 시 담당 매니저가 먼저 연락']],
-   gold:['Gold · 종합 모니터링',['Silver의 모든 기능','과태료(무인단속)·지방세·하이패스 미납 확인']],
+  plans:{free:['Free · 무료',['서류 보관함·만료일 알림','세금 캘린더·공공기관 소식·KOMPASS 서비스','AI 상담 24시간']],
+   silver:['Silver · 소득·건강보험·국민연금',['Free의 모든 기능','소득: 국세청 최근 5년 소득 자료','건강보험: 현재 자격 상태와 피부양자(가족) 확인','국민연금: 납부 총액과 예상 연금액']],
+   gold:['Gold · 종합 모니터링',['Silver의 모든 기능','과태료: 무인단속 과태료·유료도로 미납 통행료','지방세: 자동차세·재산세·주민세']],
    platinum:['Platinum · 사업자 + Gold',['Gold의 모든 기능','사업자 전용: 거래처 상태 확인, 세금계산서, 사업자 세금 캘린더·서류','사업자 수 제한 없음, 직원 초대 가능']]}},
  en:{m_sub:'Monthly (auto-renewal)',m_once:'One month (no auto-renewal)',r_renew_once:'none — one-time payment',payOnce:'Pay 1 month by card',agreeOnce:'I agree to the <a href="/terms.html" target="_blank">terms</a>, <a href="/refund.html" target="_blank">refund policy</a> and <a href="/privacy.html" target="_blank">privacy policy</a>. One-time payment of {p} for 1 month, no auto-renewal.',back:'← Home',test:'Test payment mode — no money is charged',title:'Plans',
-  intro:'Kompass monitoring: your manager and government data checks review your status every month and warn you first if something is wrong.',
+  intro:'Kompass monitoring: your government data in one place — income, health insurance, pension, fines and local taxes.',
   monthly:'Monthly subscription',r_how:'Delivery',r_how_v:'instantly in the app and on the web, no shipping',r_period:'Billing period',r_period_v:'1 month',
   r_renew:'Auto-renewal',r_renew_v:'monthly',r_price:'Price per month',phone:'Phone number you use to sign in to the Kompass app',
   terms:'The first charge happens right after you add a card, then every month on the same day. We notify you of the date and amount before each charge; you can turn off auto-renewal at any time (the plan stays active until the end of the paid period). Questions: 010-5183-5885, Kompass.kor@gmail.com',
   agree:'I agree to the <a href="/terms.html" target="_blank">terms</a>, <a href="/refund.html" target="_blank">refund policy</a>, <a href="/privacy.html" target="_blank">privacy policy</a> and a monthly automatic charge of {p}.',
   pay:'Add card and subscribe',safe:'Payments are processed by Toss Payments; Kompass does not store card details.',
   free:'free',perMonth:' / month',pageTitle:'Plans — KOMPASS',
-  plans:{free:['Free',['AI assistant, chat with your manager, request status','Document storage, expiry reminders, calendar']],
-   silver:['Silver · taxes, health insurance, pension',['Everything in Free','Income and tax certificate from the tax office (소득금액증명) — in the app and your documents','Health insurance status and payments','Pension: contributions paid and whether your employer pays them','If we find a problem, your manager contacts you first']],
-   gold:['Gold · full monitoring',['Everything in Silver','Traffic camera fines, local taxes, unpaid Hi-Pass tolls']],
+  plans:{free:['Free',['Document storage and expiry reminders','Tax calendar, government news, Kompass services','AI assistant 24/7']],
+   silver:['Silver · income, health insurance, pension',['Everything in Free','Income: tax office data for the last 5 years','Health insurance: current status and who is covered by your (family) policy','Pension: total contributions and your expected future pension']],
+   gold:['Gold · full monitoring',['Everything in Silver','Fines: traffic camera fines and unpaid toll roads','Local taxes: car tax, property tax, residence tax']],
    platinum:['Platinum · business + Gold',['Everything in Gold','Business section: counterparty checks, tax invoices, company tax calendar and documents','Unlimited companies, invite your staff']]}},
 };
 const PLANS = [{id:'free',price:0},{id:'silver',price:9900},{id:'gold',price:19900},{id:'platinum',price:49900}];
@@ -157,7 +157,7 @@ if (!T[lang]) lang = 'ru';
 function render() {
   const L = T[lang], nm = p => L.plans[p.id][0], it = p => L.plans[p.id][1];
   $('plans').innerHTML = PLANS.map(p => '<div class="card" style="cursor:' + (p.price ? 'pointer' : 'default') + ';' + (p.id === cur.id ? 'border-color:#7fb2ff' : '') + '" data-id="' + p.id + '"><div class="b">'
-    + '<div class="t">' + nm(p) + '</div><div class="n">' + it(p)[it(p).length - 1] + '</div>'
+    + '<div class="t">' + nm(p) + '</div><div class="n">' + (p.price ? '+ ' : '') + it(p).slice(p.price ? 1 : 0).map(x => x.split(':')[0]).join(' · ') + '</div>'
     + '<div class="p">' + (p.price ? won(p.price) + L.perMonth : L.free) + '</div></div></div>').join('');
   $('plans').querySelectorAll('.card').forEach(c => c.onclick = () => { const p = PLANS.find(x => x.id === c.dataset.id); if (p.price) { cur = p; render(); } });
   $('pname').textContent = nm(cur);

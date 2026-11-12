@@ -76,7 +76,7 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 const q = new URLSearchParams(location.search);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const row = (a, b) => '<div class="row"><span>' + esc(a) + '</span><span>' + b + '</span></div>';
-fetch('https://us-central1-kompass-sandbox.cloudfunctions.net/tossOnceConfirm', {
+fetch('https://asia-northeast3-kompass-sandbox.cloudfunctions.net/tossOnceConfirm', {
   method: 'POST', headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({paymentKey: q.get('paymentKey'), orderId: q.get('orderId'), amount: Number(q.get('amount')), phone: q.get('phone')}),
 }).then(r => r.json()).then(j => {

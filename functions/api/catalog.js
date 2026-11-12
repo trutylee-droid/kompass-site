@@ -3,7 +3,7 @@
 // панели). Здесь только прокси с кэшем Cloudflare на 10 минут: сайт ходит на
 // свой домен (без CORS), а Firestore почти не читается при любой посещаемости.
 // Если функция недоступна — 502, и страница остаётся со статичным текстом.
-const SRC = 'https://us-central1-kompass-sandbox.cloudfunctions.net/siteCatalog';
+const SRC = 'https://asia-northeast3-kompass-sandbox.cloudfunctions.net/siteCatalog';
 
 export async function onRequest() {
   try {

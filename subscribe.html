@@ -106,7 +106,7 @@ footer{border-top:1px solid var(--border);color:var(--gray);font-size:12px;line-
 // Toss автоплатёж (빌링). Ключ клиента публичный (test_ck_ — тестовый, MID bill_5kore9z4l).
 // 20.10 (Сергей): тарифы Free / Silver 9 900 / Gold 19 900 / Platinum 49 900. Цена списания берётся НА СЕРВЕРЕ по id тарифа.
 // 04.11: ключи и режим (test/live) отдельно для автоплатежа и разовой оплаты — с сервера (tossConfig).
-const CF = 'https://us-central1-kompass-sandbox.cloudfunctions.net/';
+const CF = 'https://asia-northeast3-kompass-sandbox.cloudfunctions.net/';
 let CFG = null;
 const cfgReady = fetch(CF + 'tossConfig', {cache: 'no-store'}).then(r => r.json()).then(j => { CFG = j; render(); }).catch(() => {});
 const keyFor = m => CFG && (m === 'once' ? CFG.once : CFG.billing);

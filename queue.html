@@ -137,8 +137,8 @@ a{color:#2563eb}
       };
       $('b').onclick = function () { go(0); };
     },
-    function arc() { photoStep('arc', 'Фото ID-карты', 'Сфотографируйте <b>лицевую сторону</b> ID-карты (외국인등록증). Вся карта в кадре, без бликов.', 3, 1); },
-    function bank() { photoStep('bank', 'Банковский счёт', 'Сфотографируйте <b>первую страницу книжки</b> (통장) или экран приложения банка, где виден номер счёта. На этот счёт придёт возврат налога.', 4, 2); },
+    function arc() { photoStep('arc', 'Фото ID-карты', 'Нужно фото <b>лицевой стороны</b> ID-карты (외국인등록증): сделайте снимок или выберите готовое фото. Вся карта в кадре, без бликов.', 3, 1); },
+    function bank() { photoStep('bank', 'Банковский счёт', 'Нужно фото <b>первой страницы книжки</b> (통장) или скриншот приложения банка, где виден номер счёта. На этот счёт придёт возврат налога.', 4, 2); },
     function years() {
       var ys = S.yearsList || [];
       card.innerHTML = '<h1>За какие годы?</h1><div class="sub">Отметьте годы, когда вы работали в Корее. Не уверены — оставьте пустым, менеджер проверит все.</div>' +
@@ -207,9 +207,9 @@ a{color:#2563eb}
       var REL = [['spouse', 'Супруг(а)'], ['child', 'Ребёнок'], ['parent', 'Родитель'], ['other', 'Другое']];
       var relName = function (k) { for (var i = 0; i < REL.length; i++) if (REL[i][0] === k) return REL[i][1]; return ''; };
       var list = S.deps.map(function (d, i) { return '<div><span>' + esc(relName(d.rel) || 'Иждивенец ' + (i + 1)) + '</span><b>' + esc(d.name || '') + '<br><small>' + esc(digits(d.id).replace(/^(\d{6})(\d{7})$/, '$1-$2')) + ' · <a href="#" data-rm="' + i + '">убрать</a></small></b></div>'; }).join('');
-      card.innerHTML = '<h1>ID-карты иждивенцев</h1><div class="sub">Сфотографируйте ID-карту <b>каждого</b> иждивенца (супруг(а), дети, родители). По одному фото на человека.</div>' +
+      card.innerHTML = '<h1>ID-карты иждивенцев</h1><div class="sub">Загрузите фото ID-карты <b>каждого</b> иждивенца (супруг(а), дети, родители). По одному фото на человека.</div>' +
         (list ? '<div class="rev" id="dl">' + list + '</div>' : '') +
-        '<input type="file" id="file" accept="image/*" capture="environment" hidden><input type="file" id="file2" accept="image/*" hidden>' +
+        '<input type="file" id="file" accept="image/*" hidden>' +
         '<div id="pv"></div>' +
         '<div id="flds" hidden><div class="ex" id="msg"></div>' +
           '<label class="f">Кто это?</label><div class="chips" id="rl"></div>' +
@@ -217,8 +217,7 @@ a{color:#2563eb}
           '<label class="f">Номер ID-карты (13 цифр)</label><input type="tel" id="idn" inputmode="numeric" placeholder="000000-0000000">' +
           '<button class="btn" id="add">Добавить иждивенца</button></div>' +
         '<div id="acts">' +
-          '<button class="btn" id="shot">📷 ' + (S.deps.length ? 'Сфотографировать ещё одну ID-карту' : 'Сфотографировать ID-карту') + '</button>' +
-          '<button class="btn o" id="gal">🖼 Выбрать фото из галереи</button>' +
+          '<button class="btn" id="shot">📷 ' + (S.deps.length ? 'Загрузить ID-карту ещё одного иждивенца' : 'Загрузить ID-карту иждивенца') + '</button>' +
           '<button class="btn o" id="man">Ввести вручную</button>' +
           (S.deps.length ? '<button class="btn g" id="n">Все добавлены, дальше</button>' : '') +
           '<button class="btn o" id="skip">Нет с собой — покажу менеджеру</button>' +
@@ -228,7 +227,6 @@ a{color:#2563eb}
       var openFields = function (m) { $('flds').hidden = false; $('acts').hidden = true; $('msg').innerHTML = m; drawRel(); };
       if ($('dl')) $('dl').onclick = function (e) { var i = e.target.getAttribute('data-rm'); if (i == null) return; e.preventDefault(); S.deps.splice(+i, 1); VIEW[7](); };
       $('shot').onclick = function () { $('file').click(); };
-      $('gal').onclick = function () { $('file2').click(); };
       $('man').onclick = function () { openFields('Введите данные с ID-карты иждивенца.'); };
       $('skip').onclick = function () { S.depLater = true; go(5); };
       if ($('n')) $('n').onclick = function () { S.depLater = false; go(5); };
@@ -244,15 +242,15 @@ a{color:#2563eb}
         if (S.deps.length >= 6) return err('Больше 6 иждивенцев — остальных покажите менеджеру');
         S.deps.push({ name: fio, id: idn, rel: cur.rel }); S.depLater = false; VIEW[7]();
       };
-      $('file').onchange = $('file2').onchange = function () {
+      $('file').onchange = function () {
         var f = this.files && this.files[0]; this.value = ''; if (!f) return;
-        err(''); var btn = $('shot'); btn.disabled = true; $('gal').disabled = true; btn.innerHTML = '<span class="spin"></span>Читаем документ…';
+        err(''); var btn = $('shot'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Читаем документ…';
         shrink(f).then(function (d) { $('pv').innerHTML = '<img class="ph" src="' + d + '" alt="">'; return api('photo', { kind: 'dep', b64: d.split(',')[1] }); })
           .then(function (j) {
             var x = j.fields || {};
             openFields(j.recognized ? '✅ Документ распознан. <b>Проверьте каждую цифру</b> и отметьте, кто это.' : '⚠️ Не удалось прочитать фото. Введите данные вручную или вернитесь и переснимите.');
             $('fio').value = x.name ? String(x.name).toUpperCase() : ''; $('idn').value = x.id || '';
-          }).catch(function (e) { btn.disabled = false; $('gal').disabled = false; btn.textContent = '📷 Сфотографировать ID-карту'; err(e.message); if (e.status !== 403) openFields('Введите данные вручную.'); });
+          }).catch(function (e) { btn.disabled = false; btn.textContent = '📷 Загрузить ID-карту иждивенца'; err(e.message); if (e.status !== 403) openFields('Введите данные вручную.'); });
       };
     }
   ];
@@ -273,12 +271,10 @@ a{color:#2563eb}
       : '<label class="f">Банк</label><select id="bk"><option value="">— выберите —</option>' + BANKS.map(function (b) { return '<option' + (S.bank === b ? ' selected' : '') + '>' + esc(b) + '</option>'; }).join('') + '</select>' +
         '<label class="f">Номер счёта (только цифры)</label><input type="tel" id="acc" inputmode="numeric" value="' + esc(S.account || '') + '">';
     card.innerHTML = '<h1>' + title + '</h1><div class="sub">' + hint + '</div>' +
-      '<input type="file" id="file" accept="image/*" capture="environment" hidden>' +
-      '<input type="file" id="file2" accept="image/*" hidden>' +
+      '<input type="file" id="file" accept="image/*" hidden>' +
       '<div id="pv"></div>' +
       '<div id="flds"' + (has ? '' : ' hidden') + '><div class="ex" id="msg"></div>' + fields + '</div>' +
-      '<button class="btn" id="shot">' + (has ? '📷 Переснять' : '📷 Сфотографировать') + '</button>' +
-      '<button class="btn o" id="gal">🖼 Выбрать фото из галереи</button>' +
+      '<button class="btn" id="shot">' + (has ? '📷 Загрузить другое фото' : (isArc ? '📷 Загрузить фото ID-карты' : '📷 Загрузить фото книжки')) + '</button>' +
       '<button class="btn g" id="n"' + (has ? '' : ' hidden') + '>Всё верно, дальше</button>' +
       '<button class="btn o" id="man"' + (has ? ' hidden' : '') + '>Ввести вручную</button>' +
       (isArc ? '' : '<button class="btn o" id="skip">Нет с собой — покажу менеджеру</button>') +
@@ -288,7 +284,6 @@ a{color:#2563eb}
     if (S[pvKey]) $('pv').innerHTML = '<img class="ph" src="' + S[pvKey] + '" alt="">';
     var showFields = function (m) { $('flds').hidden = false; $('n').hidden = false; $('man').hidden = true; $('msg').innerHTML = m; if (isArc) { S.arcShown = true; S.arcMsg = m; } else { S.bankShown = true; S.bankMsg = m; } };
     $('shot').onclick = function () { $('file').click(); };
-    $('gal').onclick = function () { $('file2').click(); };
     $('man').onclick = function () { showFields('Введите данные с ' + (isArc ? 'ID-карты' : 'книжки') + ' вручную.'); };
     if (!isArc) $('skip').onclick = function () { S.bankSkip = true; go(next); };
     $('b').onclick = function () { save(); go(prev); };
@@ -306,9 +301,9 @@ a{color:#2563eb}
       }
       go(next);
     };
-    $('file').onchange = $('file2').onchange = function () {
+    $('file').onchange = function () {
       var f = this.files && this.files[0]; this.value = ''; if (!f) return;
-      err(''); var btn = $('shot'); btn.disabled = true; $('gal').disabled = true; btn.innerHTML = '<span class="spin"></span>Читаем документ…';
+      err(''); var btn = $('shot'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Читаем документ…';
       shrink(f).then(function (d) {
         S[pvKey] = d; $('pv').innerHTML = '<img class="ph" src="' + d + '" alt="">';
         return api('photo', { kind: kind, b64: d.split(',')[1] });
@@ -319,9 +314,9 @@ a{color:#2563eb}
         showFields(j.recognized ? '✅ Документ распознан. <b>Проверьте каждую цифру</b> и исправьте, если что-то не так.'
           : j.wrongDoc ? '⚠️ Похоже, это другой документ. Переснимите ' + (isArc ? 'ID-карту' : 'книжку') + ' или введите данные вручную.'
           : '⚠️ Не удалось прочитать фото. Переснимите при хорошем свете или введите данные вручную.');
-        btn.disabled = false; $('gal').disabled = false; btn.textContent = '📷 Переснять';
+        btn.disabled = false; btn.textContent = '📷 Загрузить другое фото';
       }).catch(function (e) {
-        btn.disabled = false; $('gal').disabled = false; btn.textContent = '📷 Сфотографировать'; err(e.message);
+        btn.disabled = false; btn.textContent = isArc ? '📷 Загрузить фото ID-карты' : '📷 Загрузить фото книжки'; err(e.message);
         if (e.status === 403) return; showFields('Введите данные вручную.');
       });
     };

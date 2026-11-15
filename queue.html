@@ -76,7 +76,7 @@ a{color:#9fc3ff}
   'use strict';
   var API = '/api/queue';
   var qs = new URLSearchParams(location.search);
-  var S = { office: qs.get('o') || '', k: qs.get('k') || '', group: qs.get('g') || '', step: 0, years: [], dependents: '', operator: '', bankSkip: false };
+  var S = { office: qs.get('o') || '', k: qs.get('k') || '', group: qs.get('g') || '', step: 0, years: [], dependents: '', operator: '', bankSkip: false, deps: [], depLater: false };
   var STEPS = ['Согласие', 'Телефон', 'ID-карта', 'Счёт', 'Годы', 'Проверка'];
   var BANKS = ['기업은행 · Айбикей', '국민은행 · Кукмин', '우리은행 · Урибанк', '신한은행 · Шинхан', '하나은행 · Хана', '농협은행 · Нонхёп', 'Другой банк'];
   var card = document.getElementById('card');
@@ -91,11 +91,14 @@ a{color:#9fc3ff}
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(j.error || 'Ошибка. Попробуйте ещё раз.'); e.field = j.field; e.status = r.status; throw e; } return j; }); });
   }
   function progress() {
-    var p = $('prog'); p.hidden = S.step > 5;
-    $('plbl').textContent = 'Шаг ' + (S.step + 1) + ' из ' + STEPS.length;
-    $('pname').textContent = STEPS[S.step] || '';
-    $('pbar').style.width = Math.round(((S.step + 1) / STEPS.length) * 100) + '%';
-    $('dots').innerHTML = STEPS.map(function (n, i) { return '<s class="' + (i === S.step ? 'on' : i < S.step ? 'ok' : '') + '">' + (i < S.step ? '✓' : i + 1) + '</s>'; }).join('');
+    var p = $('prog'); p.hidden = S.step === 6;
+    // порядок экранов: 7 — загрузка ID иждивенцев, вставляется перед проверкой
+    var order = S.dependents === 'yes' && S.depSet ? [0, 1, 2, 3, 4, 7, 5] : [0, 1, 2, 3, 4, 5];
+    var pos = Math.max(0, order.indexOf(S.step)), names = order.map(function (i) { return i === 7 ? 'Иждивенцы' : STEPS[i]; });
+    $('plbl').textContent = 'Шаг ' + (pos + 1) + ' из ' + order.length;
+    $('pname').textContent = names[pos] || '';
+    $('pbar').style.width = Math.round(((pos + 1) / order.length) * 100) + '%';
+    $('dots').innerHTML = order.map(function (n, i) { return '<s class="' + (i === pos ? 'on' : i < pos ? 'ok' : '') + '">' + (i < pos ? '✓' : i + 1) + '</s>'; }).join('');
     window.scrollTo(0, 0);
   }
   function err(m) { var e = $('err'); if (e) e.textContent = m || ''; }
@@ -147,7 +150,7 @@ a{color:#9fc3ff}
       draw();
       $('ys').onclick = function (e) { var y = e.target.getAttribute('data-y'); if (!y) return; var i = S.years.indexOf(y); if (i >= 0) S.years.splice(i, 1); else S.years.push(y); draw(); };
       $('dp').onclick = function (e) { if (!e.target.hasAttribute('data-d')) return; S.dependents = e.target.getAttribute('data-d'); S.depSet = true; draw(); };
-      $('n').onclick = function () { go(5); };
+      $('n').onclick = function () { go(S.dependents === 'yes' && S.depSet ? 7 : 5); };
       $('b').onclick = function () { go(3); };
     },
     function review() {
@@ -158,12 +161,12 @@ a{color:#9fc3ff}
         '<div><span>Телефон</span><b>' + esc(S.phone) + ' · ' + esc(S.operator) + '</b></div>' +
         '<div><span>Счёт</span><b>' + esc(acc) + '</b></div>' +
         '<div><span>Годы</span><b>' + esc(S.years.length ? S.years.slice().sort().join(', ') : 'проверит менеджер') + '</b></div>' +
-        '<div><span>Иждивенцы</span><b>' + (S.dependents === 'yes' ? 'да' : S.dependents === 'no' ? 'нет' : 'не знаю') + '</b></div></div>' +
+        '<div><span>Иждивенцы</span><b>' + (S.dependents === 'yes' ? (S.deps.length && !S.depLater ? 'да · ID-карт: ' + S.deps.length : 'да · ID покажу менеджеру') : S.dependents === 'no' ? 'нет' : 'не знаю') + '</b></div></div>' +
         '<button class="btn g" id="n">Встать в очередь</button><button class="back" id="b">← Исправить</button><div class="err" id="err"></div>';
       $('b').onclick = function () { go(1); };
       $('n').onclick = function () {
         var btn = this; btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Записываем…'; err('');
-        api('submit', { consent: true, consentId: true, phone: S.phone, operator: S.operator, fio: S.fio, id: S.id, visa: S.visa || '', bank: S.bankSkip ? '' : (S.bank === 'Другой банк' ? (S.bankRaw || 'другой') : S.bank.split(' · ')[0]), account: S.bankSkip ? '' : S.account, years: S.years, dependents: S.dependents, group: S.group })
+        api('submit', { consent: true, consentId: true, phone: S.phone, operator: S.operator, fio: S.fio, id: S.id, visa: S.visa || '', bank: S.bankSkip ? '' : (S.bank === 'Другой банк' ? (S.bankRaw || 'другой') : S.bank.split(' · ')[0]), account: S.bankSkip ? '' : S.account, years: S.years, dependents: S.dependents, deps: S.depLater ? [] : S.deps, group: S.group })
           .then(function (j) {
             S.ticket = { id: j.id, token: j.token, group: j.group, office: S.office, k: S.k };
             try { localStorage.setItem('kq_ticket', JSON.stringify(S.ticket)); sessionStorage.removeItem('kq_sid'); } catch (e) {}
@@ -188,6 +191,59 @@ a{color:#9fc3ff}
       if (j.state === 'called' && !S.buzzed) { S.buzzed = true; try { navigator.vibrate && navigator.vibrate([400, 200, 400, 200, 600]); } catch (e) {} }
       clearTimeout(S.tm);
       if (j.state !== 'done') S.tm = setTimeout(poll, j.state === 'called' ? 30000 : 10000);
+    }
+    ,
+    function deps() {
+      var REL = [['spouse', 'Супруг(а)'], ['child', 'Ребёнок'], ['parent', 'Родитель'], ['other', 'Другое']];
+      var relName = function (k) { for (var i = 0; i < REL.length; i++) if (REL[i][0] === k) return REL[i][1]; return ''; };
+      var list = S.deps.map(function (d, i) { return '<div><span>' + esc(relName(d.rel) || 'Иждивенец ' + (i + 1)) + '</span><b>' + esc(d.name || '') + '<br><small style="font-weight:400;color:#8aaad0">' + esc(digits(d.id).replace(/^(\d{6})(\d{7})$/, '$1-$2')) + ' · <a href="#" data-rm="' + i + '">убрать</a></small></b></div>'; }).join('');
+      card.innerHTML = '<h1>ID-карты иждивенцев</h1><div class="sub">Сфотографируйте ID-карту <b>каждого</b> иждивенца (супруг(а), дети, родители). По одному фото на человека.</div>' +
+        (list ? '<div class="rev" id="dl">' + list + '</div>' : '') +
+        '<input type="file" id="file" accept="image/*" capture="environment" hidden><input type="file" id="file2" accept="image/*" hidden>' +
+        '<div id="pv"></div>' +
+        '<div id="flds" hidden><div class="ex" id="msg"></div>' +
+          '<label class="f">Кто это?</label><div class="chips" id="rl"></div>' +
+          '<label class="f">ФИО латиницей, как в карте</label><input type="text" id="fio" autocapitalize="characters">' +
+          '<label class="f">Номер ID-карты (13 цифр)</label><input type="tel" id="idn" inputmode="numeric" placeholder="000000-0000000">' +
+          '<button class="btn" id="add">Добавить иждивенца</button></div>' +
+        '<div id="acts">' +
+          '<button class="btn" id="shot">📷 ' + (S.deps.length ? 'Сфотографировать ещё одну ID-карту' : 'Сфотографировать ID-карту') + '</button>' +
+          '<button class="btn o" id="gal">🖼 Выбрать фото из галереи</button>' +
+          '<button class="btn o" id="man">Ввести вручную</button>' +
+          (S.deps.length ? '<button class="btn g" id="n">Все добавлены, дальше</button>' : '') +
+          '<button class="btn o" id="skip">Нет с собой — покажу менеджеру</button>' +
+        '</div><button class="back" id="b">← Назад</button><div class="err" id="err"></div>';
+      var cur = { rel: '' };
+      var drawRel = function () { $('rl').innerHTML = REL.map(function (r) { return '<div class="chip' + (cur.rel === r[0] ? ' on' : '') + '" data-r="' + r[0] + '">' + r[1] + '</div>'; }).join(''); };
+      var openFields = function (m) { $('flds').hidden = false; $('acts').hidden = true; $('msg').innerHTML = m; drawRel(); };
+      if ($('dl')) $('dl').onclick = function (e) { var i = e.target.getAttribute('data-rm'); if (i == null) return; e.preventDefault(); S.deps.splice(+i, 1); VIEW[7](); };
+      $('shot').onclick = function () { $('file').click(); };
+      $('gal').onclick = function () { $('file2').click(); };
+      $('man').onclick = function () { openFields('Введите данные с ID-карты иждивенца.'); };
+      $('skip').onclick = function () { S.depLater = true; go(5); };
+      if ($('n')) $('n').onclick = function () { S.depLater = false; go(5); };
+      $('b').onclick = function () { go(4); };
+      $('flds').onclick = function (e) { var r = e.target.getAttribute('data-r'); if (r) { cur.rel = r; drawRel(); } };
+      $('idn').oninput = function () { var d = digits(this.value).slice(0, 13); this.value = d.length > 6 ? d.slice(0, 6) + '-' + d.slice(6) : d; };
+      $('add').onclick = function () {
+        var fio = $('fio').value.toUpperCase().trim(), idn = digits($('idn').value);
+        if (!cur.rel) return err('Отметьте, кто это: супруг(а), ребёнок или родитель');
+        if (!/^[A-Z][A-Z \-']{2,}$/.test(fio)) { $('fio').className = 'bad'; return err('Введите ФИО латинскими буквами, как в ID-карте'); }
+        if (idn.length !== 13) { $('idn').className = 'bad'; return err('В номере ID-карты 13 цифр'); }
+        if (idn === digits(S.id) || S.deps.some(function (d) { return digits(d.id) === idn; })) return err('Эта ID-карта уже добавлена');
+        if (S.deps.length >= 6) return err('Больше 6 иждивенцев — остальных покажите менеджеру');
+        S.deps.push({ name: fio, id: idn, rel: cur.rel }); S.depLater = false; VIEW[7]();
+      };
+      $('file').onchange = $('file2').onchange = function () {
+        var f = this.files && this.files[0]; this.value = ''; if (!f) return;
+        err(''); var btn = $('shot'); btn.disabled = true; $('gal').disabled = true; btn.innerHTML = '<span class="spin"></span>Читаем документ…';
+        shrink(f).then(function (d) { $('pv').innerHTML = '<img class="ph" src="' + d + '" alt="">'; return api('photo', { kind: 'dep', b64: d.split(',')[1] }); })
+          .then(function (j) {
+            var x = j.fields || {};
+            openFields(j.recognized ? '✅ Документ распознан. <b>Проверьте каждую цифру</b> и отметьте, кто это.' : '⚠️ Не удалось прочитать фото. Введите данные вручную или вернитесь и переснимите.');
+            $('fio').value = x.name ? String(x.name).toUpperCase() : ''; $('idn').value = x.id || '';
+          }).catch(function (e) { btn.disabled = false; $('gal').disabled = false; btn.textContent = '📷 Сфотографировать ID-карту'; err(e.message); if (e.status !== 403) openFields('Введите данные вручную.'); });
+      };
     }
   ];
 

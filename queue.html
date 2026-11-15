@@ -196,6 +196,15 @@ a{color:#2563eb}
         : j.state === 'done' ? '<div class="st">Ваша заявка в работе у менеджера.</div>'
         : '<div class="st">' + (j.ahead > 0 ? 'Перед вами: <b>' + j.ahead + '</b> чел.' : '<b>Вы следующий!</b>') + '</div><div class="note" style="text-align:center">Не закрывайте страницу. Когда подойдёт очередь, здесь появится вызов' + (j.test ? '. <b>Тестовый режим: СМС не отправляется.</b>' : ' и придёт СМС.') + '</div>';
       card.innerHTML = '<div class="sub" style="text-align:center;margin-bottom:0">' + (j.again ? 'Вы уже в очереди · ' : '') + esc(j.officeName || '') + ' · ваш номер</div><div class="num">' + esc(j.no || '') + '</div>' + body +
+        // 15.11 (Сергей): дозагрузка документа в уже поданную заявку — клиент за столом показывает книжку или ID иждивенца
+        (j.state !== 'done' ? (S.addOpen
+          ? '<div class="ex" style="margin-top:14px"><b>Какой документ добавить?</b><div class="note" style="margin-top:4px">Фото сразу попадёт в вашу заявку у менеджера.</div>' +
+            '<button class="btn o" data-add="bank" style="margin-top:10px"' + (S.addBusy ? ' disabled' : '') + '>📷 Банковская книжка / счёт</button>' +
+            '<button class="btn o" data-add="dep" style="margin-top:8px"' + (S.addBusy ? ' disabled' : '') + '>📷 ID-карта иждивенца</button>' +
+            '<button class="btn o" data-add="other" style="margin-top:8px"' + (S.addBusy ? ' disabled' : '') + '>📷 Другой документ</button>' +
+            '<input type="file" id="afile" accept="image/*" hidden>' +
+            (S.addBusy ? '<div class="note" style="text-align:center">Загружаю фото…</div>' : '') + (S.addMsg ? '<div class="note" style="text-align:center;color:' + (S.addErr ? '#dc2626' : '#047857') + ';font-weight:600">' + esc(S.addMsg) + '</div>' : '') + '</div>'
+          : '<button class="btn o" id="addopen" style="margin-top:14px">📎 Дозагрузить документ (книжка, ID иждивенца)</button>') : '') +
         '<div class="promo"><b>Не хотите ждать в неведении?</b><br>В приложении Kompass — статус вашего перерасчёта, сроки визы, штрафы и напоминания. Бесплатно.<a href="/app">Установить приложение</a></div>' +
         '<div class="note" style="text-align:center;margin-top:18px">Пришли вдвоём и второй человек тоже работает?<br>Ему нужна своя заявка и свой номер.</div>' +
         '<button class="back" id="more" style="margin-top:6px">Оформить заявку второму работающему →</button>' +
@@ -206,6 +215,17 @@ a{color:#2563eb}
       if ($('tcall')) $('tcall').onclick = function () {
         if (!S.ticket) return; this.disabled = true;
         api('status', { id: S.ticket.id, token: S.ticket.token, testCall: j.state === 'called' ? 'off' : 'on' }).then(function (r) { r.again = S.state && S.state.again; S.state = r; if (S.step === 6) VIEW[6](); }).catch(function () { if ($('tcall')) $('tcall').disabled = false; });
+      };
+      if ($('addopen')) $('addopen').onclick = function () { S.addOpen = true; S.addMsg = ''; VIEW[6](); };
+      Array.prototype.forEach.call(card.querySelectorAll('[data-add]'), function (bt) {
+        bt.onclick = function () { S.addKind = bt.getAttribute('data-add'); var f = $('afile'); if (f) { f.value = ''; f.click(); } };
+      });
+      if ($('afile')) $('afile').onchange = function () {
+        var f = this.files && this.files[0]; if (!f || !S.ticket) return;
+        S.addBusy = true; S.addMsg = ''; VIEW[6]();
+        shrink(f).then(function (d) { return api('add', { id: S.ticket.id, token: S.ticket.token, kind: S.addKind, b64: d.split(',')[1] }); })
+          .then(function (r) { S.addBusy = false; S.addErr = false; S.addMsg = '✓ Фото добавлено в заявку' + (r.kind !== 'other' && !r.recognized ? ' (данные с фото менеджер внесёт сам)' : '') + '. Можно добавить ещё.'; VIEW[6](); })
+          .catch(function (e) { S.addBusy = false; S.addErr = true; S.addMsg = e.message || 'Не получилось. Покажите документ менеджеру.'; VIEW[6](); });
       };
       $('more').onclick = function () {
         if (!S.ticket || !S.ticket.k) return;

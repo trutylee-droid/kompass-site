@@ -42,7 +42,13 @@ input.bad{border-color:#dc2626}
 a{color:#2563eb}
 .err{color:#dc2626;font-size:14px;margin-top:12px;text-align:center;min-height:1px}
 .note{font-size:12.5px;color:#64748b;margin-top:10px}
-.ph{width:100%;border-radius:12px;margin:10px 0 2px;max-height:210px;object-fit:cover;border:1px solid #e2e8f0}
+.ph{display:block;width:100%;height:auto;border-radius:12px;margin:10px 0 2px;border:1px solid #e2e8f0;cursor:zoom-in}
+.phn{font-size:12px;color:#64748b;text-align:center;margin-bottom:6px}
+.zoom{position:fixed;inset:0;background:#000;z-index:50;overflow:auto;-webkit-overflow-scrolling:touch}
+.zoom img{display:block;width:230%;max-width:none}
+.zoom button{position:fixed;top:12px;right:12px;z-index:51;width:48px;height:48px;border-radius:24px;border:none;background:rgba(255,255,255,.92);font-size:22px;font-weight:700;color:#111}
+.zoom p{position:fixed;left:0;right:0;bottom:14px;text-align:center;color:#fff;font-size:13px;text-shadow:0 1px 3px #000;pointer-events:none}
+.warn{background:#fef3c7;border:1px solid #f59e0b;color:#78350f}
 .ex{background:#f1f5f9;border-radius:12px;padding:12px;font-size:13.5px;color:#334155;margin-bottom:6px}
 .rev{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:4px 12px}
 .rev div{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #e2e8f0;font-size:14.5px}
@@ -156,7 +162,7 @@ a{color:#2563eb}
       $('b').onclick = function () { go(3); };
     },
     function review() {
-      var acc = S.bankSkip ? 'покажу менеджеру' : (S.bank || '') + ' ' + (S.account || '');
+      var acc = S.bankSkip ? 'покажу менеджеру' : (S.bank || '') + ' ' + (S.account || '') + (S.holderBad ? ' ⚠️ владелец: ' + (S.bankHolder || '') : '');
       card.innerHTML = '<h1>Проверьте данные</h1><div class="sub">Если всё верно — нажмите зелёную кнопку.</div><div class="rev">' +
         '<div><span>ФИО</span><b>' + esc(S.fio) + '</b></div>' +
         '<div><span>ID-карта</span><b>' + esc(digits(S.id).replace(/^(\d{6})(\d{7})$/, '$1-$2')) + '</b></div>' +
@@ -245,7 +251,7 @@ a{color:#2563eb}
       $('file').onchange = function () {
         var f = this.files && this.files[0]; this.value = ''; if (!f) return;
         err(''); var btn = $('shot'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Читаем документ…';
-        shrink(f).then(function (d) { $('pv').innerHTML = '<img class="ph" src="' + d + '" alt="">'; return api('photo', { kind: 'dep', b64: d.split(',')[1] }); })
+        shrink(f).then(function (d) { $('pv').innerHTML = pvHtml(d); return api('photo', { kind: 'dep', b64: d.split(',')[1] }); })
           .then(function (j) {
             var x = j.fields || {};
             openFields(j.recognized ? '✅ Документ распознан. <b>Проверьте каждую цифру</b> и отметьте, кто это.' : '⚠️ Не удалось прочитать фото. Введите данные вручную или вернитесь и переснимите.');
@@ -279,9 +285,9 @@ a{color:#2563eb}
       '<button class="btn o" id="man"' + (has ? ' hidden' : '') + '>Ввести вручную</button>' +
       (isArc ? '' : '<button class="btn o" id="skip">Нет с собой — покажу менеджеру</button>') +
       '<button class="back" id="b">← Назад</button><div class="err" id="err"></div>';
-    if (has) $('msg').innerHTML = (isArc ? S.arcMsg : S.bankMsg) || 'Проверьте данные и исправьте, если нужно.';
+    if (has) { $('msg').innerHTML = (isArc ? S.arcMsg : S.bankMsg) || 'Проверьте данные и исправьте, если нужно.'; if (!isArc && S.holderBad) { $('msg').className = 'ex warn'; $('n').textContent = 'Это мой счёт — дальше'; } }
     var pvKey = isArc ? 'arcPv' : 'bankPv';
-    if (S[pvKey]) $('pv').innerHTML = '<img class="ph" src="' + S[pvKey] + '" alt="">';
+    if (S[pvKey]) $('pv').innerHTML = pvHtml(S[pvKey]);
     var showFields = function (m) { $('flds').hidden = false; $('n').hidden = false; $('man').hidden = true; $('msg').innerHTML = m; if (isArc) { S.arcShown = true; S.arcMsg = m; } else { S.bankShown = true; S.bankMsg = m; } };
     $('shot').onclick = function () { $('file').click(); };
     $('man').onclick = function () { showFields('Введите данные с ' + (isArc ? 'ID-карты' : 'книжки') + ' вручную.'); };
@@ -305,13 +311,18 @@ a{color:#2563eb}
       var f = this.files && this.files[0]; this.value = ''; if (!f) return;
       err(''); var btn = $('shot'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Читаем документ…';
       shrink(f).then(function (d) {
-        S[pvKey] = d; $('pv').innerHTML = '<img class="ph" src="' + d + '" alt="">';
-        return api('photo', { kind: kind, b64: d.split(',')[1] });
+        S[pvKey] = d; $('pv').innerHTML = pvHtml(d);
+        return api('photo', { kind: kind, b64: d.split(',')[1], fio: S.fio || '' });
       }).then(function (j) {
         var x = j.fields || {};
         if (isArc) { if (x.name) S.fio = String(x.name).toUpperCase(); if (x.id) S.id = x.id; if (x.visa) S.visa = x.visa; $('fio').value = S.fio || ''; $('idn').value = S.id || ''; }
         else { if (x.bank) { S.bankRaw = String(x.bank); var hit = BANKS.filter(function (b) { return S.bankRaw.indexOf(b.slice(0, 2)) >= 0; })[0]; S.bank = hit || 'Другой банк'; $('bk').value = S.bank; } if (x.account) { S.account = x.account; $('acc').value = x.account; } }
-        showFields(j.recognized ? '✅ Документ распознан. <b>Проверьте каждую цифру</b> и исправьте, если что-то не так.'
+        if (!isArc) { S.bankHolder = x.holder || ''; S.holderBad = x.holderCheck === 'mismatch'; }
+        var bad = !isArc && S.holderBad;
+        $('msg').className = 'ex' + (bad ? ' warn' : '');
+        $('n').textContent = bad ? 'Это мой счёт — дальше' : 'Всё верно, дальше';
+        showFields(bad ? '⚠️ Счёт на фото оформлен на <b>' + esc(S.bankHolder) + '</b>, а ID-карта — на <b>' + esc(S.fio) + '</b>.<br>Возврат налога приходит только на счёт самого заявителя. Загрузите фото <b>своей</b> книжки. Если это ваш счёт — продолжайте, менеджер проверит.'
+          : j.recognized ? '✅ Документ распознан. <b>Проверьте каждую цифру</b> и исправьте, если что-то не так.'
           : j.wrongDoc ? '⚠️ Похоже, это другой документ. Переснимите ' + (isArc ? 'ID-карту' : 'книжку') + ' или введите данные вручную.'
           : '⚠️ Не удалось прочитать фото. Переснимите при хорошем свете или введите данные вручную.');
         btn.disabled = false; btn.textContent = '📷 Загрузить другое фото';
@@ -336,6 +347,16 @@ a{color:#2563eb}
     });
   }
 
+  function pvHtml(src) { return '<img class="ph" src="' + src + '" alt="" data-zoom="1"><div class="phn">Нажмите на фото, чтобы увеличить и сверить цифры</div>'; }
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t && t.getAttribute && t.getAttribute('data-zoom')) {
+      var z = document.createElement('div'); z.className = 'zoom';
+      z.innerHTML = '<button type="button" aria-label="Закрыть">✕</button><img src="' + t.src + '" alt=""><p>Двигайте фото пальцем · ✕ — закрыть</p>';
+      z.querySelector('button').onclick = function () { document.body.removeChild(z); };
+      document.body.appendChild(z);
+    }
+  });
   function render() { progress(); VIEW[S.step](); }
   function fail(m) { $('prog').hidden = true; card.innerHTML = '<h1>Электронная очередь</h1><div class="sub">' + m + '</div>'; }
 

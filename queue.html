@@ -190,8 +190,10 @@ a{color:#2563eb}
         : j.state === 'done' ? '<div class="st">Ваша заявка в работе у менеджера.</div>'
         : '<div class="st">' + (j.ahead > 0 ? 'Перед вами: <b>' + j.ahead + '</b> чел.' : '<b>Вы следующий!</b>') + '</div><div class="note" style="text-align:center">Не закрывайте страницу. Когда подойдёт очередь, здесь появится вызов' + (j.test ? '. <b>Тестовый режим: СМС не отправляется.</b>' : ' и придёт СМС.') + '</div>';
       card.innerHTML = '<div class="sub" style="text-align:center;margin-bottom:0">' + (j.again ? 'Вы уже в очереди · ' : '') + esc(j.officeName || '') + ' · ваш номер</div><div class="num">' + esc(j.no || '') + '</div>' + body +
-        '<button class="btn o" id="more">+ Добавить ещё человека (супруг(а), родственник)</button>' +
         '<div class="promo"><b>Не хотите ждать в неведении?</b><br>В приложении Kompass — статус вашего перерасчёта, сроки визы, штрафы и напоминания. Бесплатно.<a href="/app">Установить приложение</a></div>' +
+        '<div class="note" style="text-align:center;margin-top:18px">Пришли вдвоём и второй человек тоже работает?<br>Ему нужна своя заявка и свой номер.</div>' +
+        '<button class="back" id="more" style="margin-top:6px">Оформить заявку второму работающему →</button>' +
+        '<div class="note" style="text-align:center;margin-top:4px">Иждивенцев (детей, родителей) добавлять не нужно — они уже в вашей заявке.</div>' +
         (j.test ? '<button class="back" id="again" style="margin-top:18px">🧪 Тест: сбросить номер и начать заново</button>' : '');
       $('more').onclick = function () {
         if (!S.ticket || !S.ticket.k) return;

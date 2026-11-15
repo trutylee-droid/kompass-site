@@ -48,6 +48,11 @@ a{color:#2563eb}
 .pzc{display:flex;align-items:center;gap:8px;margin-top:6px}
 .pzc button{width:46px;height:40px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;font-size:22px;font-weight:700;color:#111827;flex:none}
 .pzc span{flex:1;text-align:center;font-size:12px;color:#64748b}
+.docm{position:fixed;inset:0;z-index:50;background:#fff;display:flex;flex-direction:column}
+.docm .dh{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #e2e8f0;font-weight:700;font-size:15px}
+.docm .dx{width:44px;height:44px;border-radius:12px;border:1px solid #cbd5e1;background:#fff;font-size:22px;color:#111827}
+.docm iframe{flex:1;border:0;width:100%}
+.docm .df{padding:10px 14px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #e2e8f0}
 .warn{background:#fef3c7;border:1px solid #f59e0b;color:#78350f}
 .ex{background:#f1f5f9;border-radius:12px;padding:12px;font-size:13.5px;color:#334155;margin-bottom:6px}
 .rev{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:4px 12px}
@@ -117,7 +122,7 @@ a{color:#2563eb}
   var VIEW = [
     function consent() {
       card.innerHTML = '<h1>Здравствуйте!</h1><div class="sub">Встаньте в очередь с телефона — это 2–3 минуты. Приготовьте <b>ID-карту</b> и <b>банковскую книжку</b> (или приложение банка).</div>' +
-        '<label class="chk"><input type="checkbox" id="c1"><span>Согласен(на) на обработку моих данных (телефон, ФИО, банковский счёт, фото документов) компанией KOMPASS для записи в очередь и оказания услуги перерасчёта налога. Фото документов распознаются автоматически. <a href="/privacy.html" target="_blank">Политика конфиденциальности</a></span></label>' +
+        '<label class="chk"><input type="checkbox" id="c1"><span>Согласен(на) на обработку моих данных (телефон, ФИО, банковский счёт, фото документов) компанией KOMPASS для записи в очередь и оказания услуги перерасчёта налога. Фото документов распознаются автоматически. <a href="/privacy.html" data-doc="/privacy.html">Политика конфиденциальности</a></span></label>' +
         '<label class="chk"><input type="checkbox" id="c2"><span>Отдельно согласен(на) на обработку <b>номера ID-карты</b> (외국인등록번호) для подачи документов в налоговую.</span></label>' +
         '<button class="btn" id="n" disabled>Начать</button><div class="err" id="err"></div>';
       var f = function () { $('n').disabled = !($('c1').checked && $('c2').checked); };
@@ -395,6 +400,17 @@ a{color:#2563eb}
     e.preventDefault();
   }, { passive: false });
   document.addEventListener('touchend', function (e) { if (e.touches.length < 2) PZ = null; });
+  // 15.11 (Сергей): документы открываем окном поверх формы, а не переходом на сайт — пожилые клиенты не находили дорогу назад
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[data-doc]') : null;
+    if (a) {
+      e.preventDefault();
+      var m = document.createElement('div'); m.className = 'docm'; m.id = 'docm';
+      m.innerHTML = '<div class="dh"><span>' + esc(a.textContent) + '</span><button type="button" class="dx" data-docx="1" aria-label="Закрыть">✕</button></div><iframe src="' + a.getAttribute('data-doc') + '" title="Документ"></iframe><div class="df"><button type="button" class="btn" data-docx="1">Закрыть и вернуться к форме</button></div>';
+      document.body.appendChild(m); return;
+    }
+    if (e.target && e.target.getAttribute && e.target.getAttribute('data-docx') && $('docm')) $('docm').remove();
+  });
   function render() { progress(); VIEW[S.step](); }
   function fail(m) { $('prog').hidden = true; card.innerHTML = '<h1>Электронная очередь</h1><div class="sub">' + m + '</div>'; }
 

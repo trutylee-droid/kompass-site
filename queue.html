@@ -186,14 +186,14 @@ a{color:#2563eb}
       card.innerHTML = '<div class="sub" style="text-align:center;margin-bottom:0">' + (j.again ? 'Вы уже в очереди · ' : '') + esc(j.officeName || '') + ' · ваш номер</div><div class="num">' + esc(j.no || '') + '</div>' + body +
         '<button class="btn o" id="more">+ Добавить ещё человека (супруг(а), родственник)</button>' +
         '<div class="promo"><b>Не хотите ждать в неведении?</b><br>В приложении Kompass — статус вашего перерасчёта, сроки визы, штрафы и напоминания. Бесплатно.<a href="/app">Установить приложение</a></div>' +
-        '<button class="back" id="again" style="margin-top:18px">Это не мой номер — начать заново</button>';
+        (j.test ? '<button class="back" id="again" style="margin-top:18px">🧪 Тест: сбросить номер и начать заново</button>' : '');
       $('more').onclick = function () {
         if (!S.ticket || !S.ticket.k) return;
         location.href = '/queue?o=' + encodeURIComponent(S.ticket.office) + '&k=' + encodeURIComponent(S.ticket.k) + '&g=' + encodeURIComponent(S.ticket.group || '') + '&new=1';
       };
       // сброс сохранённого номера на этом телефоне (чужой телефон, проверка формы). Заявка в очереди остаётся:
       // если тот же человек зарегистрируется снова с той же ID-картой, он получит свой прежний номер.
-      $('again').onclick = function () {
+      if ($('again')) $('again').onclick = function () {
         if (!confirm('Убрать этот номер с экрана и начать регистрацию заново? Заявка ' + (j.no || '') + ' останется в очереди.')) return;
         var t = S.ticket || {}; try { localStorage.removeItem('kq_ticket'); } catch (e) {}
         location.href = '/queue' + (t.office && t.k ? '?o=' + encodeURIComponent(t.office) + '&k=' + encodeURIComponent(t.k) : '');

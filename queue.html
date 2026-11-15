@@ -42,12 +42,12 @@ input.bad{border-color:#dc2626}
 a{color:#2563eb}
 .err{color:#dc2626;font-size:14px;margin-top:12px;text-align:center;min-height:1px}
 .note{font-size:12.5px;color:#64748b;margin-top:10px}
-.ph{display:block;width:100%;height:auto;border-radius:12px;margin:10px 0 2px;border:1px solid #e2e8f0;cursor:zoom-in}
-.phn{font-size:12px;color:#64748b;text-align:center;margin-bottom:6px}
-.zoom{position:fixed;inset:0;background:#000;z-index:50;overflow:auto;-webkit-overflow-scrolling:touch}
-.zoom img{display:block;width:230%;max-width:none}
-.zoom button{position:fixed;top:12px;right:12px;z-index:51;width:48px;height:48px;border-radius:24px;border:none;background:rgba(255,255,255,.92);font-size:22px;font-weight:700;color:#111}
-.zoom p{position:fixed;left:0;right:0;bottom:14px;text-align:center;color:#fff;font-size:13px;text-shadow:0 1px 3px #000;pointer-events:none}
+.pzw{position:sticky;top:0;z-index:5;background:#fff;padding:6px 0 4px;margin:6px 0 2px}
+.pz{height:210px;overflow:auto;-webkit-overflow-scrolling:touch;border-radius:12px;border:1px solid #cbd5e1;background:#f1f5f9;touch-action:pan-x pan-y}
+.pz img{display:block;width:100%;height:auto;max-width:none;user-select:none;-webkit-user-drag:none}
+.pzc{display:flex;align-items:center;gap:8px;margin-top:6px}
+.pzc button{width:46px;height:40px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;font-size:22px;font-weight:700;color:#111827;flex:none}
+.pzc span{flex:1;text-align:center;font-size:12px;color:#64748b}
 .warn{background:#fef3c7;border:1px solid #f59e0b;color:#78350f}
 .ex{background:#f1f5f9;border-radius:12px;padding:12px;font-size:13.5px;color:#334155;margin-bottom:6px}
 .rev{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:4px 12px}
@@ -347,16 +347,46 @@ a{color:#2563eb}
     });
   }
 
-  function pvHtml(src) { return '<img class="ph" src="' + src + '" alt="" data-zoom="1"><div class="phn">Нажмите на фото, чтобы увеличить и сверить цифры</div>'; }
+  // 15.11 (Сергей): фото остаётся НАД полями — его можно увеличивать (＋ / −, двумя пальцами, двойным касанием) и двигать пальцем,
+  // а цифры сверять и править тут же, не закрывая фото. Блок прилипает к верху экрана, пока человек листает поля.
+  function pvHtml(src) {
+    return '<div class="pzw"><div class="pz" id="pz"><img src="' + src + '" alt="" draggable="false"></div>' +
+      '<div class="pzc"><button type="button" data-pz="-1" aria-label="Уменьшить">−</button><span>Увеличьте и двигайте фото пальцем — сверяйте цифры с полями ниже</span><button type="button" data-pz="1" aria-label="Увеличить">＋</button></div></div>';
+  }
+  function pzSet(box, z, cx, cy) {
+    var img = box.querySelector('img'); if (!img) return;
+    var old = Number(box.getAttribute('data-z') || 1); z = Math.max(1, Math.min(5, z));
+    // точка, вокруг которой увеличиваем (по умолчанию центр окна), остаётся на месте
+    if (cx == null) { cx = box.clientWidth / 2; cy = box.clientHeight / 2; }
+    var fx = (box.scrollLeft + cx) / (box.clientWidth * old), fy = (box.scrollTop + cy) / Math.max(1, img.clientHeight);
+    img.style.width = (z * 100) + '%'; box.setAttribute('data-z', z);
+    box.scrollLeft = fx * box.clientWidth * z - cx; box.scrollTop = fy * img.clientHeight - cy;
+  }
   document.addEventListener('click', function (e) {
-    var t = e.target;
-    if (t && t.getAttribute && t.getAttribute('data-zoom')) {
-      var z = document.createElement('div'); z.className = 'zoom';
-      z.innerHTML = '<button type="button" aria-label="Закрыть">✕</button><img src="' + t.src + '" alt=""><p>Двигайте фото пальцем · ✕ — закрыть</p>';
-      z.querySelector('button').onclick = function () { document.body.removeChild(z); };
-      document.body.appendChild(z);
-    }
+    var d = e.target && e.target.getAttribute && e.target.getAttribute('data-pz'); if (!d) return;
+    var box = $('pz'); if (!box) return;
+    var z = Number(box.getAttribute('data-z') || 1); pzSet(box, d === '1' ? z * 1.6 : z / 1.6);
   });
+  var PZ = null, lastTap = 0;
+  document.addEventListener('touchstart', function (e) {
+    var box = e.target && e.target.closest ? e.target.closest('.pz') : null; if (!box) return;
+    if (e.touches.length === 2) {
+      var a = e.touches[0], b = e.touches[1], r = box.getBoundingClientRect();
+      PZ = { box: box, d: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), z: Number(box.getAttribute('data-z') || 1), cx: (a.clientX + b.clientX) / 2 - r.left, cy: (a.clientY + b.clientY) / 2 - r.top };
+    } else if (e.touches.length === 1) {
+      var now = Date.now();
+      if (now - lastTap < 320) { var r2 = box.getBoundingClientRect(), z2 = Number(box.getAttribute('data-z') || 1); pzSet(box, z2 > 1.2 ? 1 : 2.6, e.touches[0].clientX - r2.left, e.touches[0].clientY - r2.top); e.preventDefault(); lastTap = 0; }
+      else lastTap = now;
+    }
+  }, { passive: false });
+  document.addEventListener('touchmove', function (e) {
+    if (!PZ || e.touches.length !== 2) return;
+    var a = e.touches[0], b = e.touches[1];
+    pzSet(PZ.box, PZ.z * Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) / Math.max(1, PZ.d), PZ.cx, PZ.cy);
+    PZ.z = Number(PZ.box.getAttribute('data-z') || 1); PZ.d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('touchend', function (e) { if (e.touches.length < 2) PZ = null; });
   function render() { progress(); VIEW[S.step](); }
   function fail(m) { $('prog').hidden = true; card.innerHTML = '<h1>Электронная очередь</h1><div class="sub">' + m + '</div>'; }
 

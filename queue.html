@@ -194,7 +194,13 @@ a{color:#2563eb}
         '<div class="note" style="text-align:center;margin-top:18px">Пришли вдвоём и второй человек тоже работает?<br>Ему нужна своя заявка и свой номер.</div>' +
         '<button class="back" id="more" style="margin-top:6px">Оформить заявку второму работающему →</button>' +
         '<div class="note" style="text-align:center;margin-top:4px">Иждивенцев (детей, родителей) добавлять не нужно — они уже в вашей заявке.</div>' +
-        (j.test ? '<button class="back" id="again" style="margin-top:18px">🧪 Тест: сбросить номер и начать заново</button>' : '');
+        (j.test && j.state !== 'done' ? '<button class="back" id="tcall" style="margin-top:18px">' + (j.state === 'called' ? '🧪 Тест: вернуть в очередь' : '🧪 Тест: вызвать меня к столу') + '</button>' : '') +
+        (j.test ? '<button class="back" id="again" style="margin-top:' + (j.state !== 'done' ? '0' : '18px') + '">🧪 Тест: сбросить номер и начать заново</button>' : '');
+      // проверка экрана вызова без менеджера — служба выполняет это только для тестовых заявок (номер T…)
+      if ($('tcall')) $('tcall').onclick = function () {
+        if (!S.ticket) return; this.disabled = true;
+        api('status', { id: S.ticket.id, token: S.ticket.token, testCall: j.state === 'called' ? 'off' : 'on' }).then(function (r) { r.again = S.state && S.state.again; S.state = r; if (S.step === 6) VIEW[6](); }).catch(function () { if ($('tcall')) $('tcall').disabled = false; });
+      };
       $('more').onclick = function () {
         if (!S.ticket || !S.ticket.k) return;
         location.href = '/queue?o=' + encodeURIComponent(S.ticket.office) + '&k=' + encodeURIComponent(S.ticket.k) + '&g=' + encodeURIComponent(S.ticket.group || '') + '&new=1';

@@ -194,7 +194,7 @@ a{color:#2563eb}
       var body = j.state === 'called'
         ? '<div class="call">🔔 ВАС ВЫЗЫВАЮТ!<br><span style="font-size:16px;font-weight:600">Подойдите к ' + (j.desk ? 'столу ' + esc(j.desk) : 'менеджеру') + (j.manager ? ' (' + esc(j.manager) + ')' : '') + '</span></div>'
         : j.state === 'done' ? '<div class="st">Ваша заявка в работе у менеджера.</div>'
-        : '<div class="st">' + (j.ahead > 0 ? 'Перед вами: <b>' + j.ahead + '</b> чел.' : '<b>Вы следующий!</b>') + '</div><div class="note" style="text-align:center">Не закрывайте страницу. Когда подойдёт очередь, здесь появится вызов' + (j.test ? '. <b>Тестовый режим: СМС не отправляется.</b>' : ' и придёт СМС.') + '</div>';
+        : '<div class="st">' + (j.ahead > 0 ? 'Перед вами: <b>' + j.ahead + '</b> чел.' : '<b>Вы следующий!</b>') + '</div><div class="note" style="text-align:center">Не закрывайте страницу. Когда подойдёт очередь, здесь появится вызов' + (j.test && !j.testSms ? '. <b>Тестовый режим: СМС не отправляется.</b>' : ' и придёт СМС.') + '</div>';
       card.innerHTML = '<div class="sub" style="text-align:center;margin-bottom:0">' + (j.again ? 'Вы уже в очереди · ' : '') + esc(j.officeName || '') + ' · ваш номер</div><div class="num">' + esc(j.no || '') + '</div>' + body +
         // 15.11 (Сергей): дозагрузка документа в уже поданную заявку — клиент за столом показывает книжку или ID иждивенца
         (j.state !== 'done' ? (S.addOpen

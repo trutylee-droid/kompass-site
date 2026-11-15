@@ -280,14 +280,14 @@ a{color:#2563eb}
         if (idn.length !== 13) { $('idn').className = 'bad'; return err('В номере ID-карты 13 цифр'); }
         if (idn === digits(S.id) || S.deps.some(function (d) { return digits(d.id) === idn; })) return err('Эта ID-карта уже добавлена');
         if (S.deps.length >= 6) return err('Больше 6 иждивенцев — остальных покажите менеджеру');
-        S.deps.push({ name: fio, id: idn, rel: cur.rel }); S.depLater = false; VIEW[7]();
+        S.deps.push({ name: fio, id: idn, rel: cur.rel, ref: cur.ref || '' }); S.depLater = false; VIEW[7]();
       };
       $('file').onchange = function () {
         var f = this.files && this.files[0]; this.value = ''; if (!f) return;
         err(''); var btn = $('shot'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span>Читаем документ…';
         shrink(f).then(function (d) { $('pv').innerHTML = pvHtml(d); return api('photo', { kind: 'dep', b64: d.split(',')[1] }); })
           .then(function (j) {
-            var x = j.fields || {};
+            var x = j.fields || {}; cur.ref = j.ref || ''; // какое фото относится к этому иждивенцу — лишние попытки служба уберёт
             openFields(j.recognized ? '✅ Документ распознан. <b>Проверьте каждую цифру</b> и отметьте, кто это.' : '⚠️ Не удалось прочитать фото. Введите данные вручную или вернитесь и переснимите.');
             $('fio').value = x.name ? String(x.name).toUpperCase() : ''; $('idn').value = x.id || '';
           }).catch(function (e) { btn.disabled = false; btn.textContent = '📷 Загрузить ID-карту иждивенца'; err(e.message); if (e.status !== 403) openFields('Введите данные вручную.'); });
